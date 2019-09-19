@@ -13,12 +13,10 @@ sleep 5
  
 ######### user params #########
 
-## Cosmics
-#testMenu=/cdaq/special/2019/MWGR1/CruzetForMWGR1/HLT/V8
-##/cdaq/physics/Run2018/2e34/v2.2.2/HLT/V2
-#runNumber=328788
-#testGT=106X_dataRun3_HLT_HcalResp_SiPixelLAforWidth_v1
-##101X_dataRun2_HLT_SiStripAPVGain_FT_v1
+# # Cosmics
+# testMenu=/cdaq/special/2019/MWGR1/CruzetForMWGR1/HLT/V8
+# runNumber=328788
+# testGT=106X_dataRun3_HLT_HcalResp_SiPixelLAforWidth_v1
 
 # VirginRaw
 testMenu=/cdaq/special/2019/MWGR1/VirginRaw/VR_Random_TS2/HLT/V4
@@ -33,12 +31,29 @@ mkdir -p $outputbasedir
 ## reference trial:
 ./newHiltonMenu.py $testMenu
 ./cleanGenerateAndRun.sh $runNumber skipRepack
+
+if [ -d "${outputbasedir}/reference_run${runNumber}" ]; then
+
+  printf "%s\n" "[runFastTrackValidation] removing directory ${outputbasedir}/reference_run${runNumber} .."
+  rm -r "${outputbasedir}/reference_run${runNumber}"
+fi
+
+printf "%s\n" "[runFastTrackValidation] copying /fff/BU0/output/run$runNumber to $outputbasedir/reference_run$runNumber .."
 cp -r /fff/BU0/output/run$runNumber $outputbasedir/reference_run$runNumber
 
 ## test trial:
 ./newHiltonMenu.py --GT $testGT $testMenu
 ./cleanGenerateAndRun.sh $runNumber # don't skip repack for test GT
+
+if [ -d "${outputbasedir}/test_run${runNumber}" ]; then
+
+  printf "%s\n" "[runFastTrackValidation] removing directory ${outputbasedir}/test_run${runNumber} .."
+  rm -r "${outputbasedir}/test_run${runNumber}"
+fi
+
+printf "%s\n" "[runFastTrackValidation] copying /fff/BU0/output/run$runNumber to $outputbasedir/test_run$runNumber .."
 cp -r /fff/BU0/output/run$runNumber $outputbasedir/test_run$runNumber
+
 echo " "
 echo "hltd jobs for both test and reference configuration completed. Check the following for correct output:"
 echo "$outputbasedir/reference_run$runNumber"
@@ -47,25 +62,56 @@ echo " "
 echo "dumping rates..."
 sleep 3
 echo " "
+
 ./monitorRatesMultiLumi.py $outputbasedir/reference_run$runNumber/streamHLTRates/data/run$runNumber*jsndata > ref_HLT_rates.txt
 ./monitorRatesMultiLumi.py $outputbasedir/test_run$runNumber/streamHLTRates/data/run$runNumber*jsndata > test_HLT_rates.txt
-#echo "Doing \"diff ref_HLT_rates.txt test_HLT_rates.txt\" ..."
-#diff ref_HLT_rates.txt test_HLT_rates.txt
+
 echo "HLT Rates of menu $testMenu using test GT $testGT dumped to test_HLT_rates.txt."
 echo "Reference rates dumped to ref_HLT_rates.txt."
 echo " "
 echo "getting timing results..."
 sleep 3
 
-fastHadd add -o $outputbasedir/reference_run$runNumber/ref_DQM_hists.pb $outputbasedir/reference_run$runNumber/streamDQMHistograms/data/*.pb 
-fastHadd add -o $outputbasedir/test_run$runNumber/test_DQM_hists.pb $outputbasedir/test_run$runNumber/streamDQMHistograms/data/*.pb
-fastHadd convert -o ref_DQM_hists.root $outputbasedir/reference_run$runNumber/ref_DQM_hists.pb
-fastHadd convert -o test_DQM_hists.root $outputbasedir/test_run$runNumber/test_DQM_hists.pb
+if [ -d $outputbasedir/reference_run$runNumber/streamDQMHistograms/data ]; then
 
-echo " "
-echo "DQM histograms (including timing) dumped to:"
-echo "ref_DQM_hists.root (reference hists)"
-echo "test_DQM_hists.root (test GT $testGT)"
-echo "Copy to lxplus and open in TBrowser to examine timing plots."
-echo " "
-echo "End of script."
+  streamDQMHistograms_data_ref=$(find $outputbasedir/reference_run$runNumber/streamDQMHistograms/data -maxdepth 1 -name '*.pb')
+
+  if [ ${streamDQMHistograms_data_ref} ]; then
+
+    fastHadd add -o $outputbasedir/reference_run$runNumber/ref_DQM_hists.pb ${streamDQMHistograms_data_ref}
+    fastHadd convert -o ref_DQM_hists.root $outputbasedir/reference_run$runNumber/ref_DQM_hists.pb
+
+    printf "\n%s\n" "[reference] DQM histograms (including timing) dumped to: ref_DQM_hists.root (copy to lxplus and open in TBrowser to examine timing plots)"
+
+  else
+
+    printf "\n%s\n" "[reference] DQM histograms not produced (no matches for $outputbasedir/reference_run$runNumber/streamDQMHistograms/data/*.pb)"
+  fi
+
+else
+
+  printf "\n%s\n" "[reference] DQM histograms not produced (directory $outputbasedir/reference_run$runNumber/streamDQMHistograms/data/ does not exist)"
+fi
+
+if [ -d $outputbasedir/test_run$runNumber/streamDQMHistograms/data ]; then
+
+  streamDQMHistograms_data_test=$(find $outputbasedir/test_run$runNumber/streamDQMHistograms/data -maxdepth 1 -name '*.pb')
+
+  if [ ${streamDQMHistograms_data_test} ]; then
+
+    fastHadd add -o $outputbasedir/test_run$runNumber/test_DQM_hists.pb ${streamDQMHistograms_data_test}
+    fastHadd convert -o test_DQM_hists.root $outputbasedir/test_run$runNumber/test_DQM_hists.pb
+
+    printf "\n%s\n" "[test, GT=${testGT}] DQM histograms (including timing) dumped to: test_DQM_hists.root (copy to lxplus and open in TBrowser to examine timing plots)"
+
+  else
+
+    printf "\n%s\n" "[test, GT=${testGT}] DQM histograms not produced (no matches for $outputbasedir/test_run$runNumber/streamDQMHistograms/data/*.pb)"
+  fi
+
+else
+
+  printf "\n%s\n" "[test, GT=${testGT}] DQM histograms not produced (directory $outputbasedir/test_run$runNumber/streamDQMHistograms/data/ does not exist)"
+fi
+
+printf "\n%s\n" "End of script."

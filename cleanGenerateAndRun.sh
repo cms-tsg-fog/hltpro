@@ -59,7 +59,20 @@ mkdir -p $outputbasedir/testRepack/output
 for streamdir in "${streamList[@]}"; do
 
     stream=$(basename $streamdir)
+
+    if [[ ${stream} == streamHLTRates ]] ||
+       [[ ${stream} == streamL1Rates ]]; then
+
+      continue
+    fi
+
+    inpfiles=$(find ${streamdir}/data -maxdepth 1 -mindepth 1 -type f | sort)
+
+    if ! [ "${inpfiles}" ]; then continue; fi;
+
     newfile=$outputbasedir/testRepack/input/$stream.dat
-    cat $streamdir/data/* > $newfile
-    cmsRun RunRepackCfg.py $newfile #> testRepack/output/$stream.log
+
+    cat ${inpfiles} > ${newfile}
+
+    cmsRun RunRepackCfg.py ${newfile} #> testRepack/output/$stream.log
 done

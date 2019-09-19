@@ -35,8 +35,8 @@ eval `scramv1 runtime -sh`
 mkdir -p ../python/CondCore
 mkdir -p CondCore
 mkdir -p ../bin/$SCRAM_ARCH
-cp -r $srcpath/../python/CondCore/Utilities ../python/CondCore/
-cp -r $srcpath/CondCore/Utilities CondCore/
+cp -r $srcpath/../python/CondCore/Utilities/ ../python/CondCore/
+cp -r $srcpath/../src/CondCore/Utilities/ CondCore/
 cp `type -p conddb` ../bin/$SCRAM_ARCH/
 cmsset=`echo $srcpath | sed 's/\/opt\/\(......\).*$/\1/'`
 if [ "$cmsset" == "offlin" ]; then

@@ -24,7 +24,7 @@ iCore=$(( ($i - 1)*2 ))
 else
 iCore=$(( ($i - 1 - $nTot/2)*2 + 1 ))
 fi
-sudo mv /etc/appliance/resources/quarantined/core${iCore} /etc/appliance/resources/idle/
+sudo mv /etc/appliance/resources/quarantined/core${iCore} /etc/appliance/resources/idle/ 2> /dev/null
 done
 
 echo Hilton will run hltd with $n cores
