@@ -1,3 +1,4 @@
+#!/bin/bash
 
 #Usage: Without arguments, this script sets up the SCRAM_ARCH and
 #       sources cmsset_default.sh.
@@ -12,7 +13,8 @@ export https_proxy="https://cmsproxy.cms:3128/"
 export NO_PROXY=".cms,localhost"
 #export SCRAM_ARCH=slc6_amd64_gcc493
 #export SCRAM_ARCH=slc6_amd64_gcc530
-export SCRAM_ARCH=slc7_amd64_gcc530
+#export SCRAM_ARCH=slc7_amd64_gcc630
+export SCRAM_ARCH=slc7_amd64_gcc700
 #source /opt/hilton/cmssw/cmsset_default.sh
 source /opt/offline/cmsset_default.sh
 

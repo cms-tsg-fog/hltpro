@@ -22,7 +22,8 @@ def l1xml_override(l1xml_filename):
     #hence if the CMSSW directory structure changes or hilton install location changes (unlikely)
     #this will break    
     l1xml_str= 'process.TriggerMenu = cms.ESProducer( "L1TUtmTriggerMenuESProducer",\n'
-    l1xml_str+='    L1TriggerMenuFile = cms.string("../../../../../../../../../../../../%s")\n' % os.path.abspath(l1xml_filename)
+    #l1xml_str+='    L1TriggerMenuFile = cms.string("../../../../../../../../../../../../%s")\n' % os.path.abspath(l1xml_filename)
+    l1xml_str+='    L1TriggerMenuFile = cms.string("../../../../../../../../../../../../../../%s")\n' % os.path.abspath(l1xml_filename)
     l1xml_str+=')\n'
     return l1xml_str
 
@@ -54,11 +55,19 @@ def main(args):
 
 
     print  "dumping",args.menu," from ConfDB v2..."
-    out,err = subprocess.Popen(['/nfshome0/hltpro/scripts/hltConfigFromDB',
-                                '--v2','--gdr','--configName',args.menu],
-                               stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
+    if (args.unprescale):
+        print "removing HLT prescales..."
+        #'--2','--gdr','--services','-PrescaleService','--paths','-DQMHistograms','--configName',args.menu],  
+        out,err = subprocess.Popen(['/nfshome0/hltpro/scripts/hltConfigFromDB', '--v2','--gdr','--services','-PrescaleService','--configName',args.menu],
+                                   stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
+    else:
+        out,err = subprocess.Popen(['/nfshome0/hltpro/scripts/hltConfigFromDB',
+                                    '--v2','--gdr','--configName',args.menu],
+                                   stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
     with open("hlt.py","w") as f:
         f.write(out)
+    if (args.unprescale): 
+        subprocess.Popen(['sed','-i','s~+ process.hltPSColumnMonitor~~g','hlt.py']).communicate() 
 
     # check for errors in the menu
     print "checking dump consistency"
@@ -128,6 +137,7 @@ if __name__=='__main__':
     parser.add_argument('menu',help='HLT menu location in ORCOFF')
     parser.add_argument('--GT',help='overrides the Global Tag in the resulting hilton menu with this GT')
     parser.add_argument('--l1XML',help='overrides the L1 menu in the resulting hilton menu via an XML file ')
-    parser.add_argument('--l1GT',help='override the L1 menu in the resulting hilton menu via a GlobalTag record, example would be "--l1GT L1Menu_Collisions2016_v6r8m_m2" ask your friendly L1 menu expert for the correct record name')
+    parser.add_argument('--l1GT',help='override the L1 menu in the resulting hilton menu via a GlobalTag record, example would be "--l1GT L1Menu_Collisions2016_v6r8m_m2" ask your friendly L1 menu expert for the correct record name')    
+    parser.add_argument('--unprescale',action='store_true',help='remove HLT prescales')
     args = parser.parse_args()
     main(args)

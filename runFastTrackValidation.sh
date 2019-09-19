@@ -11,10 +11,20 @@ echo "reference and test global tags."
 echo " "
 sleep 5
  
-###############################
-testMenu=/cdaq/some/menu/HLT/V1
-runNumber=123456
-testGT=someTestGT
+######### user params #########
+
+## Cosmics
+#testMenu=/cdaq/special/2019/MWGR1/CruzetForMWGR1/HLT/V8
+##/cdaq/physics/Run2018/2e34/v2.2.2/HLT/V2
+#runNumber=328788
+#testGT=106X_dataRun3_HLT_HcalResp_SiPixelLAforWidth_v1
+##101X_dataRun2_HLT_SiStripAPVGain_FT_v1
+
+# VirginRaw
+testMenu=/cdaq/special/2019/MWGR1/VirginRaw/VR_Random_TS2/HLT/V4
+runNumber=328691
+testGT=106X_dataRun3_HLT_HcalResp_SiPixelLAforWidth_v1
+
 ###############################
 
 outputbasedir=/cmsnfsscratch/globalscratch/hltpro/fastTrack
@@ -49,7 +59,7 @@ sleep 3
 
 fastHadd add -o $outputbasedir/reference_run$runNumber/ref_DQM_hists.pb $outputbasedir/reference_run$runNumber/streamDQMHistograms/data/*.pb 
 fastHadd add -o $outputbasedir/test_run$runNumber/test_DQM_hists.pb $outputbasedir/test_run$runNumber/streamDQMHistograms/data/*.pb
-fastHadd convert -o ref_DQM_hists.root $outputbasedir/test_run$runNumber/ref_DQM_hists.pb
+fastHadd convert -o ref_DQM_hists.root $outputbasedir/reference_run$runNumber/ref_DQM_hists.pb
 fastHadd convert -o test_DQM_hists.root $outputbasedir/test_run$runNumber/test_DQM_hists.pb
 
 echo " "
@@ -59,5 +69,3 @@ echo "test_DQM_hists.root (test GT $testGT)"
 echo "Copy to lxplus and open in TBrowser to examine timing plots."
 echo " "
 echo "End of script."
-
-
