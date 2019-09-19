@@ -46,9 +46,9 @@ options.parseArguments()
 process.options = cms.untracked.PSet(
     numberOfThreads = cms.untracked.uint32(options.numThreads),
     numberOfStreams = cms.untracked.uint32(options.numFwkStreams),
-    multiProcesses = cms.untracked.PSet(
-    maxChildProcesses = cms.untracked.int32(0)
-    )
+    #multiProcesses = cms.untracked.PSet(
+    #maxChildProcesses = cms.untracked.int32(0)
+    #)
 )
 
 process.EvFDaqDirector.buBaseDir    = options.buBaseDir

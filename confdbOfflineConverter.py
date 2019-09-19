@@ -105,6 +105,7 @@ class OfflineConverter:
 
     def query(self, *args):
         args = self.javaCmd + self.connect + args
+        
         if self.verbose:
             sys.stderr.write("\n" + ' '.join(args) + "\n\n" )
         sub = subprocess.Popen(

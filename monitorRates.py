@@ -98,13 +98,7 @@ def monitorRates(jsndata_file):
         for i, rate in enumerate(L1_rates['L1_DECISION']):
             print "%-60s    %10.1f Hz" % (L1_names['L1-Algo-Names'][i], rate / SECS_PER_LUMI)
         print
-#        sys.stdout.write("\x1b[0;0;32m")
-#        print "%-60s       %12s" % ("L1 Tech Trigger", "post-DT rate")
-#        sys.stdout.write("\x1b[0;0m")
-#        for i, rate in enumerate(L1_rates['L1_TECHNICAL']):
-#            print "%-60s    %10.1f Hz" % (L1_names['L1-Tech-Names'][i], rate / SECS_PER_LUMI)
-#        print
-        
+
 for arg in sys.argv[1:]:
     sys.stdout.write("\x1b[0;0;31m")
     print arg

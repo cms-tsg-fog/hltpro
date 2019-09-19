@@ -14,9 +14,9 @@ import filecmp
 import zlib
 
 #Input parameters -- must change these before using!
-runNumber = '274442'
+runNumber = '296864'
 runDir = '/fff/BU0/output/run'+runNumber      
-outDir = '/tmp/avetisya/MacroMergeOutput/run'+runNumber
+outDir = '/tmp/sharper/MacroMergeOutput/run'+runNumber
 
 if (not os.path.exists(outDir)):
    print "Output directory" + outDir + "does not exist!"

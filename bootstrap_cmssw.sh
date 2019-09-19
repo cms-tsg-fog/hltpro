@@ -45,6 +45,7 @@ function bootstrap_cmssw() {
     chmod +x "$VO_CMS_SW_DIR"/bootstrap.sh
 
     echo "Bootstrapping software area at $VO_CMS_SW_DIR"
+    echo "\"$VO_CMS_SW_DIR\"/bootstrap.sh setup -path \"$VO_CMS_SW_DIR\" -arch \"$SCRAM_ARCH\" 2>&1 | tee \"$VO_CMS_SW_DIR\"/bootstrap_\"$SCRAM_ARCH\".log"
     "$VO_CMS_SW_DIR"/bootstrap.sh setup -path "$VO_CMS_SW_DIR" -arch "$SCRAM_ARCH" 2>&1 | tee "$VO_CMS_SW_DIR"/bootstrap_"$SCRAM_ARCH".log
     if (( $? )); then
       echo
