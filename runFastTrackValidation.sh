@@ -47,8 +47,8 @@ echo " "
 echo "dumping rates..."
 sleep 3
 echo " "
-../scripts/monitorRatesMultiLumi.py  $outputbasedir/reference_run$runNumber/streamHLTRates/data/run$runNumber*jsndata > ref_HLT_rates.txt
-../scripts/monitorRatesMultiLumi.py  $outputbasedir/test_run$runNumber/streamHLTRates/data/run$runNumber*jsndata > test_HLT_rates.txt
+./monitorRatesMultiLumi.py $outputbasedir/reference_run$runNumber/streamHLTRates/data/run$runNumber*jsndata > ref_HLT_rates.txt
+./monitorRatesMultiLumi.py $outputbasedir/test_run$runNumber/streamHLTRates/data/run$runNumber*jsndata > test_HLT_rates.txt
 #echo "Doing \"diff ref_HLT_rates.txt test_HLT_rates.txt\" ..."
 #diff ref_HLT_rates.txt test_HLT_rates.txt
 echo "HLT Rates of menu $testMenu using test GT $testGT dumped to test_HLT_rates.txt."

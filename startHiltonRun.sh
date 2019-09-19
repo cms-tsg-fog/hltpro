@@ -6,10 +6,10 @@ fi
 
 run=$1
 if [[ $# -ge 1 && $run =~ [0-9]+$ ]]; then
-    /nfshome0/hltpro/scripts/addMissingEoLS.sh $run
+    ./addMissingEoLS.sh $run
     sudo chmod -R 777 /fff
     sudo /sbin/service hltd restart
-    /nfshome0/hltpro/scripts/nCoresOnly.sh $nCores
+    ./nCoresOnly.sh $nCores
     sleep 5
     curl "http://localhost:9000/cgi-bin/start_cgi.py?run=${run}"
 else

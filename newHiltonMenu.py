@@ -53,15 +53,17 @@ def main(args):
         print "You need to do cmsenv first"
         sys.exit()
 
+#    scripts_dir = '/nfshome0/hltpro/scripts'
+    scripts_dir = '.'
 
     print  "dumping",args.menu," from ConfDB v2..."
     if (args.unprescale):
         print "removing HLT prescales..."
         #'--2','--gdr','--services','-PrescaleService','--paths','-DQMHistograms','--configName',args.menu],  
-        out,err = subprocess.Popen(['/nfshome0/hltpro/scripts/hltConfigFromDB', '--v2','--gdr','--services','-PrescaleService','--configName',args.menu],
+        out,err = subprocess.Popen([scripts_dir+'/hltConfigFromDB', '--v2','--gdr','--services','-PrescaleService','--configName',args.menu],
                                    stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
     else:
-        out,err = subprocess.Popen(['/nfshome0/hltpro/scripts/hltConfigFromDB',
+        out,err = subprocess.Popen([scripts_dir+'/hltConfigFromDB',
                                     '--v2','--gdr','--configName',args.menu],
                                    stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
     with open("hlt.py","w") as f:
@@ -86,7 +88,7 @@ def main(args):
     globaltag = process.GlobalTag.globaltag.value()
     print " "
     print "checking L1 seeds in HLT menu against L1 xml in global tag",globaltag
-    subprocess.Popen(["/nfshome0/hltpro/scripts/L1MenuCheck_FromGT.sh",
+    subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh",
                       "hlt.py",globaltag]).communicate()
 
     if process.GlobalTag.toGet.value()==[]:
@@ -99,7 +101,7 @@ def main(args):
  
     print "\nconverting menu for use on hilton"
 
-    with open("/nfshome0/hltpro/scripts/hilton_menu_overrides.txt") as f:
+    with open(scripts_dir+"/hilton_menu_overrides.txt") as f:
         menu_overrides = f.read()
     if args.GT!=None:
         print "   overriding GT for hilton config with GT:",args.GT
@@ -110,7 +112,7 @@ def main(args):
         print "   rechecking HLT menu for missing seeds in xml"
         #the hlt.py is just used to get the list of seeds so doesnt matter that we have not
         #rewriten the xml override to it yet
-        subprocess.Popen(["/nfshome0/hltpro/scripts/L1MenuCheck.sh","hlt.py",args.l1XML]).communicate()
+        subprocess.Popen([scripts_dir+"/L1MenuCheck.sh","hlt.py",args.l1XML]).communicate()
 
     if args.l1GT!=None:
         print "   overriding L1 menu for hilton config with GT record:",args.l1GT
