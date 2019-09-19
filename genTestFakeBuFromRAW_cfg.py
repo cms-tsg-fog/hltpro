@@ -8,14 +8,14 @@ cmsswbase = os.path.expandvars('$CMSSW_BASE/')
 options.register ('runNumber',
                   # 318734,
                   #320917,
-                  323778,
+#                  323778,
                   #324420,
                   #000001,
                   #304906,
                   # 1,
                   #325113, #rec
 #                  328788, # Cosmics
-#                  328691, # VirginRaw
+                  328691, # VirginRaw
                   #330061,
                   # 327237,
                   VarParsing.VarParsing.multiplicity.singleton,
@@ -65,10 +65,10 @@ process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
                                 #'file:/nfshome0/hltpro/hilton_c2f13_20_04/run330061_ls0136_index000005_fu-c2a03-41-02_pid362895.raw'
 #                                '/store/data/Commissioning2019/HLTPhysics/RAW/v1/000/328/788/00000/F5DC78DF-D593-5E41-8DCF-A02F21A3FC44.root',
-                                #'/store/data/Commissioning2019/VRRandom3/RAW/v1/000/328/691/00000/00117159-5391-2C49-98CA-949BD0537DD9.root',
+                                '/store/data/Commissioning2019/VRRandom3/RAW/v1/000/328/691/00000/00117159-5391-2C49-98CA-949BD0537DD9.root',
                                #'/store/data/Run2018D/HLTPhysics/RAW/v1/000/324/420/00000/487403ED-6DB3-8241-85A0-3D6EAE21B98E.root'
                                 #'/store/group/phys_exotica/HNL/74AB8BD0-9379-E811-A0C0-02163E017FD1.root',
-                                '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/D64468A2-C1A9-BD4A-81BE-EF0287C1B5DE.root',
+#                                '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/D64468A2-C1A9-BD4A-81BE-EF0287C1B5DE.root',
                                 #'/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/E603254F-3776-DA48-B42C-AE957D98B402.root',
                                 #'/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/E78B79AE-42D4-1142-B8A6-01DD27739012.root',
                                 #'/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/F0938726-EA4E-7340-9824-EF54B059A24F.root',
