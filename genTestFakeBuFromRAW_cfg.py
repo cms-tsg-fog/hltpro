@@ -5,8 +5,20 @@ import os
 options = VarParsing.VarParsing('analysis')
 cmsswbase = os.path.expandvars('$CMSSW_BASE/')
 
-# The "fileNamesByRun_dict" dictionary contains the input files associated to a run number
-# [dictionary] key: run number (int); value: list of strings fed to process.source.fileNames.
+# fileNamesByRun_dict -> Dictionary Of Input Files, key-ed by Run Number
+#
+#   - this dictionary contains the input files associated to a run number
+#         [key] = run number (int)
+#       [value] = list of strings fed to process.source.fileNames
+#
+#   - if you need to analyze a new list of files for run X,
+#     add a dictionary entry to fileNamesByRun_dict
+#     with key X and the list of input files as value
+#
+#   - once the dictionary holds the correct information,
+#     one can specify the run number from the command line
+#     (example: cmsRun genTestFakeBuFromRAW_cfg runNumber=X)
+#     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
 
@@ -20,18 +32,6 @@ fileNamesByRun_dict = {
 
   328691 : [ # VirginRaw
     '/store/data/Commissioning2019/VRRandom3/RAW/v1/000/328/691/00000/00117159-5391-2C49-98CA-949BD0537DD9.root',
-  ],
-
-  324420 : [
-#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/324/420/00000/487403ED-6DB3-8241-85A0-3D6EAE21B98E.root',
-  ],
-
-  323778 : [
-#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/D64468A2-C1A9-BD4A-81BE-EF0287C1B5DE.root',
-#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/E603254F-3776-DA48-B42C-AE957D98B402.root',
-#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/E78B79AE-42D4-1142-B8A6-01DD27739012.root',
-#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/F0938726-EA4E-7340-9824-EF54B059A24F.root',
-#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/F3B99342-F73F-D749-84FA-CFEFE24D6808.root',
   ],
 
   327237 : [
@@ -63,6 +63,18 @@ fileNamesByRun_dict = {
 
   325112 : [
 #    '/store/data/Run2018D/HIMinimumBias0/RAW/v1/000/325/112/00000/660F62BB-9932-D645-A4A4-0BBBDA3963E8.root',
+  ],
+
+  324420 : [
+#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/324/420/00000/487403ED-6DB3-8241-85A0-3D6EAE21B98E.root',
+  ],
+
+  323778 : [
+#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/D64468A2-C1A9-BD4A-81BE-EF0287C1B5DE.root',
+#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/E603254F-3776-DA48-B42C-AE957D98B402.root',
+#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/E78B79AE-42D4-1142-B8A6-01DD27739012.root',
+#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/F0938726-EA4E-7340-9824-EF54B059A24F.root',
+#    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/323/778/00000/F3B99342-F73F-D749-84FA-CFEFE24D6808.root',
   ],
 
   320917 : [
