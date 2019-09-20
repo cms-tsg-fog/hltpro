@@ -85,11 +85,19 @@ def main(args):
     print "\nrunning MenuChecker.py"
     subprocess.Popen(["python","/nfshome0/hltpro/RateMon/MenuChecker.py",args.menu]).communicate()
 
+#    # check to make sure no empty event content in any of the streams
+#    print "\nchecking event content output commands..."
+#    for output_module_name in process.outputModules.keys():
+#        output_commands = process.outputModules[output_module_name].outputCommands.value()
+#        if len(output_commands) == 0:
+#            print "\tWARNING: OutputModule %s has no event content!" % output_module_name
+#        elif output_commands[0].find('drop *') < 0:
+#            print "\tWARNING: OutputModule %s missing drop * command!" % output_module_name
+
     globaltag = process.GlobalTag.globaltag.value()
     print " "
     print "checking L1 seeds in HLT menu against L1 xml in global tag",globaltag
-    subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh",
-                      "hlt.py",globaltag]).communicate()
+    subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh", "hlt.py",globaltag]).communicate()
 
     if process.GlobalTag.toGet.value()==[]:
         print "checking for GlobalTag overrides: \033[32mSUCCEEDED\033[0m"
