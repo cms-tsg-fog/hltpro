@@ -6,8 +6,13 @@
 # sample and a sample related to the conditions change you are validating. For example, for 
 # a change in ECal conditions, you might run over an EGamma sample.
 
-echo "Running automated fast track validation script. Will compare rates and timing of menus using"
-echo "reference and test global tags."
+if [ -z "${CMSSW_BASE}" ]; then
+
+  printf "\n%s\n\n" "[runFastTrackValidation] environment variable CMSSW_BASE is not set --> you need to first set up CMSSW (for example with \"source setup.sh CMSSW_X_Y_Z\")"
+  exit 1
+fi
+
+echo "Running automated fast track validation script. Will compare rates and timing of menus using reference and test global tags."
 echo " "
 sleep 5
  
