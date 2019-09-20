@@ -60,7 +60,8 @@ for streamdir in "${streamList[@]}"; do
 
     stream=$(basename $streamdir)
 
-    if [[ ${stream} == streamHLTRates ]] ||
+    if [[ ${stream} == streamDQMHistograms ]] ||
+       [[ ${stream} == streamHLTRates ]] ||
        [[ ${stream} == streamL1Rates ]]; then
 
       continue

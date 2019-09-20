@@ -79,11 +79,9 @@ sleep 3
 
 if [ -d $outputbasedir/reference_run$runNumber/streamDQMHistograms/data ]; then
 
-  streamDQMHistograms_data_ref=$(find $outputbasedir/reference_run$runNumber/streamDQMHistograms/data -maxdepth 1 -name '*.pb')
+  if [ $(ls $outputbasedir/reference_run$runNumber/streamDQMHistograms/data/*.pb 2> /dev/null | wc -l) -gt 0 ]; then
 
-  if [ ${streamDQMHistograms_data_ref} ]; then
-
-    fastHadd add -o $outputbasedir/reference_run$runNumber/ref_DQM_hists.pb ${streamDQMHistograms_data_ref}
+    fastHadd add -o $outputbasedir/reference_run$runNumber/ref_DQM_hists.pb $outputbasedir/reference_run$runNumber/streamDQMHistograms/data/*.pb
     fastHadd convert -o ref_DQM_hists.root $outputbasedir/reference_run$runNumber/ref_DQM_hists.pb
 
     printf "\n%s\n" "[reference] DQM histograms (including timing) dumped to: ref_DQM_hists.root (copy to lxplus and open in TBrowser to examine timing plots)"
@@ -100,11 +98,9 @@ fi
 
 if [ -d $outputbasedir/test_run$runNumber/streamDQMHistograms/data ]; then
 
-  streamDQMHistograms_data_test=$(find $outputbasedir/test_run$runNumber/streamDQMHistograms/data -maxdepth 1 -name '*.pb')
+  if [ $(ls $outputbasedir/test_run$runNumber/streamDQMHistograms/data/*.pb 2> /dev/null | wc -l) -gt 0 ]; then
 
-  if [ ${streamDQMHistograms_data_test} ]; then
-
-    fastHadd add -o $outputbasedir/test_run$runNumber/test_DQM_hists.pb ${streamDQMHistograms_data_test}
+    fastHadd add -o $outputbasedir/test_run$runNumber/test_DQM_hists.pb $outputbasedir/test_run$runNumber/streamDQMHistograms/data/*.pb
     fastHadd convert -o test_DQM_hists.root $outputbasedir/test_run$runNumber/test_DQM_hists.pb
 
     printf "\n%s\n" "[test, GT=${testGT}] DQM histograms (including timing) dumped to: test_DQM_hists.root (copy to lxplus and open in TBrowser to examine timing plots)"
