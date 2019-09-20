@@ -13,7 +13,7 @@ fi
 run=$1
 if [[ $# -ge 1 && $run =~ [0-9]+$ ]]; then
     ./cleanRun.sh $run
-    cmsRun genTestFakeBuFromRAW_cfg.py
+    cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run
     ./startHiltonRun.sh $run $nCores
 else
     echo "Need at least one positive integer argument: the run number"
