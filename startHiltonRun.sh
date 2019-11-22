@@ -9,6 +9,7 @@ if [[ $# -ge 1 && $run =~ [0-9]+$ ]]; then
     ./addMissingEoLS.sh $run
     sudo chmod -R 777 /fff
     sudo /sbin/service hltd restart
+    sleep 5
     ./nCoresOnly.sh $nCores
     sleep 5
     curl "http://localhost:9000/cgi-bin/start_cgi.py?run=${run}"

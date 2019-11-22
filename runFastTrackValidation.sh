@@ -18,15 +18,15 @@ sleep 5
  
 ######### user params #########
 
-# # Cosmics
-# testMenu=/cdaq/special/2019/MWGR1/CruzetForMWGR1/HLT/V8
-# runNumber=328788
-# testGT=106X_dataRun3_HLT_HcalResp_SiPixelLAforWidth_v1
+# Cosmics
+testMenu=/cdaq/special/2019/MWGR1/CruzetForMWGR1/HLT/V8
+runNumber=328788
+testGT=106X_dataRun3_HLT_v3
 
-# VirginRaw
-testMenu=/cdaq/special/2019/MWGR1/VirginRaw/VR_Random_TS2/HLT/V4
-runNumber=328691
-testGT=106X_dataRun3_HLT_HcalResp_SiPixelLAforWidth_v1
+# # VirginRaw
+# testMenu=/cdaq/special/2019/MWGR1/VirginRaw/VR_Random_TS2/HLT/V4
+# runNumber=328691
+# testGT=106X_dataRun3_HLT_HcalResp_SiPixelLAforWidth_v1
 
 ###############################
 
