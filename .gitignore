@@ -1,3 +1,6 @@
 *~
 *.pyc
 *.pdf
+*.root
+ref_HLT_rates.txt
+test_HLT_rates.txt
