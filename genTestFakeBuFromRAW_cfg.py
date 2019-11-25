@@ -22,6 +22,14 @@ cmsswbase = os.path.expandvars('$CMSSW_BASE/')
 
 fileNamesByRun_dict = {
 
+  331595 : [ # MWGR4 / VirginRaw
+    '/store/data/Commissioning2019/VRRandom3/RAW/v1/000/331/595/00000/3F49019E-7FA1-9A41-A8DE-418E5AEB988E.root',
+  ],
+
+  331571 : [ # MWGR4 / Cosmics
+    '/store/data/Commissioning2019/HLTPhysics/RAW/v1/000/331/571/00000/D21C720B-541B-204C-A81B-EA8C057D45E2.root',
+  ],
+
   330061 : [
     'file:/nfshome0/hltpro/hilton_c2f13_20_04/run330061_ls0136_index000005_fu-c2a03-41-02_pid362895.raw',
   ],
