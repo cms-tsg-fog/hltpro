@@ -2,5 +2,6 @@
 *.pyc
 *.pdf
 *.root
+*.tar.gz
 ref_HLT_rates.txt
 test_HLT_rates.txt
