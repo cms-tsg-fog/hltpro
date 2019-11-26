@@ -21,12 +21,12 @@ sleep 5
 # Cosmics
 testMenu=/cdaq/special/2019/MWGR1/CruzetForMWGR1/HLT/V8
 runNumber=331483
-testGT=106X_dataRun3_HLT_HcalUpdate_v1
+testGT=106X_dataRun3_HLT_Candidate_2019_11_25_21_28_25
 
 # # VirginRaw
 # testMenu=/cdaq/special/2019/MWGR1/VirginRaw/VR_Random_TS2/HLT/V4
 # runNumber=331595
-# testGT=106X_dataRun3_HLT_HcalUpdate_v1
+# testGT=106X_dataRun3_HLT_Candidate_2019_11_25_21_28_25
 
 ###############################
 
