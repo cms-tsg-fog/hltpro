@@ -15,18 +15,18 @@ fi
 echo "Running automated fast track validation script. Will compare rates and timing of menus using reference and test global tags."
 echo " "
 sleep 5
- 
+
 ######### user params #########
 
 # Cosmics
 testMenu=/cdaq/special/2019/MWGR1/CruzetForMWGR1/HLT/V8
 runNumber=331483
-testGT=106X_dataRun3_HLT_Candidate_2019_11_25_21_28_25
+testGT=106X_dataRun3_HLT_v3
 
 # # VirginRaw
 # testMenu=/cdaq/special/2019/MWGR1/VirginRaw/VR_Random_TS2/HLT/V4
 # runNumber=331595
-# testGT=106X_dataRun3_HLT_Candidate_2019_11_25_21_28_25
+# testGT=106X_dataRun3_HLT_v3
 
 ###############################
 
