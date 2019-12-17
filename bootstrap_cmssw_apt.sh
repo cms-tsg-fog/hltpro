@@ -41,7 +41,7 @@ function bootstrap_cmssw() {
   if ! [ -f "$VO_CMS_SW_DIR"/"$SCRAM_ARCH"/external/apt/*/etc/profile.d/init.sh ]; then
     mkdir -p "$VO_CMS_SW_DIR"
     echo "Downloading bootstrap script"
-    wget -q -O "$VO_CMS_SW_DIR"/bootstrap.sh http://cmsrep.cern.ch/cmssw/cms/bootstrap.sh
+    wget -q -O "$VO_CMS_SW_DIR"/bootstrap.sh http://cmsrep.cern.ch/cmssw/repos/bootstrap.sh
     chmod +x "$VO_CMS_SW_DIR"/bootstrap.sh
 
     echo "Bootstrapping software area at $VO_CMS_SW_DIR"
