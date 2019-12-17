@@ -1,23 +1,4 @@
-#! /bin/bash
-
-# load installation environment from a bootstrapped area
-function load_bootstrap_environment() {
-  test -n "$1" || return 1
-
-  # set the environment
-  export VO_CMS_SW_DIR="$(readlink -f $1)"
-  test -n "$SCRAM_ARCH" || SCRAM_ARCH=slc7_amd64_gcc820
-  export SCRAM_ARCH
-
-  # check that the area has been bootstrapped
-  if ! [ -f "$VO_CMS_SW_DIR"/"$SCRAM_ARCH"/external/rpm/*/etc/profile.d/init.sh ]; then
-    echo "Can only load the environment from an already bootstrapped area"
-    return 1
-  fi
-
-  source "$VO_CMS_SW_DIR"/"$SCRAM_ARCH"/external/rpm/*/etc/profile.d/init.sh
-  $VO_CMS_SW_DIR/common/cmspkg -a $SCRAM_ARCH update
-}
+#!/bin/bash
 
 # boostrap a new CMSSW area
 function bootstrap_cmssw() {
@@ -29,6 +10,7 @@ function bootstrap_cmssw() {
   export NO_PROXY=".cms"
   export VO_CMS_SW_DIR="$(readlink -f $1)"
   export LANG="C"
+
   test -n "$SCRAM_ARCH" || SCRAM_ARCH=slc7_amd64_gcc820
   export SCRAM_ARCH
 
