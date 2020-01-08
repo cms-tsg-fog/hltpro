@@ -28,9 +28,11 @@ xmlhash=`conddb --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%
 
 #All this is to get around the fact that conddb dump tries to modify the release base
 #I have tried to make this robust, but I am not very confident. I have no doubt that this will break sometime in the future...
-srcpath=`echo $CMSSW_SEARCH_PATH | sed '0,/:.*$/s/:.*$//'`
+srcpath=${CMSSW_BASE}/src
+printf "%s\n" "[L1MenuCheck_FromGT.sh] srcpath=${srcpath}"
 scramv1 project CMSSW $CMSSW_VERSION 2> /dev/null
 cd $CMSSW_VERSION/src
+printf "%s\n" "[L1MenuCheck_FromGT.sh] pwd: ${PWD}"
 eval `scramv1 runtime -sh`
 mkdir -p ../python/CondCore
 mkdir -p CondCore
@@ -39,6 +41,7 @@ cp -r $srcpath/../python/CondCore/Utilities/ ../python/CondCore/
 cp -r $srcpath/../src/CondCore/Utilities/ CondCore/
 cp `type -p conddb` ../bin/$SCRAM_ARCH/
 cmsset=`echo $srcpath | sed 's/\/opt\/\(......\).*$/\1/'`
+printf "%s\n" "[L1MenuCheck_FromGT.sh] cmsset=${cmsset}"
 if [ "$cmsset" == "offlin" ]; then
     sed -i 's/\/afs\/cern.ch\/cms\/cmsset_default.sh/\/opt\/offline\/cmsset_default.sh/' CondCore/Utilities/python/cond2xml.py
 elif [ "$cmsset" == "hilton" ]; then

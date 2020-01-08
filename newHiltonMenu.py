@@ -8,7 +8,6 @@
 #       
 #       Update 21/09/16: ported newHiltonMenu.sh to python
 
-
 import argparse
 import subprocess
 import os
@@ -128,7 +127,6 @@ def main(args):
 
     with open("hlt.py","a") as f:
         f.write(menu_overrides)
-
 
     subprocess.Popen(["sudo","cp","hlt.py","/opt/hltd/python/HiltonMenu.py"]).communicate()
     os.remove("hlt.py")
