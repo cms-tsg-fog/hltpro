@@ -30,7 +30,7 @@ xmlhash=`conddb --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%
 #I have tried to make this robust, but I am not very confident. I have no doubt that this will break sometime in the future...
 cmsswbase=${CMSSW_BASE}
 printf "%s\n" "[L1MenuCheck_FromGT.sh] cmsswbase=${cmsswbase}"
-if [ ! -d $cmsswbase/python/CondCore/Utilities ] || [ ! -d $cmsswbase/src/CondCore/Utilities/ ]; then
+if [ ! -d $cmsswbase/python/CondCore/Utilities ] || [ ! -d $cmsswbase/src/CondCore/Utilities ]; then
 
   printf "\033[0;31m%s\033[0m %s %s\n" "[L1MenuCheck_FromGT.sh] ERROR" "-- CMSSW area does not include the package CondCore/Utilities" \
          "(if using a local CMSSW installation, add it via \"git cms-addpkg CondCore/Utilities\"), script stopped."
