@@ -28,19 +28,25 @@ xmlhash=`conddb --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%
 
 #All this is to get around the fact that conddb dump tries to modify the release base
 #I have tried to make this robust, but I am not very confident. I have no doubt that this will break sometime in the future...
-srcpath=${CMSSW_BASE}/src
-printf "%s\n" "[L1MenuCheck_FromGT.sh] srcpath=${srcpath}"
+cmsswbase=${CMSSW_BASE}
+printf "%s\n" "[L1MenuCheck_FromGT.sh] cmsswbase=${cmsswbase}"
+if [ ! -d $cmsswbase/python/CondCore/Utilities ] || [ ! -d $cmsswbase/src/CondCore/Utilities/ ]; then
+
+  printf "\033[0;31m%s\033[0m %s %s\n" "[L1MenuCheck_FromGT.sh] ERROR" "-- CMSSW area does not include the package CondCore/Utilities" \
+         "(if using a local CMSSW installation, add it via \"git cms-addpkg CondCore/Utilities\"), script stopped."
+  exit 1
+fi
 scramv1 project CMSSW $CMSSW_VERSION 2> /dev/null
 cd $CMSSW_VERSION/src
-printf "%s\n" "[L1MenuCheck_FromGT.sh] pwd: ${PWD}"
+printf "%s\n" "[L1MenuCheck_FromGT.sh] temp CMSSW area: ${PWD}"
 eval `scramv1 runtime -sh`
 mkdir -p ../python/CondCore
 mkdir -p CondCore
 mkdir -p ../bin/$SCRAM_ARCH
-cp -r $srcpath/../python/CondCore/Utilities/ ../python/CondCore/
-cp -r $srcpath/../src/CondCore/Utilities/ CondCore/
+cp -r $cmsswbase/python/CondCore/Utilities/ ../python/CondCore/
+cp -r $cmsswbase/src/CondCore/Utilities/ CondCore/
 cp `type -p conddb` ../bin/$SCRAM_ARCH/
-cmsset=`echo $srcpath | sed 's/\/opt\/\(......\).*$/\1/'`
+cmsset=`echo $cmsswbase | sed 's/\/opt\/\(......\).*$/\1/'`
 printf "%s\n" "[L1MenuCheck_FromGT.sh] cmsset=${cmsset}"
 if [ "$cmsset" == "offlin" ]; then
     sed -i 's/\/afs\/cern.ch\/cms\/cmsset_default.sh/\/opt\/offline\/cmsset_default.sh/' CondCore/Utilities/python/cond2xml.py
