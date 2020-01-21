@@ -28,7 +28,7 @@ function bootstrap_cmssw() {
     fi
   fi
 
-  # optionally, install a CMSSW release
+  # optionally, remove a CMSSW release
   test -n "$2" || return 0
 
   echo "Updating package database"

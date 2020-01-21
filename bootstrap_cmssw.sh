@@ -26,7 +26,7 @@ function bootstrap_cmssw() {
       echo "Bootstrap failed"
       return 1
     fi
-#    sh -ex $VO_CMS_SW_DIR/bootstrap.sh reseed -path $VO_CMS_SW_DIR -arch $SCRAM_ARCH #>& $VO_CMS_SW_DIR/bootstrap_$SCRAM_ARCH.log
+#    sh -ex $VO_CMS_SW_DIR/bootstrap.sh reseed -path $VO_CMS_SW_DIR -arch $SCRAM_ARCH >& $VO_CMS_SW_DIR/bootstrap_$SCRAM_ARCH.log
   fi
 
   # optionally, install a CMSSW release
