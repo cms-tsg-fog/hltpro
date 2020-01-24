@@ -24,7 +24,7 @@ runNumber=331483
 testGT=106X_dataRun3_HLT_v4
 
 # # VirginRaw
-# testMenu=/cdaq/special/2019/MWGR1/VirginRaw/VR_Random_TS2/HLT/V5
+# testMenu=/cdaq/special/2019/MWGR1/VirginRaw/VR_Random_TS2/HLT/V6
 # runNumber=331595
 # testGT=106X_dataRun3_HLT_v4
 
