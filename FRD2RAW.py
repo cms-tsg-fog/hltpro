@@ -1,12 +1,12 @@
 import FWCore.ParameterSet.Config as cms
 
-# example: cmsRun FRD2RAW.py inputFiles=file:fedraw1.raw,file:fedraw2.raw [outputFile=output.root] [run=0] [firstLS=1] [maxEvents=-1]
+# example: cmsRun FRD2RAW.py inputFiles=file:fedraw1.raw,file:fedraw2.raw [outputFile=output.root] [firstRun=0] [firstLS=1] [maxEvents=-1]
 
 process = cms.Process('LHC')
 
 import FWCore.ParameterSet.VarParsing as VarParsing
 options = VarParsing.VarParsing ('analysis') 
-options.register('run', 0, options.multiplicity.singleton, options.varType.int, 'run number (passed to process.source.firstRun)')
+options.register('firstRun', 0, options.multiplicity.singleton, options.varType.int, 'value passed to process.source.firstRun')
 options.register('firstLS', 1, options.multiplicity.singleton, options.varType.int, 'first luminosity block for selected run')
 options.parseArguments()
 
@@ -19,8 +19,8 @@ process.maxEvents = cms.untracked.PSet(
 
 process.source = cms.Source('ErrorStreamSource',
   fileNames = cms.untracked.vstring(options.inputFiles),
-  firstRun = cms.untracked.uint32(options.run),
-  firstLuminosityBlockForEachRun = cms.untracked.VLuminosityBlockID(*[cms.LuminosityBlockID(options.firstLS, options.run)]),
+  firstRun = cms.untracked.uint32(options.firstRun),
+  firstLuminosityBlockForEachRun = cms.untracked.VLuminosityBlockID(*[cms.LuminosityBlockID(options.firstLS, options.firstRun)]),
 )
 
 from EventFilter.RawDataCollector.rawDataCollectorByLabel_cfi import rawDataCollector
