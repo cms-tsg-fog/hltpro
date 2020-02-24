@@ -233,21 +233,35 @@ process.source = cms.Source("PoolSource",
   skipEvents = cms.untracked.uint32(0),
 )
 
-process.EvFDaqDirector = cms.Service("EvFDaqDirector",
-                                     runNumber= cms.untracked.uint32(options.runNumber),
-                                     baseDir = cms.untracked.string(options.dataDir),
-                                     buBaseDir = cms.untracked.string("/fff/BU0/data"),
-                                     directorIsBu = cms.untracked.bool(True),
-                                     #obsolete:
-                                     hltBaseDir = cms.untracked.string("/fff/BU0/ramdisk"),
-                                     smBaseDir  = cms.untracked.string("/fff/BU0/ramdisk"),
-                                     slaveResources = cms.untracked.vstring('dvfu-c2f37-38-01'),
-                                     slavePathToData = cms.untracked.string("/fff/BU/ramdisk")
+def isPreCMSSW11():
+   try:
+      import os
+      return int(os.environ['CMSSW_VERSION'].split("_")[1])<11
+   except:
+      print "error trying to get CMSSW version, assuming version >=11"
+      return False
+
+if isPreCMSSW11():
+   print "setting up DAQ director for CMSSW versions <11"
+   process.EvFDaqDirector = cms.Service("EvFDaqDirector",
+                                        runNumber= cms.untracked.uint32(options.runNumber),
+                                        baseDir = cms.untracked.string(options.dataDir),
+                                        buBaseDir = cms.untracked.string("/fff/BU0/data"),
+                                        directorIsBu = cms.untracked.bool(True),
+                                        #obsolete:
+                                        hltBaseDir = cms.untracked.string("/fff/BU0/ramdisk"),
+                                        smBaseDir  = cms.untracked.string("/fff/BU0/ramdisk"),
+                                        slaveResources = cms.untracked.vstring('dvfu-c2f37-38-01'),
+                                        slavePathToData = cms.untracked.string("/fff/BU/ramdisk")
                                      )
-#process.EvFBuildingThrottle = cms.Service("EvFBuildingThrottle",
-#                                          highWaterMark = cms.untracked.double(0.90),
-#                                          lowWaterMark = cms.untracked.double(0.45)
-#                                          )
+else:
+   print "setting up DAQ director for CMSSW versions >=11"
+   process.EvFDaqDirector = cms.Service("EvFDaqDirector",
+                                        runNumber= cms.untracked.uint32(options.runNumber),
+                                        baseDir = cms.untracked.string(options.dataDir),
+                                        buBaseDir = cms.untracked.string("/fff/BU0/data"),
+                                        directorIsBU = cms.untracked.bool(True),
+                                     )
 
 process.a = cms.EDAnalyzer("ExceptionGenerator",
                            defaultAction = cms.untracked.int32(0),
