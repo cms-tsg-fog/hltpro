@@ -19,14 +19,14 @@ sleep 5
 ######### user params #########
 
 # Cosmics
-testMenu=/cdaq/special/2019/MWGR1/CruzetForMWGR1/HLT/V9
+testMenu=/cdaq/special/2020/MWGR1/CruzetForMWGR1/HLT/V10
 runNumber=334393
-testGT=110X_dataRun3_HLT_HcalForMWGR1_v1
+testGT=110X_dataRun3_HLT_v1
 
 # # VirginRaw
-# testMenu=/cdaq/special/2019/MWGR1/VirginRaw/VR_Random_TS2/HLT/V6
-# runNumber=331595
-# testGT=106X_dataRun3_HLT_v4
+# testMenu=/cdaq/special/2020/MWGR1/VirginRaw/VR_Random_TS2/HLT/V9
+# runNumber=334518
+# testGT=110X_dataRun3_HLT_v1
 
 ###############################
 

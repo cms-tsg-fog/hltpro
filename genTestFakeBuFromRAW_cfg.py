@@ -22,6 +22,10 @@ cmsswbase = os.path.expandvars('$CMSSW_BASE/')
 
 fileNamesByRun_dict = {
 
+  334518 : [ # 2020 MWGR0 / VirginRaw
+    '/store/data/Commissioning2019/VRRandom3/RAW/v1/000/334/518/00000/18B41CEB-DCF7-BD46-B6BC-0E7E56E7B047.root',
+  ],
+
   334393 : [ # 2020 MWGR0 / Cosmics
     '/store/data/Commissioning2019/HLTPhysics/RAW/v1/000/334/393/00000/E0D10C28-5C45-8147-A967-8FCE150D9514.root',
   ],
