@@ -9,7 +9,7 @@
 # Just remember to change it two or three times per year
 
 export http_proxy="http://cmsproxy.cms:3128/"
-export https_proxy="https://cmsproxy.cms:3128/"
+export https_proxy="http://cmsproxy.cms:3128/"
 export NO_PROXY=".cms,localhost"
 #export SCRAM_ARCH=slc7_amd64_gcc630
 #export SCRAM_ARCH=slc7_amd64_gcc700
