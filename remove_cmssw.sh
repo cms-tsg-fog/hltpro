@@ -14,7 +14,7 @@ function remove_cmssw() {
 
   # set the environment
   export http_proxy="http://cmsproxy.cms:3128/"
-  export https_proxy="https://cmsproxy.cms:3128/"
+  export https_proxy="http://cmsproxy.cms:3128/"
   export NO_PROXY=".cms"
   export VO_CMS_SW_DIR="$(readlink -e $1)"
   export LANG="C"
