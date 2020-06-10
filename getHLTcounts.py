@@ -1,107 +1,78 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python
+"""
+description:
+ script to print number of events accepted by selected HLT paths in a given set of luminosity blocks
+"""
+import argparse
 import sys
 import cx_Oracle
-import string
-import os 
-
-def help() :
-    print " usage: " + sys.argv[0] + " Pathname json"
-    sys.exit(1)
-#print len(sys.argv)
-if len(sys.argv)<3 or len(sys.argv)>=5 :
-    help()
-elif len(sys.argv)==4:
-    DEBUG=True
-else:
-    DEBUG=False
-
-#print DEBUG
-
-pathname="'"+sys.argv[1]+"'"
-jsonFILE=sys.argv[2]
-debug=0
-
-
-#DB
-#connstr='cms_runinfo_r/mickey2mouse@cms_orcon_adg'
-#connstr='cms_runinfo_r/mickey2mouse@cms_omds_adg'
-connstr='cms_hlt_gdr_r/convertMe!@cms_omds_adg'
-conn = cx_Oracle.connect(connstr)
-curs = conn.cursor()
-curs.arraysize=50
-
-#json_DCS = "/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/DCSOnly/json_DCSONLY.txt" #2016
-json_DCS = "/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/DCSOnly/json_DCSONLY.txt" # 2017
-
-if DEBUG:
-    print jsonFILE
-    import json
-    data = json.load(open(jsonFILE))
-    from pprint import pprint
-#pprint(data)
-#print data["294936"]
-    for j in data:
-        print j, data[j]
-    
-
-#### FOR TESTING QUERIES
-#    count = {}
-#    paths = []
-#    runnumber = 295606
-#    pathname = 'HLT_ZeroBias_v'
-#    for lsnumber in range(10,20):
-#        print lsnumber,runnumber,pathname,
-#        query="select a.paccept,c.name as path,a.runnumber,a.lsnumber from cms_runinfo.HLT_SUPERVISOR_TRIGGERPATHS a,cms_hlt_gdr.u_pathids b, cms_hlt_gdr.u_paths c where a.runnumber="+str(runnumber)+" and a.lsnumber="+str(lsnumber)+" and b.pathid=a.pathid and c.id=b.id_path and instr(c.name,'" + pathname+ "')>0"
-#    #    print query
-#        curs.execute(query)
-#        
-#        ii=0
-#        curs_copy=curs
-#        
-#        for rows in curs_copy:
-#            #        print rows
-#            path  = rows[1]
-#            paths.append(path)
-#            run   = rows[2]
-#            ls    = rows[3]
-#            if path in count.keys():
-#                count[path]+= rows[0]
-#                print '-->',count[path]
-#            else:
-#                count[path] = 0
-#                ii=ii+1
-#        print ""
-#    print count
-#    exit()
-
-count = {}
-paths = []
+import os
 import json
-json_raw = json.load(open(jsonFILE))
-#print json_raw
-for runnumber in json_raw:
-    for rangeLS in json_raw[runnumber]:
-#        print rangeLS[0],rangeLS[1]
-        for lsnumber in range(rangeLS[0],rangeLS[1]+1):
-#            print lsnumber,runnumber,pathname
-            query='select  a.paccept,c.name as path,a.runnumber,a.lsnumber from cms_runinfo.HLT_SUPERVISOR_TRIGGERPATHS a, cms_hlt_gdr.u_pathids b, cms_hlt_gdr.u_paths c where runnumber='+runnumber+' and lsnumber= '+str(lsnumber)+'and b.pathid=a.pathid and c.id=b.id_path and instr(c.name,'+pathname+')>0'
-            curs.execute(query)
 
-            ii=0
-            curs_copy=curs
+if __name__ == '__main__':
+   parser = argparse.ArgumentParser(
+     prog='./'+os.path.basename(__file__),
+     formatter_class=argparse.RawDescriptionHelpFormatter,
+     description=__doc__)
 
-            for rows in curs_copy:
-#                print rows
-                path  = rows[1]
-                paths.append(path)
-                run   = rows[2]
-                ls    = rows[3]
-                if path in count.keys():
-                    count[path]+= rows[0]
-                else:
-                    count[path] = 0
-                ii=ii+1
+   parser.add_argument('-t', '--trigger', dest='trigger', required=True, action='store', default=None,
+                       help='pattern to match name of trigger path(s) [example: "HLT_ZeroBias_v"]')
 
-for key, value in count.items():
-    print key, value
+   parser.add_argument('-l', '--lumi-json', dest='lumi_json', required=True, action='store', default=None,
+                       help='path to .json file with luminosity blocks')
+
+   parser.add_argument('-c', '--connect-str', dest='connect_str', action='store',
+#                      default='cms_runinfo_r/mickey2mouse@cms_orcon_adg',
+#                      default='cms_runinfo_r/mickey2mouse@cms_omds_adg',
+                       default='cms_hlt_gdr_r/convertMe!@cms_omds_adg',
+                       help='connection string to the Oracle Database')
+
+   parser.add_argument('-v', '--verbosity', dest='verbosity', action='store', type=int, default=0,
+                       help='verbosity of stdout')
+
+   args, args_unknown = parser.parse_known_args()
+
+   triggerNameMatch = '\''+args.trigger.replace('\'','').replace('"','')+'\''
+   lumiJson = args.lumi_json
+
+   if not os.path.isfile(lumiJson):
+      raise RuntimeError('invalid path to .json file with luminosity blocks [-l]: '+lumiJson)
+
+   if args.verbosity >= 0:
+      print '-'*50
+      print '\033[1m{:<10}\033[0m : {:}'.format('trigger(s)', triggerNameMatch)
+      print '\033[1m{:<10}\033[0m : {:}'.format('run/lumis', lumiJson)
+      print '-'*50
+
+   # DB
+   conn = cx_Oracle.connect(args.connect_str)
+   curs = conn.cursor()
+   curs.arraysize = 50
+
+   counts = {}
+   lumiJsonDict = json.load(open(lumiJson))
+
+   for runnumber in sorted(lumiJsonDict.keys()):
+      lumiBlocks = lumiJsonDict[runnumber]
+      if args.verbosity > 10:
+         print '  > run={:<7} lumiBlocks={:}'.format(runnumber, lumiBlocks)
+      for rangeLS in lumiBlocks:
+          for lsnumber in range(rangeLS[0], rangeLS[1]+1):
+              query = 'select  a.paccept,c.name as path,a.runnumber,a.lsnumber'
+              query += ' from cms_runinfo.HLT_SUPERVISOR_TRIGGERPATHS a, cms_hlt_gdr.u_pathids b, cms_hlt_gdr.u_paths c'
+              query += ' where runnumber='+runnumber+' and lsnumber='+str(lsnumber)+' and b.pathid=a.pathid and c.id=b.id_path and instr(c.name,'+triggerNameMatch+')>0'
+              curs.execute(query)
+              for rows in curs:
+                  path = rows[1]
+                  if args.verbosity > 20:
+                     print '    > path={:<70} run={:<7} lumiBlock={:<7} counts={:<7}'.format(path, rows[2], rows[3], rows[0])
+                  if path in counts:
+                     counts[path] += rows[0]
+                  else:
+                     counts[path] = 0
+
+   if args.verbosity > 10:
+      print '-'*50
+
+   for triggerPath in sorted(counts.keys()):
+       print '{:>12} \033[1m{:<100}\033[0m'.format(counts[triggerPath], triggerPath)
