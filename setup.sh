@@ -7,9 +7,12 @@ defCmssetDefault=/opt/offline/cmsset_default.sh
 
 usage(){
   cat <<@EOF
-Usage: this script sets up the SCRAM_ARCH and sources cmsset_default.sh.
-       If the name of a CMSSW release is specified (option: -r),
-       cmsenv is done in this release.
+Usage:
+  This script sets up the SCRAM_ARCH and sources cmsset_default.sh.
+  If the name of a CMSSW release is specified (option: -r),
+  cmsenv is done in this release.
+
+> source setup.sh [-h] [-a scram_arch] [-c cmsset_default.sh] [-r CMSSW_X_Y_Z]
 
 Options:
   -h, --help      Show this help message
