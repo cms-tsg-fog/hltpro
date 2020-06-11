@@ -14,7 +14,7 @@ import filecmp
 import zlib
 
 #Input parameters -- must change these before using!
-runNumber = '296864'
+runNumber = '324970'
 runDir = '/fff/BU0/output/run'+runNumber      
 outDir = '/tmp/sharper/MacroMergeOutput/run'+runNumber
 

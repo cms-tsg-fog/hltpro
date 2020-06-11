@@ -1,9 +1,5 @@
 import FWCore.ParameterSet.Config as cms
-import FWCore.ParameterSet.VarParsing as VarParsing
 import os
-
-options = VarParsing.VarParsing('analysis')
-cmsswbase = os.path.expandvars('$CMSSW_BASE/')
 
 # fileNamesByRun_dict -> Dictionary Of Input Files, key-ed by Run Number
 #
@@ -83,6 +79,23 @@ fileNamesByRun_dict = {
 
   324420 : [
 #    '/store/data/Run2018D/HLTPhysics/RAW/v1/000/324/420/00000/487403ED-6DB3-8241-85A0-3D6EAE21B98E.root',
+  ],
+
+  # EGamma starting at lumisection 1
+  324970 : [
+#    '/store/data/Run2018D/EGamma/RAW/v1/000/324/970/00000/8B3773DB-14EA-9844-BE94-D91404291BB9.root',
+#    'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D_324970_LS1_8B3773DB-14EA-9844-BE94-D91404291BB9.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS1_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS2_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS3_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS4_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS5_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS6_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS7_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS8_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS9_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS10_numEvent100.root',
+     'file:/cmsnfshltdata/hltdata/TSG/FUVAL_INPUT_FILES/EGamma_Run2018D-v1_RAW_Run324970_LS11_numEvent500.root',
   ],
 
   323778 : [
@@ -175,6 +188,9 @@ fileNamesByRun_dict = {
 
 # -----------------------------------------------------------------------------------------------------------------
 
+import FWCore.ParameterSet.VarParsing as VarParsing
+options = VarParsing.VarParsing('analysis')
+
 options.register ('runNumber', 1,
                   VarParsing.VarParsing.multiplicity.singleton,
                   VarParsing.VarParsing.varType.int,          # string, int, or float
@@ -209,15 +225,13 @@ elif len(fileNamesByRun_dict[options.runNumber]) == 0:
 process = cms.Process("FAKEBU")
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(400)
-    #input = cms.untracked.int32(1000)
-    #input = cms.untracked.int32(10000)
+  input = cms.untracked.int32(options.maxEvents)
 )
 
 #process.options = cms.untracked.PSet(
-#    multiProcesses = cms.untracked.PSet(
+#  multiProcesses = cms.untracked.PSet(
 #    maxChildProcesses = cms.untracked.int32(0)
-#    )
+#  )
 #)
 
 process.MessageLogger = cms.Service("MessageLogger",
@@ -271,6 +285,8 @@ process.a = cms.EDAnalyzer("ExceptionGenerator",
                            defaultAction = cms.untracked.int32(0),
                            defaultQualifier = cms.untracked.int32(10)
                            )
+
+cmsswbase = os.path.expandvars('$CMSSW_BASE/')
 
 process.out = cms.OutputModule("RawStreamFileWriterForBU",
   ProductLabel = cms.untracked.string("rawDataCollector"),
