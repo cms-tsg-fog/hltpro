@@ -7,8 +7,7 @@ import datetime
 import json
 
 # length of a lumisections, corresponding to 2**18 LHC orbits, or 23.31 seconds
-SECS_PER_LUMI = 23.31040958083832;
-
+SECS_PER_LUMI = 23.31040958083832
 
 # Supply this method with a FULL PATH to a .jsndata file to read it and put the HLT or L1 rates inside into the database.
 # The jsndata needs the .ini descriptor files to be there or this will fail
@@ -32,14 +31,19 @@ def monitorRates(jsndata_files,outputRates):
         jsndata_filename=os.path.basename(jsndata_file)
         file_raw, file_ext = os.path.splitext(jsndata_filename)
         raw_pieces=file_raw.split( '_' , 3 ) # this is not an emoji!
+
+        if len(raw_pieces) < 4:
+           print 'Invalid input file:', file_raw
+           return False
+
         run_number=raw_pieces[0][3:] # 123456
         ls=raw_pieces[1] # ls1234
         stream=raw_pieces[2][6:] # HLTRates | L1Rates
         extra=raw_pieces[3]
 
         if stream != "HLTRates" and stream != "L1Rates":
-            print 'Unrecognized rate stream: '+raw_pieces[2]
-            return False
+           print 'Unrecognized rate stream:', raw_pieces[2]
+           return False
     
         # Open the jsndata file
         # If it doesn't exist, this function will crash
@@ -84,7 +88,6 @@ def monitorRates(jsndata_files,outputRates):
                     HLT_rates[pathname]['PREJECT']  = rates['data'][5][i]
                     HLT_rates[pathname]['PEXCEPT']  = rates['data'][6][i]
 
-
     sys.stdout.write("\x1b[0;0;32m")
     if outputRates==True:  print "%-60s       %12s    %12s    %12s" % ("HLT Path Name", "L1 seed rate", "Prescale rate", "HLT path rate")
     else: print "%-60s       %12s    %12s    %12s" % ("HLT Path Name", "L1 seed counts", "Prescale counts", "HLT path counts")
@@ -100,12 +103,6 @@ def monitorRates(jsndata_files,outputRates):
         print  outputStr % (pathname, rate['L1PASS'] * rateConversion, rate['PSPASS'] * rateConversion, rate['PACCEPT'] * rateConversion)
     print
 
-
-#for arg in sys.argv[1:]:
-  #  sys.stdout.write("\x1b[0;0;31m")
-#    print arg
- #   sys.stdout.write("\x1b[0;0m")
-
 import argparse
 
 parser = argparse.ArgumentParser(description='outputs the counts/rates of paths given the input rate files')
@@ -114,5 +111,4 @@ parser.add_argument('--outputRates',help="outputs rates rather than counts",dest
 parser.set_defaults(outputRates=False)
 args = parser.parse_args()
 
-#print args.inputFiles
 monitorRates(args.inputFiles,args.outputRates)
