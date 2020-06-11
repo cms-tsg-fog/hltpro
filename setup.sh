@@ -63,16 +63,20 @@ if [ ! -z "${cmsswRelease}" ]; then
     printf "\033[1m%s\033[0m%s\n" "CMSSW Release" "            : ${cmsswRelease}"
     BASE=`scram list -c CMSSW | grep "\<$cmsswRelease\>" | awk '{ print $3; }'`
     if ! [ "${BASE}" ]; then
-        echo "CMSSW release ${cmsswRelease} is not installed for the architecture ${SCRAM_ARCH}."
+        printf "\n%s\n" "CMSSW release ${cmsswRelease} is not installed for the architecture ${SCRAM_ARCH}."
         scram list CMSSW
     elif ! [ -d "${BASE}" ]; then
-        echo "The directory ${BASE} does not exist; the release installation is probably broken."
+        printf "\n%s\n" "The directory ${BASE} does not exist; the release installation is probably broken."
     else
-        echo "Setting up the CMSSW environment from ${BASE}"
+        printf "\n%s\n" "Setting up the CMSSW environment from ${BASE}"
         cd ${BASE}
         eval `scram runtime -sh`
         cd ${OLDPWD}
+        printf "\033[34m\033[1m%s\033[0m=%s\n" "CMSSW_BASE" "${CMSSW_BASE}"
     fi
     unset cmsswRelease BASE
+else
+  printf "\n%s\n" "Did not set up CMSSW environment (to do this, specify the name of a release via option -r)"
+  printf "\033[34m\033[1m%s\033[0m=%s\n" "CMSSW_BASE" "${CMSSW_BASE}"
 fi
 unset showHelpMsg defScramArch defCmssetDefault usage scramArch cmssetDefault
