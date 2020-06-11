@@ -25,10 +25,10 @@ cmssetDefault=${defCmssetDefault}
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    -h|--help) showHelpMsg=true; shift ;;
-    -a|--arch) scramArch=$2; shift; shift ;;
-    -c|--cmsset) cmssetDefault=$2; shift; shift ;;
-    -r|--release) cmsswRelease=$2; shift; shift ;;
+    -h|--help) showHelpMsg=true; shift;;
+    -a|--arch) scramArch=$2; shift; shift;;
+    -c|--cmsset) cmssetDefault=$2; shift; shift;;
+    -r|--release) cmsswRelease=$2; shift; shift;;
     *) shift;;
   esac
 done
