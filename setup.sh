@@ -75,4 +75,4 @@ if [ ! -z "${cmsswRelease}" ]; then
     fi
     unset cmsswRelease BASE
 fi
-unset showHelpMsg defScramArch defCmssetDefault scramArch cmssetDefault
+unset showHelpMsg defScramArch defCmssetDefault usage scramArch cmssetDefault
