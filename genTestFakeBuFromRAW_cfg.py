@@ -225,7 +225,9 @@ elif len(fileNamesByRun_dict[options.runNumber]) == 0:
 process = cms.Process("FAKEBU")
 
 process.maxEvents = cms.untracked.PSet(
-  input = cms.untracked.int32(options.maxEvents)
+    input = cms.untracked.int32(400)
+    #input = cms.untracked.int32(1000)
+    #input = cms.untracked.int32(10000)
 )
 
 #process.options = cms.untracked.PSet(
