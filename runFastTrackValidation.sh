@@ -7,26 +7,24 @@
 # a change in ECal conditions, you might run over an EGamma sample.
 
 if [ -z "${CMSSW_BASE}" ]; then
-
   printf "\n%s\n\n" "[runFastTrackValidation] environment variable CMSSW_BASE is not set --> you need to first set up CMSSW (for example with \"source setup.sh CMSSW_X_Y_Z\")"
   exit 1
 fi
 
-echo "Running automated fast track validation script. Will compare rates and timing of menus using reference and test global tags."
-echo " "
+printf "%s\n\n" "Running automated fast-track validation script. Will compare rates and timing of menus using reference and test global tags."
 sleep 5
 
 ######### user params #########
 
 # Cosmics
-testMenu=/cdaq/special/2020/MWGR1/CruzetForMWGR1/HLT/V10
+testMenu=/cdaq/test/gennai/2020/MWGR_September/HLT_GPU/V8
 runNumber=334393
-testGT=110X_dataRun3_HLT_v1
+testGT=111X_dataRun3_HLT_Candidate_2020_08_21_13_26_45
 
 # # VirginRaw
-# testMenu=/cdaq/special/2020/MWGR1/VirginRaw/VR_Random_TS2/HLT/V9
+# testMenu=/cdaq/special/2020/MWGR1/VirginRaw/VR_Random_TS2/HLT/V14
 # runNumber=334518
-# testGT=110X_dataRun3_HLT_v1
+# testGT=111X_dataRun3_HLT_v1
 
 ###############################
 
