@@ -18,7 +18,7 @@ import os
 
 fileNamesByRun_dict = {
 
-  337242 : [# 2020 MWGR3 / Cosmics
+  337242 : [ # 2020 MWGR3 / Cosmics
     '/store/data/Commissioning2020/Cosmics/RAW/v1/000/337/242/00000/F73C6160-3892-8A42-9EB2-B21F7728025E.root',
   ],
 

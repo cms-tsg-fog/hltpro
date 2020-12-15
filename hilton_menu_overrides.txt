@@ -1,9 +1,7 @@
 import FWCore.ParameterSet.VarParsing as VarParsing
 import os
 
-cmsswbase = os.path.expandvars('$CMSSW_BASE/')
-
-options = VarParsing.VarParsing ('analysis')
+options = VarParsing.VarParsing('analysis')
 
 options.register ('runNumber',
                   1, # default value
@@ -35,7 +33,7 @@ options.register ('numFwkStreams',
                   VarParsing.VarParsing.varType.int,          # string, int, or float
                   "Number of CMSSW streams")
 
-options.register ('fileBrokerHost'
+options.register ('fileBrokerHost',
                   '', # default value
                   VarParsing.VarParsing.multiplicity.singleton,
                   VarParsing.VarParsing.varType.string,       # string, int, or float
