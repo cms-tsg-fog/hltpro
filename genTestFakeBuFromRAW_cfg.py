@@ -18,6 +18,10 @@ import os
 
 fileNamesByRun_dict = {
 
+  338717 : [ # 2020 MWGR4 / Cosmics
+    '/store/data/Commissioning2020/Cosmics/RAW/v1/000/338/717/00000/9B97E41C-639B-4A46-8BE8-E45B605442DF.root',
+  ],
+
   337242 : [ # 2020 MWGR3 / Cosmics
     '/store/data/Commissioning2020/Cosmics/RAW/v1/000/337/242/00000/F73C6160-3892-8A42-9EB2-B21F7728025E.root',
   ],
