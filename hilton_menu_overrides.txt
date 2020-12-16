@@ -89,6 +89,9 @@ if options.fileBrokerHost:
     except:
         print "Unable to set process.EvFDaqDirector.fileBrokerHost =", options.fileBrokerHost
 
+if not process.EvFDaqDirector.fileBrokerHost:
+  raise Exception('No EvFDaqDirector.fileBrokerHost')
+
 try:
     from HLTrigger.Configuration.customizeHLTforPatatrack import customizeHLTforPatatrack
     process = customizeHLTforPatatrack(process)
