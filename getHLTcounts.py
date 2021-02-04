@@ -4,9 +4,8 @@ description:
  script to print number of events accepted by selected HLT paths in a given set of luminosity blocks
 """
 import argparse
-import sys
-import cx_Oracle
 import os
+import cx_Oracle
 import json
 
 if __name__ == '__main__':

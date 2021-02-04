@@ -1,41 +1,98 @@
 #!/bin/bash
 
-#Usage: Without arguments, this script sets up the SCRAM_ARCH and
-#       sources cmsset_default.sh.
-#       The first argument is assumed to be the CMSSW release and
-#       cmsenv is done in this release.
+# defaults
+showHelpMsg=false
+defScramArch=slc7_amd64_gcc820
+defCmssetDefault=/opt/offline/cmsset_default.sh
 
-# SCRAM_ARCH changes rarely so it's OK to hard-code the value
-# Just remember to change it two or three times per year
+# help message
+usage() {
+  cat <<@EOF
+Usage:
+  This script sets up the SCRAM_ARCH and sources cmsset_default.sh.
+  If the name of a CMSSW release is specified (option: -r),
+  cmsenv is done in this release.
+
+> source setup.sh [-h] [-a scram_arch] [-c cmsset_default.sh] [-r CMSSW_X_Y_Z]
+
+Options:
+  -h, --help      Show this help message
+  -a, --arch      Value of SCRAM_ARCH                [Default: ${defScramArch}]
+  -c, --cmsset    Path to cmsset_default.sh script   [Default: ${defCmssetDefault}]
+  -r, --release   Name of CMSSW release              [Optional]
+@EOF
+}
+
+# command-line interface
+scramArch=${defScramArch}
+cmssetDefault=${defCmssetDefault}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help) showHelpMsg=true; shift;;
+    -a|--arch) scramArch=$2; shift; shift;;
+    -c|--cmsset) cmssetDefault=$2; shift; shift;;
+    -r|--release) cmsswRelease=$2; shift; shift;;
+    *) shift;;
+  esac
+done
+
+# clear transient variables/functions
+clear_vars(){
+  unset showHelpMsg defScramArch defCmssetDefault usage scramArch cmssetDefault cmsswRelease clear_vars
+}
+
+# print help message
+if [ ${showHelpMsg} == true ]; then
+  usage
+  clear_vars
+  return 0
+fi
+
+# set up environment
+printf "\033[1m%s\033[0m%s\n" "SCRAM Architecture" "       : ${scramArch}"
+printf "\033[1m%s\033[0m%s\n" "cmsset_default.sh script" " : ${cmssetDefault}"
+
+if [ ! -f "${cmssetDefault}" ]; then
+  printf "\n\033[31m\033[1m%s\033[0m%s\n\n" ">> ERROR" ": invalid path to cmsset_default.sh script [-c]: ${cmssetDefault}"
+  usage
+  clear_vars
+  return 1
+fi
 
 export http_proxy="http://cmsproxy.cms:3128/"
 export https_proxy="http://cmsproxy.cms:3128/"
 export NO_PROXY=".cms,localhost"
-#export SCRAM_ARCH=slc7_amd64_gcc630
-#export SCRAM_ARCH=slc7_amd64_gcc700
-export SCRAM_ARCH=slc7_amd64_gcc820
-#source /opt/hilton/cmssw/cmsset_default.sh
-source /opt/offline/cmsset_default.sh
+
+export SCRAM_ARCH=${scramArch}
+source ${cmssetDefault}
 
 export TZ='-01:00'
 
 # do cmsenv in the release installation directory
-if [ "$#" -eq 1 ]; then
-    VERSION=$1
-    BASE=`scram list -c CMSSW | grep "\<$VERSION\>" | awk '{ print $3; }'`
-
-    if ! [ "$BASE" ]; then
-        echo "CMSSW release $VERSION is not installed for the architecture $SCRAM_ARCH"
+if [ ! -z "${cmsswRelease}" ]; then
+    printf "\033[1m%s\033[0m%s\n" "CMSSW Release" "            : ${cmsswRelease}"
+    cmsswBase=`scram list -c CMSSW | grep "\<$cmsswRelease\>" | awk '{ print $3; }'`
+    if ! [ "${cmsswBase}" ]; then
+        printf "\n%s\n" "CMSSW release ${cmsswRelease} is not installed for the architecture ${SCRAM_ARCH}."
         scram list CMSSW
-    elif ! [ -d "$BASE" ]; then
-        echo "The directory $BASE does not exist; the release installation is probably broken."
+        clear_vars
+        return 1
+    elif ! [ -d "${cmsswBase}" ]; then
+        printf "\n%s\n" "The directory ${cmsswBase} does not exist; the release installation is probably broken."
+        clear_vars
+        return 1
     else
-        pwd=$PWD
-        echo "Setting up the CMSSW environment from $BASE" 
-        cd $BASE
+        printf "\n%s\n" "Setting up the CMSSW environment from ${cmsswBase}"
+        cd ${cmsswBase}
         eval `scram runtime -sh`
-        cd $pwd
+        cd ${OLDPWD}
+        printf "\033[34m\033[1m%s\033[0m=%s\n" "CMSSW_BASE" "${CMSSW_BASE}"
     fi
+    unset cmsswRelease cmsswBase
+else
+  printf "\n%s\n" "Did not set up CMSSW environment (to do this, specify the name of a release via option -r)"
+  printf "\033[34m\033[1m%s\033[0m=%s\n" "CMSSW_BASE" "${CMSSW_BASE}"
 fi
-unset VERSION
-unset BASE
+
+clear_vars
