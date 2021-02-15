@@ -29,6 +29,10 @@ fileNamesByRun_dict = {
   336435 : [ # 2020 MWGR2 / Cosmics
     '/store/data/Commissioning2020/MinimumBias/RAW/v1/000/336/435/00000/E6E0F0FC-9FCB-4444-AFAF-6159FDD40A86.root',
   ],
+  
+  335443 : [# 2020 Cosmics
+     '/store/data/Commissioning2020/Cosmics/RAW/v1/000/335/443/00000/81EAE361-0FBA-0B4F-9728-227DE2567C7B.root',
+  ],
 
   334518 : [ # 2020 MWGR0 / VirginRaw
     '/store/data/Commissioning2019/VRRandom3/RAW/v1/000/334/518/00000/18B41CEB-DCF7-BD46-B6BC-0E7E56E7B047.root',
@@ -300,13 +304,11 @@ process.a = cms.EDAnalyzer("ExceptionGenerator",
                            defaultQualifier = cms.untracked.int32(10)
                            )
 
-cmsswbase = os.path.expandvars('$CMSSW_BASE/')
-
 process.out = cms.OutputModule("RawStreamFileWriterForBU",
-  ProductLabel = cms.untracked.string("rawDataCollector"),
-  numEventsPerFile = cms.untracked.uint32(1),
-  jsonDefLocation = cms.untracked.string(cmsswbase+"/src/EventFilter/Utilities/plugins/budef.jsd"),
-  debug = cms.untracked.bool(True)
+    source = cms.InputTag("rawDataCollector"),
+    numEventsPerFile = cms.uint32(1),
+    frdVersion = cms.uint32(6),
+    frdFileVersion = cms.uint32(1)
 )
 
 process.p = cms.Path(process.a)
