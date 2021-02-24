@@ -106,7 +106,6 @@ process.MessageLogger = cms.Service("MessageLogger",
     errors = cms.untracked.PSet(
         placeholder = cms.untracked.bool(True)
     ),
-    fwkJobReports = cms.untracked.vstring('FrameworkJobReport'),
     infos = cms.untracked.PSet(
         Root_NoDictionary = cms.untracked.PSet(
             limit = cms.untracked.int32(0),
