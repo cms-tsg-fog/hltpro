@@ -46,9 +46,9 @@ mkdir -p ../bin/$SCRAM_ARCH
 cp -r $cmsswbase/python/CondCore/Utilities/ ../python/CondCore/
 cp -r $cmsswbase/src/CondCore/Utilities/ CondCore/
 cp `type -p conddb` ../bin/$SCRAM_ARCH/
-cmsset=`echo $cmsswbase | sed 's/\/opt\/\(......\).*$/\1/'`
+cmsset=`echo $cmsswbase | sed 's/\/opt\/\(\w\+\).*$/\1/'`
 printf "%s\n" "[L1MenuCheck_FromGT.sh] cmsset=${cmsset}"
-if [ "$cmsset" == "offlin" ]; then
+if [ "$cmsset" == "offline" ]; then
     sed -i 's/\/afs\/cern.ch\/cms\/cmsset_default.sh/\/opt\/offline\/cmsset_default.sh/' CondCore/Utilities/python/cond2xml.py
 elif [ "$cmsset" == "hilton" ]; then
     sed -i 's/\/afs\/cern.ch\/cms\/cmsset_default.sh/\/opt\/hilton\/cmssw\/cmsset_default.sh/' CondCore/Utilities/python/cond2xml.py
