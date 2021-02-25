@@ -311,7 +311,7 @@ process.a = cms.EDAnalyzer("ExceptionGenerator",
 
 process.out = cms.OutputModule("RawStreamFileWriterForBU",
     source = cms.InputTag("rawDataCollector"),
-    numEventsPerFile = cms.uint32(1),
+    numEventsPerFile = cms.uint32(100),
     frdVersion = cms.uint32(6),
     frdFileVersion = cms.uint32(1)
 )
