@@ -34,7 +34,7 @@ options.register ('numFwkStreams',
                   "Number of CMSSW streams")
 
 options.register ('fileBrokerHost',
-                  '1', # default value
+                  '', # default value
                   VarParsing.VarParsing.multiplicity.singleton,
                   VarParsing.VarParsing.varType.string,       # string, int, or float
                   "File broker host data network address")
