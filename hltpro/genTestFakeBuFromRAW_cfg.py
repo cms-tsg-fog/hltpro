@@ -217,7 +217,7 @@ options.register ('runNumber', 1,
                   "Run Number")
 
 options.register ('buBaseDir',
-                  '/bu/', # default value
+                  '/fff/BU0', # default value
                   VarParsing.VarParsing.multiplicity.singleton,
                   VarParsing.VarParsing.varType.string,          # string, int, or float
                   "BU base directory")
@@ -300,6 +300,7 @@ else:
                                         runNumber= cms.untracked.uint32(options.runNumber),
                                         baseDir = cms.untracked.string(options.dataDir),
                                         buBaseDir = cms.untracked.string(options.buBaseDir),
+                                        hltSourceDirectory = cms.untracked.string("/tmp/hltpro/hlt/"),
                                         directorIsBU = cms.untracked.bool(True),
                                      )
 

@@ -3,8 +3,6 @@
 #Usage: This script takes an HLT menu in ORCOFF as argument and changes the menu on the Hilton. 
 #       It assumes that the HLT browser is currently not broken (if you get a menu without the 
 #       name in the heading, check the browser).
-#       It also assumes that the test_hlt_config1 in /etc/hltd.conf is set to 
-#       python/HiltonMenu.py. If this is not the case, you will need to change it by hand.
 #       
 #       Update 21/09/16: ported newHiltonMenu.sh to python
 
@@ -128,7 +126,9 @@ def main(args):
     with open("hlt.py","a") as f:
         f.write(menu_overrides)
 
-    subprocess.Popen(["sudo","cp","hlt.py","/opt/hltd/python/HiltonMenu.py"]).communicate()
+    subprocess.Popen(["sudo","mkdir","-p","/tmp/hltpro/hlt"]).communicate()
+    subprocess.Popen(["sudo","cp","hlt.py","/tmp/hltpro/hlt/HltConfig.py"]).communicate()
+    subprocess.Popen(["sudo","cp","fffParameters.jsn","/tmp/hltpro/hlt"]).communicate()
     os.remove("hlt.py")
 
     import ConfigParser
@@ -137,8 +137,8 @@ def main(args):
     print "\nHLTD config:"
     print "   ",hltd_config.get("CMSSW","test_hlt_config1")
     print "   ",hltd_config.get("CMSSW","cmssw_default_version")
-    print "\nheading of /opt/hltd/python/HiltonMenu.py:"
-    subprocess.Popen(["head","-1","/opt/hltd/python/HiltonMenu.py"]).communicate()
+    print "\nheading of /tmp/hltpro/hlt/HltConfig.py:"
+    subprocess.Popen(["head","-1","/tmp/hltpro/hlt/HltConfig.py"]).communicate()
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='takes a HLT menu in ORCOFF and changes the menu on the Hilton')
