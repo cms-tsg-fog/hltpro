@@ -8,8 +8,8 @@ run=$1
 if [[ $# -ge 1 && $run =~ [0-9]+$ ]]; then
     ./addMissingEoLS.sh $run
     sudo chmod -R 777 /fff
-    sudo /sbin/service hltd restart
-    sudo /sbin/service bufu_filebroker restart
+    sudo systemctl restart hltd
+    sudo systemctl restart bufu_filebroker
     sleep 5
     ./nCoresOnly.sh $nCores
     sleep 5
