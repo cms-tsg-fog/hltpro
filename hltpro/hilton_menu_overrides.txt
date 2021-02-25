@@ -75,7 +75,7 @@ except:
     pass
 
 try:
-    process.EvFDaqDirector.useFileBroker = False
+    process.EvFDaqDirector.useFileBroker = True
 except:
     print "No process.EvFDaqDirector.useFileBroker in Python configuration"
 
