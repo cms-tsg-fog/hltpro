@@ -18,6 +18,10 @@ import os
 
 fileNamesByRun_dict = {
 
+  339579 : [# 2021 MWGR1 / Cosmics with displaced muon seeds
+    '/store/data/Commissioning2021/HLTPhysics/RAW/v1/000/339/579/00000/a26e3078-ac1f-49c3-8a40-e9007fbd1b47.root',
+  ],
+
   338717 : [ # 2020 MWGR4 / Cosmics
     '/store/data/Commissioning2020/Cosmics/RAW/v1/000/338/717/00000/9B97E41C-639B-4A46-8BE8-E45B605442DF.root',
   ],
@@ -30,7 +34,7 @@ fileNamesByRun_dict = {
     '/store/data/Commissioning2020/MinimumBias/RAW/v1/000/336/435/00000/E6E0F0FC-9FCB-4444-AFAF-6159FDD40A86.root',
   ],
   
-  335443 : [# 2020 Cosmics
+  335443 : [# 2020 MWGR1 / Cosmics
      '/store/data/Commissioning2020/Cosmics/RAW/v1/000/335/443/00000/81EAE361-0FBA-0B4F-9728-227DE2567C7B.root',
   ],
 
