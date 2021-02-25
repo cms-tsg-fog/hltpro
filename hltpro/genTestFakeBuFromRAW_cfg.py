@@ -286,7 +286,7 @@ if isPreCMSSW11():
    process.EvFDaqDirector = cms.Service("EvFDaqDirector",
                                         runNumber= cms.untracked.uint32(options.runNumber),
                                         baseDir = cms.untracked.string(options.dataDir),
-                                        buBaseDir = cms.untracked.string("/fff/BU0/data"),
+                                        buBaseDir = cms.untracked.string("/fff/BU0"),
                                         directorIsBu = cms.untracked.bool(True),
                                         #obsolete:
                                         hltBaseDir = cms.untracked.string("/fff/BU0/ramdisk"),
@@ -299,7 +299,7 @@ else:
    process.EvFDaqDirector = cms.Service("EvFDaqDirector",
                                         runNumber= cms.untracked.uint32(options.runNumber),
                                         baseDir = cms.untracked.string(options.dataDir),
-                                        buBaseDir = cms.untracked.string("/fff/BU0/data"),
+                                        buBaseDir = cms.untracked.string(options.buBaseDir),
                                         directorIsBU = cms.untracked.bool(True),
                                      )
 
