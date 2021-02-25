@@ -18,6 +18,10 @@ import os
 
 fileNamesByRun_dict = {
 
+  339579 : [# 2021 MWGR1 / Cosmics with displaced muon seeds
+    '/store/data/Commissioning2021/HLTPhysics/RAW/v1/000/339/579/00000/a26e3078-ac1f-49c3-8a40-e9007fbd1b47.root',
+  ],
+
   338717 : [ # 2020 MWGR4 / Cosmics
     '/store/data/Commissioning2020/Cosmics/RAW/v1/000/338/717/00000/9B97E41C-639B-4A46-8BE8-E45B605442DF.root',
   ],
@@ -28,6 +32,10 @@ fileNamesByRun_dict = {
 
   336435 : [ # 2020 MWGR2 / Cosmics
     '/store/data/Commissioning2020/MinimumBias/RAW/v1/000/336/435/00000/E6E0F0FC-9FCB-4444-AFAF-6159FDD40A86.root',
+  ],
+  
+  335443 : [# 2020 MWGR1 / Cosmics
+     '/store/data/Commissioning2020/Cosmics/RAW/v1/000/335/443/00000/81EAE361-0FBA-0B4F-9728-227DE2567C7B.root',
   ],
 
   334518 : [ # 2020 MWGR0 / VirginRaw
@@ -209,7 +217,7 @@ options.register ('runNumber', 1,
                   "Run Number")
 
 options.register ('buBaseDir',
-                  '/bu/', # default value
+                  '/fff/BU0', # default value
                   VarParsing.VarParsing.multiplicity.singleton,
                   VarParsing.VarParsing.varType.string,          # string, int, or float
                   "BU base directory")
@@ -278,7 +286,7 @@ if isPreCMSSW11():
    process.EvFDaqDirector = cms.Service("EvFDaqDirector",
                                         runNumber= cms.untracked.uint32(options.runNumber),
                                         baseDir = cms.untracked.string(options.dataDir),
-                                        buBaseDir = cms.untracked.string("/fff/BU0/data"),
+                                        buBaseDir = cms.untracked.string("/fff/BU0"),
                                         directorIsBu = cms.untracked.bool(True),
                                         #obsolete:
                                         hltBaseDir = cms.untracked.string("/fff/BU0/ramdisk"),
@@ -291,7 +299,8 @@ else:
    process.EvFDaqDirector = cms.Service("EvFDaqDirector",
                                         runNumber= cms.untracked.uint32(options.runNumber),
                                         baseDir = cms.untracked.string(options.dataDir),
-                                        buBaseDir = cms.untracked.string("/fff/BU0/data"),
+                                        buBaseDir = cms.untracked.string(options.buBaseDir),
+                                        hltSourceDirectory = cms.untracked.string("/tmp/hltpro/hlt/"),
                                         directorIsBU = cms.untracked.bool(True),
                                      )
 
@@ -300,13 +309,11 @@ process.a = cms.EDAnalyzer("ExceptionGenerator",
                            defaultQualifier = cms.untracked.int32(10)
                            )
 
-cmsswbase = os.path.expandvars('$CMSSW_BASE/')
-
 process.out = cms.OutputModule("RawStreamFileWriterForBU",
-  ProductLabel = cms.untracked.string("rawDataCollector"),
-  numEventsPerFile = cms.untracked.uint32(1),
-  jsonDefLocation = cms.untracked.string(cmsswbase+"/src/EventFilter/Utilities/plugins/budef.jsd"),
-  debug = cms.untracked.bool(True)
+    source = cms.InputTag("rawDataCollector"),
+    numEventsPerFile = cms.uint32(1),
+    frdVersion = cms.uint32(6),
+    frdFileVersion = cms.uint32(1)
 )
 
 process.p = cms.Path(process.a)
