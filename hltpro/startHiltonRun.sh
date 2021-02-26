@@ -8,6 +8,7 @@ run=$1
 if [[ $# -ge 1 && $run =~ [0-9]+$ ]]; then
     ./addMissingEoLS.sh $run
     sudo chmod -R 777 /fff
+    sudo sh -c 'echo 1048576 > /proc/sys/fs/inotify/max_queued_events'
     sudo systemctl restart hltd
     sudo systemctl restart bufu_filebroker
     sleep 5

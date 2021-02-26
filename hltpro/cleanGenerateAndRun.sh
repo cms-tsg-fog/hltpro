@@ -27,6 +27,12 @@ while [ $(ps -u daqlocal | grep "cmsRun" | grep -v "grep" | wc -l) -gt 0 ]; do
     sleep 10
 done
 
+while [ $(ps -u daqlocal | grep "anelastic" | grep -v "grep" | wc -l) -gt 0 ]; do
+    echo "merging still running ..."
+    sleep 10
+done
+
+
 while [ $(ps -u daqlocal | grep "valgrind" | grep -v "grep" | wc -l) -gt 0 ]; do
     echo "valgrind jobs still running ..."
     sleep 10
