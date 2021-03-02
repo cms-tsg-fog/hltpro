@@ -245,7 +245,7 @@ elif len(fileNamesByRun_dict[options.runNumber]) == 0:
 process = cms.Process("FAKEBU")
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(400)
+    input = cms.untracked.int32(100)
     #input = cms.untracked.int32(1000)
     #input = cms.untracked.int32(10000)
 )
@@ -311,7 +311,7 @@ process.a = cms.EDAnalyzer("ExceptionGenerator",
 
 process.out = cms.OutputModule("RawStreamFileWriterForBU",
     source = cms.InputTag("rawDataCollector"),
-    numEventsPerFile = cms.uint32(100),
+    numEventsPerFile = cms.uint32(10),
     frdVersion = cms.uint32(6),
     frdFileVersion = cms.uint32(1)
 )
