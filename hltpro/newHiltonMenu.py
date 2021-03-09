@@ -131,14 +131,20 @@ def main(args):
     subprocess.Popen(["sudo","cp","fffParameters.jsn","/tmp/hltpro/hlt"]).communicate()
     os.remove("hlt.py")
 
-    import ConfigParser
-    hltd_config = ConfigParser.RawConfigParser()
-    hltd_config.read("/etc/hltd.conf")
-    print "\nHLTD config:"
-    print "   ",hltd_config.get("CMSSW","test_hlt_config1")
-    print "   ",hltd_config.get("CMSSW","cmssw_default_version")
-    print "\nheading of /tmp/hltpro/hlt/HltConfig.py:"
+    print "\nHLT Configuration:"
+    print "(heading of /tmp/hltpro/hlt/HltConfig.py)"
     subprocess.Popen(["head","-1","/tmp/hltpro/hlt/HltConfig.py"]).communicate()
+    
+    print "\nfff Parameters:"
+    print "(from /tmp/hltpro/hlt/fffParameters.jsn)"
+    print open("/tmp/hltpro/hlt/fffParameters.jsn").read()
+
+    #import ConfigParser
+    #hltd_config = ConfigParser.RawConfigParser()
+    #hltd_config.read("/etc/hltd.conf")
+    #print "\nHLTD config:"
+    #print "   ",hltd_config.get("CMSSW","test_hlt_config1")
+    #print "   ",hltd_config.get("CMSSW","cmssw_default_version")
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='takes a HLT menu in ORCOFF and changes the menu on the Hilton')
