@@ -18,6 +18,10 @@ import os
 
 fileNamesByRun_dict = {
 
+  340207 : [# 2021 MWGR2 / Cosmics
+    '/store/data/Commissioning2021/Cosmics/RAW/v1/000/340/207/00000/d7836c50-0aa3-4b46-ae9a-770aa4b87e30.root',
+  ],
+
   339579 : [# 2021 MWGR1 / Cosmics with displaced muon seeds
     '/store/data/Commissioning2021/HLTPhysics/RAW/v1/000/339/579/00000/a26e3078-ac1f-49c3-8a40-e9007fbd1b47.root',
   ],
