@@ -1,7 +1,10 @@
 import FWCore.ParameterSet.VarParsing as VarParsing
+
 import os
 
-options = VarParsing.VarParsing('analysis')
+cmsswbase = os.path.expandvars('$CMSSW_BASE/')
+
+options = VarParsing.VarParsing ('analysis')
 
 options.register ('runNumber',
                   1, # default value
@@ -49,7 +52,7 @@ options.parseArguments()
 
 process.options = cms.untracked.PSet(
     numberOfThreads = cms.untracked.uint32(options.numThreads),
-    numberOfStreams = cms.untracked.uint32(options.numFwkStreams),
+    numberOfStreams = cms.untracked.uint32(options.numFwkStreams)
 )
 
 process.EvFDaqDirector.buBaseDir    = options.buBaseDir
@@ -57,40 +60,41 @@ process.EvFDaqDirector.baseDir      = options.dataDir
 process.EvFDaqDirector.runNumber    = options.runNumber
 
 try:
-    process.EvFDaqDirector.selectedTransferMode = options.transferMode
+     process.EvFDaqDirector.selectedTransferMode = options.transferMode
 except:
-    print "Unable to set process.EvFDaqDirector.selectedTransferMode =", options.transferMode
+     print "unable to set process.EvFDaqDirector.selectedTransferMode=", options.transferMode
 
 C_ALGO_VALUE = ""
 C_ALGO_UNDEFINED = ""
 for moduleName in process.__dict__['_Process__outputmodules']:
     modified_module = getattr(process,moduleName)
-    modified_module.compression_level = cms.untracked.int32(1)
+    modified_module.compression_level=cms.untracked.int32(1)
     if C_ALGO_VALUE != C_ALGO_UNDEFINED:
-        modified_module.compression_algorithm = cms.untracked.string(C_ALGO_VALUE)
+        modified_module.compression_algorithm=cms.untracked.string(C_ALGO_VALUE)
 
+# to be replaced with variable passed by hltd on command line
 try:
-    process.hltEnableParking.result = True
+    if options.transferMode.endswith("_NOPARKING"):
+        process.hltEnableParking.result = False
+    else:
+        process.hltEnableParking.result = True
 except:
     pass
 
 try:
-    process.EvFDaqDirector.useFileBroker = True
+    process.EvFDaqDirector.useFileBroker  = True
 except:
-    print "No process.EvFDaqDirector.useFileBroker in Python configuration"
+    print "no process.EvFDaqDirector.useFileBroker in Python configuration"
 
 if options.fileBrokerHost:
     try:
         process.EvFDaqDirector.fileBrokerHostFromCfg = False
     except:
-        print "Unable to set process.EvFDaqDirector.fileBrokerHostFromCfg = False"
+        print "Unable to set process.EvFDaqDirector.fileBrokerHostFromCfg = True"
     try:
         process.EvFDaqDirector.fileBrokerHost = options.fileBrokerHost
     except:
-        print "Unable to set process.EvFDaqDirector.fileBrokerHost =", options.fileBrokerHost
-
-if not process.EvFDaqDirector.fileBrokerHost:
-  raise Exception('No EvFDaqDirector.fileBrokerHost')
+        print "Unable to set process.EvFDaqDirector.fileBrokerHost =",options.fileBrokerHost
 
 try:
     from HLTrigger.Configuration.customizeHLTforPatatrack import customizeHLTforPatatrack
