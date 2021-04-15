@@ -106,7 +106,7 @@ def main(args):
  
     print "\nconverting menu for use on hilton"
 
-    with open(scripts_dir+"/hilton_menu_overrides.txt") as f:
+    with open(scripts_dir+"/hltDAQPatch.py") as f:
         menu_overrides = f.read()
     if args.GT!=None:
         print "   overriding GT for hilton config with GT:",args.GT

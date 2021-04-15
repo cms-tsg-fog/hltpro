@@ -6,6 +6,7 @@ include:
 
 stages:
 - 🛠️ setup
+- synchronize
 - 🏗️ build
 #- 🐞 test
 #- 📦 publish
@@ -21,14 +22,46 @@ builder image:
     CONTEXT_FOLDER: .gitlab/ci
     NAME: builder
 
+synchronize:
+  stage: synchronize
+  variables:
+    GIT_DEPTH: 0
+    GIT_SUBMODULE_STRATEGY: normal
+  rules:
+    - if: "$PROJECT_ACCESS_TOKEN"
+      #changes:
+      # - hltpro/hltDAQPatch.py_template # rules: changes always evaluates to true when there is no Git push event (eg. submodule fetch)
+      #when: manual
+      allow_failure: true
+  before_script:
+    - |
+      echo "Accessing GitLab as $GITLAB_USER_NAME ($GITLAB_USER_EMAIL)"
+      git config --global user.name "$GITLAB_USER_NAME"
+      git config --global user.email "$GITLAB_USER_EMAIL"
+      git config --global push.default simple
+      git remote add origin-write "https://gitlab-ci-token:$PROJECT_ACCESS_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git"
+      git checkout "$CI_COMMIT_BRANCH"
+  script:
+    - >
+      sed 
+      -e "s/\${HLT_COMPRESSION_ALGORITHM}/""/" 
+      -e "s/\${HLT_COMPRESSION_LEVEL}/1/" 
+      -e "s/\${USE_FILE_BROKER_PY_BOOLEAN}/True/" 
+      hltpro/hltDAQPatch.py_template > hltpro/hltDAQPatch.py
+
+      git diff hltpro/hltDAQPatch.py || 
+      echo "HLT config DAQ patch (hltDAQPatch.py) has changed. Committing changes." || 
+      git commit -am "Update HLT config DAQ patch (Pipeline $CI_PIPELINE_ID)" || 
+      git push origin-write $CI_COMMIT_BRANCH
+ 
 build:RPMs:
   image: $CI_REGISTRY_IMAGE/builder:$CI_COMMIT_REF_NAME-latest
   stage: 🏗️ build
   script:
-  - make
+    - make
   artifacts:
     paths:
-    - rpms
+      - rpms
 
 #publish:docker:
 #  extends: .auto_devops_docker_builder_autotag
