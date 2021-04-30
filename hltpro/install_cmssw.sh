@@ -20,7 +20,7 @@ function bootstrap_and_install_cmssw() {
   export SCRAM_ARCH
 
   # if necessary, bootstrap the area
-  if ! [ -d "$VO_CMS_SW_DIR"/"$SCRAM_ARCH" ] || ![ -f "$VO_CMS_SW_DIR"/"$SCRAM_ARCH"/external/rpm/*/etc/profile.d/init.sh ]; then
+  if ! [ -d "$VO_CMS_SW_DIR"/"$SCRAM_ARCH" ] || ! [ -f "$VO_CMS_SW_DIR"/"$SCRAM_ARCH"/external/rpm/*/etc/profile.d/init.sh ]; then
     mkdir -p "$VO_CMS_SW_DIR"
     rc=$?; if [[ $rc != 0 ]]; then return $rc; fi
     echo "Downloading bootstrap script"

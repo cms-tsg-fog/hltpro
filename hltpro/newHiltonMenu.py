@@ -50,7 +50,6 @@ def main(args):
         print "You need to do cmsenv first"
         sys.exit()
 
-#    scripts_dir = '/nfshome0/hltpro/scripts'
     scripts_dir = '.'
 
     print  "dumping",args.menu," from ConfDB v2..."

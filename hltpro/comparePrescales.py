@@ -13,8 +13,8 @@ def processCmd(cmd, quite = 0):
     status, output = commands.getstatusoutput(cmd)
     return output
 
-os.system('/nfshome0/hltpro/scripts/hltConfigFromDB --v2 --gdr --configName '+str(args.menuA)+' > hlt_menuA.py')
-os.system('/nfshome0/hltpro/scripts/hltConfigFromDB --v2 --gdr --configName '+str(args.menuB)+' > hlt_menuB.py')
+os.system('./hltConfigFromDB --v2 --gdr --configName '+str(args.menuA)+' > hlt_menuA.py')
+os.system('./hltConfigFromDB --v2 --gdr --configName '+str(args.menuB)+' > hlt_menuB.py')
 
 from hlt_menuA import *
 
