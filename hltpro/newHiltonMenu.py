@@ -74,7 +74,7 @@ def main(args):
     # convert the hlt menu for online use in the Hilton
     # run the menu checker script
     print "\nRunning MenuChecker.py"
-    subprocess.Popen(["python","/nfshome0/hltpro/RateMon/MenuChecker.py",args.menu]).communicate()
+    subprocess.Popen(["python","MenuChecker.py",args.menu]).communicate()
 
 #    # check to make sure no empty event content in any of the streams
 #    print "\nchecking event content output commands..."
