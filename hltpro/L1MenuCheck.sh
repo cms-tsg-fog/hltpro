@@ -1,13 +1,13 @@
 #! /bin/bash
 
-#Usage: This script takes two inputs: The HLT menu python file and the L1 menu xml file.
+#Usage: This script takes two inputs: The HLT menu python file and the L1 menu XML file.
 #       It then checks that every instance of "L1SeedsLogicalExpression" in the HLT menu
-#       matches to an algorithm name in the L1 xml. If the HLTL1TSeed module L1Seed
-#       parameter name changes or the L1 xml format changes, the script will need to be
+#       matches to an algorithm name in the L1 XML. If the HLTL1TSeed module L1Seed
+#       parameter name changes or the L1 XML format changes, the script will need to be
 #       updated.
 
 if [ "$#" -ne 2 ]; then
-    echo "Need exactly two arguments: (1) the HLT menu python and (2) the L1 menu xml"
+    echo "Need exactly two arguments: (1) the HLT menu python file and (2) the L1 menu XML"
     exit 1
 fi
 
@@ -20,18 +20,16 @@ menulines=`grep "L1SeedsLogicalExpression" $menu | sed 's/^.*"\(.*\)".*$/\1/g'`
 count=0
 
 for line in $menulines ; do
-    #echo $line
     if [[ $line == L1* ]]; then
         chk=0
         for seed in $xmllines ; do
-            #echo "   $seed"
             if [ $line == $seed ]; then
                 chk=1
                 break
             fi
         done
         if [ $chk -eq 0 ]; then
-            echo "$line does not exist in L1 xml!!!"
+            echo "$line does not exist in L1 XML!!!"
             ((count++))
         fi
     fi

@@ -1,10 +1,8 @@
 #! /usr/bin/env python
 
-#Usage: This script takes an HLT menu in ORCOFF as argument and changes the menu on the Hilton. 
+# Usage: This script takes an HLT menu in ORCOFF as argument and changes the menu on the Hilton. 
 #       It assumes that the HLT browser is currently not broken (if you get a menu without the 
 #       name in the heading, check the browser).
-#       
-#       Update 21/09/16: ported newHiltonMenu.sh to python
 
 import argparse
 import subprocess
@@ -12,15 +10,13 @@ import os
 import sys
 
 def l1xml_override(l1xml_filename):
-    """ Returns a string of the python necessary to override the L1 menu using an xml."""
-    #because the L1TUtmTriggerMenuESProducer has the path hardcoded to a specific directory,
-    #specifically L1Trigger/L1TGlobal/data/Luminosity/startup/ 
-    #we need to escape that back up to the root of the filesystem
-    #hence if the CMSSW directory structure changes or hilton install location changes (unlikely)
-    #this will break    
+    """ Returns a string of the python necessary to override the L1 menu using an XML."""
+    # because the L1TUtmTriggerMenuESProducer has the path hardcoded to a specific directory,
+    # specifically L1Trigger/L1TGlobal/data/Luminosity/startup/ 
+    # we need to escape that back up to the root of the filesystem
+    # hence if the CMSSW directory structure changes or Hilton install location changes this will break    
     l1xml_str= 'process.TriggerMenu = cms.ESProducer( "L1TUtmTriggerMenuESProducer",\n'
-    #l1xml_str+='    L1TriggerMenuFile = cms.string("../../../../../../../../../../../../%s")\n' % os.path.abspath(l1xml_filename)
-    l1xml_str+='    L1TriggerMenuFile = cms.string("../../../../../../../../../../../../../../%s")\n' % os.path.abspath(l1xml_filename)
+    l1xml_str+='    L1TriggerMenuFile = cms.string("../../../../../../../../../../../../../../../%s")\n' % os.path.abspath(l1xml_filename)
     l1xml_str+=')\n'
     return l1xml_str
 
@@ -52,10 +48,9 @@ def main(args):
 
     scripts_dir = '.'
 
-    print  "dumping",args.menu," from ConfDB v2..."
+    print "Dumping",args.menu,"from ConfDB..."
     if (args.unprescale):
-        print "removing HLT prescales..."
-        #'--2','--gdr','--services','-PrescaleService','--paths','-DQMHistograms','--configName',args.menu],  
+        print "Removing HLT prescales..."
         out,err = subprocess.Popen([scripts_dir+'/hltConfigFromDB', '--v2','--gdr','--services','-PrescaleService','--configName',args.menu],
                                    stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
     else:
@@ -68,17 +63,17 @@ def main(args):
         subprocess.Popen(['sed','-i','s~+ process.hltPSColumnMonitor~~g','hlt.py']).communicate() 
 
     # check for errors in the menu
-    print "checking dump consistency"
+    print "Checking dump consistency"
     try:
         from hlt import process
-        print "   found HLT version: \t%s" % process.HLTConfigVersion.tableName.value()
+        print "   Found HLT version: \t%s" % process.HLTConfigVersion.tableName.value()
     except:
-        print "   hlt menu (dump is in hlt.py) is corrupted, most of the time this is a typo in menu name"
+        print "   HLT menu (dump is in hlt.py) is corrupted, most of the time this is a typo in menu name"
         sys.exit()
 
-    # convert the hlt menu for online use in the hilton
+    # convert the hlt menu for online use in the Hilton
     # run the menu checker script
-    print "\nrunning MenuChecker.py"
+    print "\nRunning MenuChecker.py"
     subprocess.Popen(["python","/nfshome0/hltpro/RateMon/MenuChecker.py",args.menu]).communicate()
 
 #    # check to make sure no empty event content in any of the streams
@@ -92,34 +87,34 @@ def main(args):
 
     globaltag = process.GlobalTag.globaltag.value()
     print " "
-    print "checking L1 seeds in HLT menu against L1 xml in global tag",globaltag
+    print "Checking L1 seeds in HLT menu against L1 XML in Global Tag",globaltag
     subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh", "hlt.py",globaltag]).communicate()
 
     if process.GlobalTag.toGet.value()==[]:
-        print "checking for GlobalTag overrides: \033[32mSUCCEEDED\033[0m"
+        print "Checking for GlobalTag overrides: \033[32mSUCCEEDED\033[0m"
     else:
-        print "checking for GlobalTag overrides: \033[31mFAIL\033[0m"
+        print "Checking for GlobalTag overrides: \033[31mFAIL\033[0m"
         print "\033[31mERROR:\033[0m overriding records in GlobalTag, \033[31m this must be removed from the menu!\033[0m"
         for pset in process.GlobalTag.toGet.value():
             print "   ",pset.dumpPython().replace("\n","\n    ")
  
-    print "\nconverting menu for use on hilton"
-
+    print "Overriding menu with the DAQ patch"
     with open(scripts_dir+"/hltDAQPatch.py") as f:
         menu_overrides = f.read()
+    
     if args.GT!=None:
-        print "   overriding GT for hilton config with GT:",args.GT
+        print "Overriding GT for Hilton config with GT:",args.GT
         menu_overrides += gt_override(args.GT)
+
     if args.l1XML!=None:
-        print "   overriding L1 menu for hilton config with xml:",args.l1XML
+        print "Overriding L1 menu for Hilton config with XML:",args.l1XML
         menu_overrides += l1xml_override(args.l1XML)
-        print "   rechecking HLT menu for missing seeds in xml"
-        #the hlt.py is just used to get the list of seeds so doesnt matter that we have not
-        #rewriten the xml override to it yet
+        print "Rechecking HLT menu for missing seeds in XML"
+        #the hlt.py is just used to get the list of seeds so doesnt matter that we have not rewriten the XML override to it yet
         subprocess.Popen([scripts_dir+"/L1MenuCheck.sh","hlt.py",args.l1XML]).communicate()
 
     if args.l1GT!=None:
-        print "   overriding L1 menu for hilton config with GT record:",args.l1GT
+        print "Overriding L1 menu for Hilton config with GT record:",args.l1GT
         menu_overrides += l1gt_override(args.l1GT)
 
     with open("hlt.py","a") as f:
@@ -139,19 +134,12 @@ def main(args):
     print "(from /tmp/hltpro/hlt/fffParameters.jsn)"
     print open("/tmp/hltpro/hlt/fffParameters.jsn").read()
 
-    #import ConfigParser
-    #hltd_config = ConfigParser.RawConfigParser()
-    #hltd_config.read("/etc/hltd.conf")
-    #print "\nHLTD config:"
-    #print "   ",hltd_config.get("CMSSW","test_hlt_config1")
-    #print "   ",hltd_config.get("CMSSW","cmssw_default_version")
-
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='takes a HLT menu in ORCOFF and changes the menu on the Hilton')
     parser.add_argument('menu',help='HLT menu location in ORCOFF')
-    parser.add_argument('--GT',help='overrides the Global Tag in the resulting hilton menu with this GT')
-    parser.add_argument('--l1XML',help='overrides the L1 menu in the resulting hilton menu via an XML file ')
-    parser.add_argument('--l1GT',help='override the L1 menu in the resulting hilton menu via a GlobalTag record, example would be "--l1GT L1Menu_Collisions2016_v6r8m_m2" ask your friendly L1 menu expert for the correct record name')    
-    parser.add_argument('--unprescale',action='store_true',help='remove HLT prescales')
+    parser.add_argument('--GT',help='Overrides the Global Tag in the resulting Hilton menu with this GT')
+    parser.add_argument('--l1XML',help='Overrides the L1 menu in the resulting Hilton menu via an XML file ')
+    parser.add_argument('--l1GT',help='Override the L1 menu in the resulting Hilton menu via a GlobalTag record') # example would be "--l1GT L1Menu_Collisions2018_v2_1_0_xml" (see https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideL1TriggerMenu) 
+    parser.add_argument('--unprescale',action='store_true',help='Remove HLT prescales')
     args = parser.parse_args()
     main(args)

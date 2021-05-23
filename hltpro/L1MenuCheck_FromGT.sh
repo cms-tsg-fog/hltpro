@@ -2,12 +2,12 @@
 
 #Usage: This script takes two inputs: The HLT menu python file and a global tag.
 #       It then checks that every instance of "L1SeedsLogicalExpression" in the HLT menu
-#       matches to an algorithm name in the L1 xml from the latest IOV in the global tag.
-#       If the HLTL1TSeed module L1Seed parameter name changes or the L1 xml format changes,
+#       matches to an algorithm name in the L1 XML from the latest IOV in the global tag.
+#       If the HLTL1TSeed module L1Seed parameter name changes or the L1 XML format changes,
 #       the script will need to be updated.
 
 if [ "$#" -ne 2 ]; then
-    echo "Need exactly two arguments: (1) the HLT menu python and (2) a global tag"
+    echo "Need exactly two arguments: (1) the HLT menu python file and (2) a Global Tag"
     exit 1
 fi
 
@@ -71,21 +71,19 @@ menulines=`grep "L1SeedsLogicalExpression" $menu | sed 's/^.*"\(.*\)".*$/\1/g'`
 count=0
 
 for line in $menulines ; do
-    #echo $line
     # Remove spurious symbols from L1 seed names, like parenthesis
     correctedLine="$(echo $line | sed 's/)//g' | sed 's/(//g')"
     line="$correctedLine"
     if [[ $line == L1* ]]; then
         chk=0
         for seed in $xmllines ; do
-            #echo "   $seed"
             if [ $line == $seed ]; then
                 chk=1
                 break
             fi
         done
         if [ $chk -eq 0 ]; then
-            echo "$line does not exist in L1 xml!!!"
+            echo "$line does not exist in L1 XML!!!"
             ((count++))
         fi
     fi

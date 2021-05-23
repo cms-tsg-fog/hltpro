@@ -35,12 +35,12 @@ options.parseArguments()
 
 if options.runNumber not in fileNamesByRun_dict:
    log_msg = 'no file-list defined for run='+str(options.runNumber)+' (key '+str(options.runNumber)+' missing in dictionary)'
-   log_msg += ' --> modify fileNamesByRun_dict dictionary in genTestFakeBuFromRAW_cfg.py'
+   log_msg += ' --> modify fileNamesByRun_dict dictionary in inputFilesRAW.py'
    raise SystemExit('\033[1m\033[91m[FATAL] '+log_msg+'\033[0m')
 
 elif len(fileNamesByRun_dict[options.runNumber]) == 0:
    log_msg = 'invalid file-list associated to run='+str(options.runNumber)+' (must be a non-empty list of strings)'
-   log_msg += ' --> modify fileNamesByRun_dict dictionary in genTestFakeBuFromRAW_cfg.py'
+   log_msg += ' --> modify fileNamesByRun_dict dictionary in inputFilesRAW.py'
    raise SystemExit('\033[1m\033[91m[FATAL] '+log_msg+'\033[0m')
 
 # -----------------------------------------------------------------------------------------------------------------
@@ -49,8 +49,6 @@ process = cms.Process("FAKEBU")
 
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(400)
-    #input = cms.untracked.int32(1000)
-    #input = cms.untracked.int32(10000)
 )
 
 #process.options = cms.untracked.PSet(

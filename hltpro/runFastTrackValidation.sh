@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Need to run setup.sh first, and of course make sure /etc/hltd.conf is configured correctly.
+# Need to run setup.sh first, and of course make sure fffParameters.jsn is configured correctly.
 # Also, need to make sure genTestFakeBuFromRAW_cfg.py is configured the way you want for 
 # this test. For the fast track validation, usually you want to run over an HLTPhysics 
 # sample and a sample related to the conditions change you are validating. For example, for 
