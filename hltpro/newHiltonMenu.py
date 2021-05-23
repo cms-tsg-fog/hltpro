@@ -125,6 +125,7 @@ def main(args):
     with open("hlt.py","a") as f:
         f.write(menu_overrides)
 
+    # HLT configuration and fffParameters.jsn copied to tmp directory to be picked up by the HLTD  
     subprocess.Popen(["sudo","mkdir","-p","/tmp/hltpro/hlt"]).communicate()
     subprocess.Popen(["sudo","cp","hlt.py","/tmp/hltpro/hlt/HltConfig.py"]).communicate()
     subprocess.Popen(["sudo","cp","fffParameters.jsn","/tmp/hltpro/hlt"]).communicate()

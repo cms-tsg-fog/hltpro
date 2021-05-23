@@ -76,48 +76,30 @@ process.source = cms.Source("PoolSource",
   skipEvents = cms.untracked.uint32(0),
 )
 
-def isPreCMSSW11():
-   try:
-      import os
-      return int(os.environ['CMSSW_VERSION'].split("_")[1])<11
-   except:
-      print "error trying to get CMSSW version, assuming version >=11"
-      return False
+# DAQ source
+# The RAW input data is converted into the FRD (FED Raw Data) format using the EvFDaqDirector service and the RawStreamFileWriterForBU output module
+# The new DAQ file broker (file locking schema) is enabled (EvFDaqDirector.useFileBroker = True) via the DAQ patch (hltDAQPatch.py) and ran using the bufu_filebroker systemd service
 
-if isPreCMSSW11():
-   print "setting up DAQ director for CMSSW versions <11"
-   process.EvFDaqDirector = cms.Service("EvFDaqDirector",
-                                        runNumber= cms.untracked.uint32(options.runNumber),
-                                        baseDir = cms.untracked.string(options.dataDir),
-                                        buBaseDir = cms.untracked.string("/fff/BU0"),
-                                        directorIsBu = cms.untracked.bool(True),
-                                        #obsolete:
-                                        hltBaseDir = cms.untracked.string("/fff/BU0/ramdisk"),
-                                        smBaseDir  = cms.untracked.string("/fff/BU0/ramdisk"),
-                                        slaveResources = cms.untracked.vstring('dvfu-c2f37-38-01'),
-                                        slavePathToData = cms.untracked.string("/fff/BU/ramdisk")
-                                     )
-else:
-   print "setting up DAQ director for CMSSW versions >=11"
-   process.EvFDaqDirector = cms.Service("EvFDaqDirector",
-                                        runNumber= cms.untracked.uint32(options.runNumber),
-                                        baseDir = cms.untracked.string(options.dataDir),
-                                        buBaseDir = cms.untracked.string(options.buBaseDir),
-                                        hltSourceDirectory = cms.untracked.string("/tmp/hltpro/hlt/"),
-                                        directorIsBU = cms.untracked.bool(True),
-                                     )
+process.EvFDaqDirector = cms.Service("EvFDaqDirector",
+                                     runNumber= cms.untracked.uint32(options.runNumber),
+                                     baseDir = cms.untracked.string(options.dataDir),
+                                     buBaseDir = cms.untracked.string(options.buBaseDir),
+                                     hltSourceDirectory = cms.untracked.string("/tmp/hltpro/hlt/"), # HLTD picks up HLT configuration and fffParameters.jsn from here (copied by newHiltonMenu.py)
+                                     directorIsBU = cms.untracked.bool(True),
+                                  )
+
+process.out = cms.OutputModule("RawStreamFileWriterForBU",
+    source = cms.InputTag("rawDataCollector"),
+    numEventsPerFile = cms.uint32(10),
+    frdVersion = cms.uint32(6),    # new FRD format 
+    frdFileVersion = cms.uint32(1) # new FRD format 
+)
 
 process.a = cms.EDAnalyzer("ExceptionGenerator",
                            defaultAction = cms.untracked.int32(0),
                            defaultQualifier = cms.untracked.int32(10)
                            )
 
-process.out = cms.OutputModule("RawStreamFileWriterForBU",
-    source = cms.InputTag("rawDataCollector"),
-    numEventsPerFile = cms.uint32(10),
-    frdVersion = cms.uint32(6),
-    frdFileVersion = cms.uint32(1)
-)
 
 process.p = cms.Path(process.a)
 
