@@ -50,12 +50,6 @@ process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(400)
 )
 
-#process.options = cms.untracked.PSet(
-#  multiProcesses = cms.untracked.PSet(
-#    maxChildProcesses = cms.untracked.int32(0)
-#  )
-#)
-
 process.MessageLogger = cms.Service("MessageLogger",
                                     destinations = cms.untracked.vstring( 'cout' ),
                                     cout = cms.untracked.PSet(
