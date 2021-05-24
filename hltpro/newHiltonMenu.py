@@ -76,14 +76,14 @@ def main(args):
     print "\nRunning MenuChecker.py"
     subprocess.Popen(["python","MenuChecker.py",args.menu]).communicate()
 
-#    # check to make sure no empty event content in any of the streams
-#    print "\nchecking event content output commands..."
-#    for output_module_name in process.outputModules.keys():
-#        output_commands = process.outputModules[output_module_name].outputCommands.value()
-#        if len(output_commands) == 0:
-#            print "\tWARNING: OutputModule %s has no event content!" % output_module_name
-#        elif output_commands[0].find('drop *') < 0:
-#            print "\tWARNING: OutputModule %s missing drop * command!" % output_module_name
+    # check to make sure no empty event content in any of the streams
+    print "\nchecking event content output commands..."
+    for output_module_name in process.outputModules.keys():
+        output_commands = process.outputModules[output_module_name].outputCommands.value()
+        if len(output_commands) == 0:
+            print "\tWARNING: OutputModule %s has no event content!" % output_module_name
+        elif output_commands[0].find('drop *') < 0:
+            print "\tWARNING: OutputModule %s missing drop * command!" % output_module_name
 
     globaltag = process.GlobalTag.globaltag.value()
     print " "
