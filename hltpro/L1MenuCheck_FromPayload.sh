@@ -1,13 +1,13 @@
 #! /bin/bash
 
-#Usage: This script takes two inputs: The HLT menu python file and a payload hash for the corresponding L1 xml.
+#Usage: This script takes two inputs: The HLT menu python file and a payload hash for the corresponding L1 XML.
 #       It then checks that every instance of "L1SeedsLogicalExpression" in the HLT menu
-#       matches to an algorithm name in the L1 xml.
-#       If the HLTL1TSeed module L1Seed parameter name changes or the L1 xml format changes,
+#       matches to an algorithm name in the L1 XML.
+#       If the HLTL1TSeed module L1Seed parameter name changes or the L1 XML format changes,
 #       the script will need to be updated.
 
 if [ "$#" -ne 2 ]; then
-    echo "Need exactly two arguments: (1) the HLT menu python and (2) a payload hash for the L1 xml"
+    echo "Need exactly two arguments: (1) the HLT menu python and (2) a payload hash for the L1 XML"
     exit 1
 fi
 
@@ -67,11 +67,11 @@ for line in $menulines ; do
             fi
         done
         if [ $chk -eq 0 ]; then
-            echo "$line does not exist in L1 xml!!!"
+            echo "$line does not exist in L1 XML!!!"
             ((count++))
         fi
     fi
 done
-echo "Found $count instances in $menu of an L1 seed which is not present in L1 xml from payload hash $xmlhash"
+echo "Found $count instances in $menu of an L1 seed which is not present in L1 XML from payload hash $xmlhash"
 echo " "
 rm tmp.xml

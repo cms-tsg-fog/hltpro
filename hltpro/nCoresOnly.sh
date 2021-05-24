@@ -31,4 +31,4 @@ for i in `seq 1 $n`; do
 
 done
 
-echo Hilton will run hltd with $n cores
+echo -e "\nHilton will run HLTD with $n cores\n"

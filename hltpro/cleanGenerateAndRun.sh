@@ -23,7 +23,7 @@ fi
 # This loop looks for running cmsRun jobs and waits until there are no longer any
 sleep 10 #<-- this is needed here or else the rest will be skipped
 while [ $(ps -u daqlocal | grep "cmsRun" | grep -v "grep" | wc -l) -gt 0 ]; do
-    echo "jobs still running ..."
+    echo "Jobs still running ..."
     sleep 10
 done
 
@@ -33,15 +33,15 @@ while [ $(ps -u daqlocal | grep "anelastic" | grep -v "grep" | wc -l) -gt 0 ]; d
     if [[ $ret -eq 1 ]]; then
         break
     fi
-    echo "merging still running ..."
+    echo "Merging still running ..."
     sleep 10
 done
 
 while [ $(ps -u daqlocal | grep "valgrind" | grep -v "grep" | wc -l) -gt 0 ]; do
-    echo "valgrind jobs still running ..."
+    echo "Valgrind jobs still running ..."
     sleep 10
 done
-echo "jobs finished."
+echo "Jobs finished."
 
 # Skip repack check if specified:
 if [[ $# -ge 2 && ($2 == "skipRepack" || $3 == "skipRepack") ]]; then
