@@ -3,4 +3,4 @@
 	url = ../../cms-rcms/cdaq/swt-fillers.git
 [submodule "ratemon"]
 	path = ratemon
-	url = ../ratemon
+	url = https://gitlab.cern.ch/cms-tsg-fog/ratemon
