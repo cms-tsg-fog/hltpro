@@ -1,6 +1,6 @@
 [submodule "swt-fillers"]
 	path = swt-fillers
-	url = https://gitlab.cern.ch/cms-rcms/cdaq/swt-fillers.git
+	url = git@gitlab.cern.ch:cms-rcms/cdaq/swt-fillers.git
 [submodule "ratemon"]
 	path = ratemon
-	url = https://gitlab.cern.ch/cms-tsg-fog/ratemon.git
+	url = git@gitlab.cern.ch:cms-tsg-fog/ratemon.git
