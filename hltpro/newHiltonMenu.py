@@ -49,14 +49,19 @@ def main(args):
     scripts_dir = '.'
 
     print "Dumping",args.menu,"from ConfDB..."
-    if (args.unprescale):
+    hlt_cfg_cmd = [scripts_dir+'/hltConfigFromDB', '--v2','--gdr','--services','-PrescaleService','--configName',args.menu]
+    if args.unprescale:
         print "Removing HLT prescales..."
-        out,err = subprocess.Popen([scripts_dir+'/hltConfigFromDB', '--v2','--gdr','--services','-PrescaleService','--configName',args.menu],
-                                   stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
-    else:
-        out,err = subprocess.Popen([scripts_dir+'/hltConfigFromDB',
-                                    '--v2','--gdr','--configName',args.menu],
-                                   stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
+        hlt_cfg_cmd.extend(["--services","-PrescaleService"])
+    if args.gpu:
+        print "Running GPU based converter..."
+        hlt_cfg_cmd.append("--v2-gpu")
+
+    out,err = subprocess.Popen(hlt_cfg_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
+    if err:
+        print "error dumping menu:"
+        print err
+
     with open("hlt.py","w") as f:
         f.write(out)
     if (args.unprescale): 
@@ -141,5 +146,6 @@ if __name__=='__main__':
     parser.add_argument('--l1XML',help='Overrides the L1 menu in the resulting Hilton menu via an XML file ')
     parser.add_argument('--l1GT',help='Override the L1 menu in the resulting Hilton menu via a GlobalTag record') # example would be "--l1GT L1Menu_Collisions2018_v2_1_0_xml" (see https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideL1TriggerMenu) 
     parser.add_argument('--unprescale',action='store_true',help='Remove HLT prescales')
+    parser.add_argument('--gpu',action='store_true',help='run the experimental GPU enabled converter')
     args = parser.parse_args()
     main(args)
