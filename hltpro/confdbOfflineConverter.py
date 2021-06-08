@@ -37,7 +37,7 @@ class OfflineConverter:
     databases['v1']['hltdev'] = ( '-t', 'oracle', '-h', 'cmsr1-s.cern.ch', '-d', 'cms_cond.cern.ch', '-u', 'cms_hltdev_reader', '-s', 'convertme!' )
     databases['v1']['orcoff'] = ( '-t', 'oracle', '-h', 'cmsr1-s.cern.ch', '-d', 'cms_cond.cern.ch', '-u', 'cms_hlt_gui_r',     '-s', 'convertme!' )
     databases['v1']['daq']    = ( '-t', 'oracle', '-h', 'cmsonr1-s.cms',   '-d', 'cms_rcms.cern.ch', '-u', 'cms_hlt_r',         '-s', 'convertme!' )
-    databases['v2']['gdr']    = ( '-t', 'oracle', '-h', 'cmsonr1-s.cms',   '-d', 'cms_rcms.cern.ch', '-u', 'cms_hlt_gdr_r',     '-s', 'convertme!' )
+    databases['v2']['gdr']    = ( '-t', 'oracle', '-h', 'cmsonr1-s.cms',   '-d', 'cms_rcms.cern.ch', '-u', 'cms_hlt_gdr_r',     '-s', 'convertMe!' )
 
     @staticmethod
     def CheckTempDirectory(dir):
@@ -172,6 +172,7 @@ def main():
     version = None
     db      = None
     verbose = False
+    url     = None
 
     if not args:
         help()
@@ -196,6 +197,11 @@ def main():
     if '--v2' in args:
         version = 'v2'
         args.remove('--v2')
+
+    if '--v2-gpu' in args:
+        version = 'v2'
+        url = 'http://confdb.web.cern.ch/confdb/v2-gpu/lib'
+        args.remove('--v2-gpu')
 
     if sum(('--hltdev' in args, '--orcoff' in args, '--daq' in args, '--gdr' in args)) > 1:
         sys.stderr.write( "ERROR: too many database specifications: \"--hltdev\", \"--orcoff\", \"--daq\", \"--gdr\"\n" )
@@ -235,7 +241,7 @@ def main():
         else:
             sys.stderr.write( "ERROR: unsupported database version \"%s\"\n" % version)
 
-    converter = OfflineConverter(version = version, database = db, verbose = verbose)
+    converter = OfflineConverter(version = version, database = db, verbose = verbose, url = url)
     out, err = converter.query( * args )
     if 'ERROR' in err:
         sys.stderr.write( "%s: error while retriving the HLT menu\n\n%s\n\n" % (sys.argv[0], err) )
