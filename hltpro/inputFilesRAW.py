@@ -17,6 +17,9 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  341169 : [# 2021 MWGR3 / Cosmics
+    '/store/data/Commissioning2021/Cosmics/RAW/v1/000/341/169/00000/886d4e47-00e3-4ccd-9d2d-a9683622f51b.root',
+  ],
 
   340207 : [# 2021 MWGR2 / Cosmics
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/340/207/00000/d7836c50-0aa3-4b46-ae9a-770aa4b87e30.root',
