@@ -34,9 +34,9 @@ class OfflineConverter:
     databases = {}
     databases['v1'] = {}
     databases['v2'] = {}
-    databases['v1']['hltdev'] = ( '-t', 'oracle', '-h', 'cmsr1-s.cern.ch', '-d', 'cms_cond.cern.ch', '-u', 'cms_hltdev_reader', '-s', 'convertme!' )
-    databases['v1']['orcoff'] = ( '-t', 'oracle', '-h', 'cmsr1-s.cern.ch', '-d', 'cms_cond.cern.ch', '-u', 'cms_hlt_gui_r',     '-s', 'convertme!' )
-    databases['v1']['daq']    = ( '-t', 'oracle', '-h', 'cmsonr1-s.cms',   '-d', 'cms_rcms.cern.ch', '-u', 'cms_hlt_r',         '-s', 'convertme!' )
+    databases['v1']['hltdev'] = ( '-t', 'oracle', '-h', 'cmsr1-s.cern.ch', '-d', 'cms_cond.cern.ch', '-u', 'cms_hltdev_reader', '-s', 'c0nvertMe!' )
+    databases['v1']['orcoff'] = ( '-t', 'oracle', '-h', 'cmsr1-s.cern.ch', '-d', 'cms_cond.cern.ch', '-u', 'cms_hlt_gui_r',     '-s', 'c0nvertMe!' )
+    databases['v1']['daq']    = ( '-t', 'oracle', '-h', 'cmsonr1-s.cms',   '-d', 'cms_rcms.cern.ch', '-u', 'cms_hlt_r',         '-s', 'c0nvertMe!' )
     databases['v2']['gdr']    = ( '-t', 'oracle', '-h', 'cmsonr1-s.cms',   '-d', 'cms_rcms.cern.ch', '-u', 'cms_hlt_gdr_r',     '-s', 'convertMe!' )
 
     @staticmethod
