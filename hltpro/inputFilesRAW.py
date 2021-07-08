@@ -17,15 +17,20 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
-  341169 : [# 2021 MWGR3 / Cosmics
+
+  342154 : [ # 2021 MWGR4 / Cosmics
+    '/store/data/Commissioning2021/Cosmics/RAW/v1/000/342/154/00000/2b42c3f4-b6d7-444b-9dca-47c2d249dd53.root',
+  ],
+
+  341169 : [ # 2021 MWGR3 / Cosmics
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/341/169/00000/886d4e47-00e3-4ccd-9d2d-a9683622f51b.root',
   ],
 
-  340207 : [# 2021 MWGR2 / Cosmics
+  340207 : [ # 2021 MWGR2 / Cosmics
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/340/207/00000/d7836c50-0aa3-4b46-ae9a-770aa4b87e30.root',
   ],
 
-  339579 : [# 2021 MWGR1 / Cosmics with displaced muon seeds
+  339579 : [ # 2021 MWGR1 / Cosmics with displaced muon seeds
     '/store/data/Commissioning2021/HLTPhysics/RAW/v1/000/339/579/00000/a26e3078-ac1f-49c3-8a40-e9007fbd1b47.root',
   ],
 
@@ -40,8 +45,8 @@ fileNamesByRun_dict = {
   336435 : [ # 2020 MWGR2 / Cosmics
     '/store/data/Commissioning2020/MinimumBias/RAW/v1/000/336/435/00000/E6E0F0FC-9FCB-4444-AFAF-6159FDD40A86.root',
   ],
-  
-  335443 : [# 2020 MWGR1 / Cosmics
+
+  335443 : [ # 2020 MWGR1 / Cosmics
      '/store/data/Commissioning2020/Cosmics/RAW/v1/000/335/443/00000/81EAE361-0FBA-0B4F-9728-227DE2567C7B.root',
   ],
 
