@@ -64,9 +64,10 @@ def main(args):
         print "error dumping menu:"
         print err
 
-    with open("hlt.py","w") as f:
+    with open("hlt.py", "w") as f:
         f.write(out)
-    if (args.unprescale): 
+
+    if args.unprescale:
         subprocess.Popen(['sed','-i','s~+ process.hltPSColumnMonitor~~g','hlt.py']).communicate() 
 
     # check for errors in the menu
@@ -111,11 +112,11 @@ def main(args):
 
     if args.GT is not None:
         print "Overriding GT for Hilton config with GT:", args.GT
-        menu_overrides += gt_override(args.GT)
+        menu_overrides += '\n'+gt_override(args.GT)
 
     if args.l1XML is not None:
         print "Overriding L1 menu for Hilton config with XML:", args.l1XML
-        menu_overrides += l1xml_override(args.l1XML)
+        menu_overrides += '\n'+l1xml_override(args.l1XML)
         # disable consistency check between L1 menus in GT and .xml file (if the two are not different, no need to use the .xml file)
         menu_overrides += 'process.hltGtStage2ObjectMap.RequireMenuToMatchAlgoBlkInput = False\n'
         print "Rechecking HLT menu for missing seeds in XML"
@@ -124,17 +125,17 @@ def main(args):
 
     if args.l1GT is not None:
         print "Overriding L1 menu for Hilton config with GT record:", args.l1GT
-        menu_overrides += l1gt_override(args.l1GT)
+        menu_overrides += '\n'+l1gt_override(args.l1GT)
 
     if args.l1_emulator is not None:
         # Ref: https://github.com/cms-sw/cmssw/blob/CMSSW_12_0_0_pre4/HLTrigger/Configuration/python/Tools/confdb.py#L457-L465
-        menu_overrides += '\n'.join([
+        menu_overrides += '\n'.join(['',
           '# run the Full L1T emulator, then repack the data into a new RAW collection, to be used by the HLT',
           'from HLTrigger.Configuration.CustomConfigs import L1REPACK',
           'process = L1REPACK(process, "{:}")'.format(args.l1_emulator),
-        ])
+          ''])
 
-    with open("hlt.py","a") as f:
+    with open("hlt.py", "a") as f:
         f.write(menu_overrides)
 
     # HLT configuration and fffParameters.jsn copied to tmp directory to be picked up by the HLTD  
@@ -142,6 +143,7 @@ def main(args):
     subprocess.Popen(["sudo","cp","hlt.py","/tmp/hltpro/hlt/HltConfig.py"]).communicate()
     subprocess.Popen(["sudo","cp","fffParameters.jsn","/tmp/hltpro/hlt"]).communicate()
     os.remove("hlt.py")
+    os.remove("hlt.pyc")
 
     print "\nHLT Configuration:"
     print "(heading of /tmp/hltpro/hlt/HltConfig.py)"
