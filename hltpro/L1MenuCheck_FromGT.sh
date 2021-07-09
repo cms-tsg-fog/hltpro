@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 #Usage: This script takes two inputs: The HLT menu python file and a global tag.
 #       It then checks that every instance of "L1SeedsLogicalExpression" in the HLT menu
@@ -7,12 +7,12 @@
 #       the script will need to be updated.
 
 if [ "$#" -ne 2 ]; then
-    echo "Need exactly two arguments: (1) the HLT menu python file and (2) a Global Tag"
+    printf "%s\n" "[L1MenuCheck_FromGT.sh] Need exactly two arguments: (1) the HLT menu python file and (2) a GlobalTag"
     exit 1
 fi
 
 if [[ -z "$CMSSW_VERSION" ]]; then
-    echo "You need to do cmsenv first"
+    printf "%s\n" "[L1MenuCheck_FromGT.sh] Need to do cmsenv first"
     exit 1
 fi
 
@@ -24,10 +24,10 @@ gt=$2
 
 tagname=`conddb --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%2F%2Flocalhost%3A3128%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28retrieve%2Dziplevel%3D0%29/CMS_CONDITIONS" list $gt 2> /dev/null | grep "L1TUtmTriggerMenuRcd" | sed 's/ *$//g' | sed 's/^.* //g'`
 xmlhash=`conddb --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%2F%2Flocalhost%3A3128%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28retrieve%2Dziplevel%3D0%29/CMS_CONDITIONS" list $tagname  2> /dev/null | tail -n 2 | head -n 1 | sed 's/^.*  \(.*\)  L1TUtmTriggerMenu/\1/g'`
-#this is taken from the connect string in the HLT menu, but I had to convert the symbols to hex manually, hopefully the connect string never changes...
+# this is taken from the connect string in the HLT menu, but I had to convert the symbols to hex manually, hopefully the connect string never changes...
 
-#All this is to get around the fact that conddb dump tries to modify the release base
-#I have tried to make this robust, but I am not very confident. I have no doubt that this will break sometime in the future...
+# All this is to get around the fact that conddb dump tries to modify the release base
+# I have tried to make this robust, but I am not very confident. I have no doubt that this will break sometime in the future...
 cmsswbase=${CMSSW_BASE}
 printf "%s\n" "[L1MenuCheck_FromGT.sh] cmsswbase=${cmsswbase}"
 if [ ! -d $cmsswbase/python/CondCore/Utilities ] || [ ! -d $cmsswbase/src/CondCore/Utilities ]; then
@@ -36,25 +36,16 @@ if [ ! -d $cmsswbase/python/CondCore/Utilities ] || [ ! -d $cmsswbase/src/CondCo
          "(if using a local CMSSW installation, add it via \"git cms-addpkg CondCore/Utilities\"), script stopped."
   exit 1
 fi
-scramv1 project CMSSW $CMSSW_VERSION 2> /dev/null
+scram project CMSSW $CMSSW_VERSION 2> /dev/null
 cd $CMSSW_VERSION/src
 printf "%s\n" "[L1MenuCheck_FromGT.sh] temp CMSSW area: ${PWD}"
-eval `scramv1 runtime -sh`
+eval `scram runtime -sh`
 mkdir -p ../python/CondCore
 mkdir -p CondCore
 mkdir -p ../bin/$SCRAM_ARCH
 cp -r $cmsswbase/python/CondCore/Utilities/ ../python/CondCore/
 cp -r $cmsswbase/src/CondCore/Utilities/ CondCore/
 cp `type -p conddb` ../bin/$SCRAM_ARCH/
-cmsset=`echo $cmsswbase | sed 's/\/opt\/\(\w\+\).*$/\1/'`
-printf "%s\n" "[L1MenuCheck_FromGT.sh] cmsset=${cmsset}"
-if [ "$cmsset" == "offline" ]; then
-    sed -i 's/\/afs\/cern.ch\/cms\/cmsset_default.sh/\/opt\/offline\/cmsset_default.sh/' CondCore/Utilities/python/cond2xml.py
-elif [ "$cmsset" == "hilton" ]; then
-    sed -i 's/\/afs\/cern.ch\/cms\/cmsset_default.sh/\/opt\/hilton\/cmssw\/cmsset_default.sh/' CondCore/Utilities/python/cond2xml.py
-else
-    echo "Could not determine release base (/opt/offline or /opt/hilton). L1MenuCheck is going to fail."
-fi
 ../bin/$SCRAM_ARCH/conddb --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%2F%2Flocalhost%3A3128%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28retrieve%2Dziplevel%3D0%29/CMS_CONDITIONS" dump $xmlhash >& ../../tmp.xml 2> /dev/null
 cd ../..
 rm -r $CMSSW_VERSION
@@ -63,9 +54,9 @@ rm -r $CMSSW_VERSION
 #xmlhash=`conddb list $tagname | tail -n 2 | head -n 1 | sed 's/^.*  \(.*\)  L1TUtmTriggerMenu/\1/g'`
 #conddb dump $xmlhash >& tmp.xml
 
-xml=tmp.xml
+xmllines=`grep "<first>" tmp.xml | sed 's/^.*<first>\(.*\)<\/first>*$/\1/g' | sed '/--/d'`
+rm -f tmp.xml
 
-xmllines=`grep "<first>" $xml | sed 's/^.*<first>\(.*\)<\/first>*$/\1/g' | sed '/--/d'`
 menulines=`grep "L1SeedsLogicalExpression" $menu | sed 's/^.*"\(.*\)".*$/\1/g'`
 
 count=0
@@ -83,11 +74,10 @@ for line in $menulines ; do
             fi
         done
         if [ $chk -eq 0 ]; then
-            echo "$line does not exist in L1 XML!!!"
+            printf "%s\n" "[L1MenuCheck_FromGT.sh] --> !! L1 seed does not exist in the L1 menu of the GT: ${line}"
             ((count++))
         fi
     fi
 done
-echo "Found $count instances in $menu of an L1 seed which is not present in Global Tag $gt"
-echo " "
-rm tmp.xml
+
+printf "%s\n" "[L1MenuCheck_FromGT.sh] Found ${count} instances in ${menu} of an L1 seed which is not present in GlobalTag ${gt}"

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 #Usage: This script takes two inputs: The HLT menu python file and the L1 menu XML file.
 #       It then checks that every instance of "L1SeedsLogicalExpression" in the HLT menu
@@ -7,7 +7,7 @@
 #       updated.
 
 if [ "$#" -ne 2 ]; then
-    echo "Need exactly two arguments: (1) the HLT menu python file and (2) the L1 menu XML"
+    printf "%s\n" "[L1MenuCheck.sh] Need exactly two arguments: (1) the HLT menu python file and (2) the L1 menu XML"
     exit 1
 fi
 
@@ -29,9 +29,10 @@ for line in $menulines ; do
             fi
         done
         if [ $chk -eq 0 ]; then
-            echo "$line does not exist in L1 XML!!!"
+            printf "%s\n" "[L1MenuCheck.sh] --> !! L1 seed does not exist in the L1-menu .xml file: ${line}"
             ((count++))
         fi
     fi
 done
-echo "Found $count instances in $menu of an L1 seed which is not present in $xml"
+
+printf "%s\n" "[L1MenuCheck.sh] Found ${count} instances in ${menu} of an L1 seed which is not present in ${xml}"
