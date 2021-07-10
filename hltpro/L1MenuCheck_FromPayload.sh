@@ -25,11 +25,7 @@ srcpath=`echo $CMSSW_SEARCH_PATH | sed '0,/:.*$/s/:.*$//'`
 scram project CMSSW $CMSSW_VERSION 2> /dev/null
 cd $CMSSW_VERSION/src
 eval `scram runtime -sh`
-mkdir -p ../python/CondCore
-mkdir -p CondCore
 mkdir -p ../bin/$SCRAM_ARCH
-cp -r $srcpath/../python/CondCore/Utilities ../python/CondCore/
-cp -r $srcpath/CondCore/Utilities CondCore/
 cp $srcpath/../bin/$SCRAM_ARCH/conddb ../bin/$SCRAM_ARCH/
 ../bin/$SCRAM_ARCH/conddb --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%2F%2Flocalhost%3A3128%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28retrieve%2Dziplevel%3D0%29/CMS_CONDITIONS" dump $xmlhash >& ../../tmp.xml 2> /dev/null
 cd ../..

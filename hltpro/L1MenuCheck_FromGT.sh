@@ -30,21 +30,11 @@ xmlhash=`conddb --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%
 # I have tried to make this robust, but I am not very confident. I have no doubt that this will break sometime in the future...
 cmsswbase=${CMSSW_BASE}
 printf "%s\n" "[L1MenuCheck_FromGT.sh] cmsswbase=${cmsswbase}"
-if [ ! -d $cmsswbase/python/CondCore/Utilities ] || [ ! -d $cmsswbase/src/CondCore/Utilities ]; then
-
-  printf "\033[0;31m%s\033[0m %s %s\n" "[L1MenuCheck_FromGT.sh] ERROR" "-- CMSSW area does not include the package CondCore/Utilities" \
-         "(if using a local CMSSW installation, add it via \"git cms-addpkg CondCore/Utilities\"), script stopped."
-  exit 1
-fi
 scram project CMSSW $CMSSW_VERSION 2> /dev/null
 cd $CMSSW_VERSION/src
 printf "%s\n" "[L1MenuCheck_FromGT.sh] temp CMSSW area: ${PWD}"
 eval `scram runtime -sh`
-mkdir -p ../python/CondCore
-mkdir -p CondCore
 mkdir -p ../bin/$SCRAM_ARCH
-cp -r $cmsswbase/python/CondCore/Utilities/ ../python/CondCore/
-cp -r $cmsswbase/src/CondCore/Utilities/ CondCore/
 cp `type -p conddb` ../bin/$SCRAM_ARCH/
 ../bin/$SCRAM_ARCH/conddb --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%2F%2Flocalhost%3A3128%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29%28retrieve%2Dziplevel%3D0%29/CMS_CONDITIONS" dump $xmlhash >& ../../tmp.xml 2> /dev/null
 cd ../..
