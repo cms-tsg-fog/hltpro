@@ -7,7 +7,6 @@
 import argparse
 import subprocess
 import os
-import sys
 
 def l1xml_override(l1xml_filename):
     """ Returns a string of the python module necessary to override the L1 menu using an XML."""
@@ -18,7 +17,7 @@ def l1xml_override(l1xml_filename):
     # Note-1: if the path-finding logic of L1TUtmTriggerMenuESProducer changes in CMSSW, this function will need updating
     # Note-2: if the path of the CMSSW area is more than 50 levels deep in the filesystem,
     #         you should reconsider the location of the CMSSW area (or in extreme cases, increase the number in this function)
-    l1xml_str= 'process.TriggerMenu = cms.ESProducer( "L1TUtmTriggerMenuESProducer",\n'
+    l1xml_str= 'process.TriggerMenu = cms.ESProducer("L1TUtmTriggerMenuESProducer",\n'
     l1xml_str+='    L1TriggerMenuFile = cms.string("'+'../'*50+'{:}")\n'.format(os.path.abspath(l1xml_filename))
     l1xml_str+=')\n'
     return l1xml_str
@@ -45,7 +44,7 @@ def main(args):
 
     if os.getenv("CMSSW_VERSION") == None:
         print "You need to do cmsenv first"
-        sys.exit()
+        raise SystemExit(1)
 
     scripts_dir = '.'
 
@@ -77,7 +76,7 @@ def main(args):
         print "   Found HLT version: \t%s" % process.HLTConfigVersion.tableName.value()
     except:
         print "   HLT menu (dump is in hlt.py) is corrupted, most of the time this is a typo in menu name"
-        sys.exit()
+        raise SystemExit(1)
 
     # convert the hlt menu for online use in the Hilton
     # run the menu checker script
@@ -143,7 +142,8 @@ def main(args):
     subprocess.Popen(["sudo","cp","hlt.py","/tmp/hltpro/hlt/HltConfig.py"]).communicate()
     subprocess.Popen(["sudo","cp","fffParameters.jsn","/tmp/hltpro/hlt"]).communicate()
     os.remove("hlt.py")
-    os.remove("hlt.pyc")
+    try: os.remove("hlt.pyc")
+    except: pass
 
     print "\nHLT Configuration:"
     print "(heading of /tmp/hltpro/hlt/HltConfig.py)"
