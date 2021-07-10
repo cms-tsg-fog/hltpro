@@ -26,6 +26,10 @@ fileNamesByRun_dict = {
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/341/169/00000/886d4e47-00e3-4ccd-9d2d-a9683622f51b.root',
   ],
 
+  341139 : [ # 2021 MWGR3 / MiniDaq
+    '/store/data/Commissioning2021/MiniDaq/RAW/v1/000/341/139/00000/3bdad23c-5e58-4510-a5d9-8b9747ba634b.root',
+  ],
+
   340207 : [ # 2021 MWGR2 / Cosmics
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/340/207/00000/d7836c50-0aa3-4b46-ae9a-770aa4b87e30.root',
   ],

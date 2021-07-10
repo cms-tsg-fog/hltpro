@@ -30,6 +30,11 @@ testGT=113X_dataRun3_HLT_Candidate_2021_07_07_15_09_35
 # runNumber=335518
 # testGT=113X_dataRun3_HLT_Candidate_2021_07_07_15_09_35
 
+# # MiniDaq
+# testMenu=/minidaq/2021/Basic/HLT/V3
+# runNumber=341139
+# testGT=113X_dataRun3_HLT_Candidate_2021_07_07_15_09_35
+
 ###############################
 
 printf "%s\n  %s\n\n" "Running Fast-Track Validation:" "--> will compare rates and timing of HLT menu using reference and test GlobalTags."
