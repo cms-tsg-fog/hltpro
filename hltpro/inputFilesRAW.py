@@ -46,6 +46,10 @@ fileNamesByRun_dict = {
     '/store/data/Commissioning2020/MinimumBias/RAW/v1/000/336/435/00000/E6E0F0FC-9FCB-4444-AFAF-6159FDD40A86.root',
   ],
 
+  335518 : [ # 2020 MWGR1 / VirginRaw
+    '/store/data/Commissioning2020/VRRandom0/RAW/v1/000/335/518/00000/8289EA59-260C-1746-B67A-09B96FE73C0A.root',
+  ],
+
   335443 : [ # 2020 MWGR1 / Cosmics
      '/store/data/Commissioning2020/Cosmics/RAW/v1/000/335/443/00000/81EAE361-0FBA-0B4F-9728-227DE2567C7B.root',
   ],
