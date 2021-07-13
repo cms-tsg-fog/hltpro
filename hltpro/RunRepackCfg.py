@@ -10,6 +10,7 @@ process = cms.Process("REPACK")
 process.source = cms.Source("NewEventStreamFileReader",
     fileNames = cms.untracked.vstring("file:"+input)
 )
+
 process.configurationMetadata = cms.untracked.PSet(
     annotation = cms.untracked.string('auto generated configuration'),
     name = cms.untracked.string('repack-config'),
@@ -34,9 +35,7 @@ process.write_PrimDS1_RAW = cms.OutputModule("PoolOutputModule",
     fileName = cms.untracked.string(outbasedir+'testRepack/output/'+stream+'_write_RAW.root')
 )
 
-
 process.outputPath = cms.EndPath(process.write_PrimDS1_RAW)
-
 
 process.MessageLogger = cms.Service("MessageLogger",
     FrameworkJobReport = cms.untracked.PSet(
@@ -122,5 +121,3 @@ process.MessageLogger = cms.Service("MessageLogger",
         placeholder = cms.untracked.bool(True)
     )
 )
-
-
