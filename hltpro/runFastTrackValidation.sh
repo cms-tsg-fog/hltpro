@@ -15,8 +15,7 @@ fi
 ######### user params #########
 
 # Cosmics
-testMenu=/cdaq/cosmic/commissioning2021/CRUZET/Cosmics/V1
-#testMenu=/cdaq/cosmic/commissioning2021/CRUZET/Cosmics_testL1TNewMuSeeds/V1
+testMenu=/cdaq/cosmic/commissioning2021/CRUZET/Cosmics/V2
 runNumber=342154
 testGT=113X_dataRun3_HLT_Candidate_2021_07_07_15_09_35
 
@@ -31,7 +30,8 @@ testGT=113X_dataRun3_HLT_Candidate_2021_07_07_15_09_35
 # testGT=113X_dataRun3_HLT_Candidate_2021_07_07_15_09_35
 
 # # MiniDaq
-# testMenu=/minidaq/2021/Basic/HLT/V3
+# testMenu=/minidaq/2021/Basic/HLT/V5
+# #testMenu=/minidaq/EcalCalibration/2021/HLT/V5
 # runNumber=341139
 # testGT=113X_dataRun3_HLT_Candidate_2021_07_07_15_09_35
 
