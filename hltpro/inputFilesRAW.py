@@ -18,6 +18,10 @@
 
 fileNamesByRun_dict = {
 
+  343171 : [ # 2021 CRUZET / Cosmics
+    '/store/data/Commissioning2021/Cosmics/RAW/v1/000/343/171/00000/fd7d4ede-2d31-4011-bea1-489444a23ed4.root',
+  ],
+
   342154 : [ # 2021 MWGR4 / Cosmics
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/342/154/00000/2b42c3f4-b6d7-444b-9dca-47c2d249dd53.root',
   ],
