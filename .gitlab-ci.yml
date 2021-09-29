@@ -58,7 +58,7 @@ synchronize:
       -e "s/\${USE_FILE_BROKER_PY_BOOLEAN}/True/" 
       hltpro/hltDAQPatch.py_template > hltpro/hltDAQPatch.py
 
-      git diff hltpro/hltDAQPatch.py || 
+      git diff --quiet hltpro/hltDAQPatch.py || 
       { echo "HLT config DAQ patch (hltDAQPatch.py) has changed. Committing changes." && 
       git commit -am "Update HLT config DAQ patch (Pipeline $CI_PIPELINE_ID)" && 
       git push origin-write $CI_COMMIT_BRANCH ; } 
