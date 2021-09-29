@@ -1,5 +1,10 @@
 # hltpro
-Repository of HLT Online Test Stand (Hilton) software used on online validation machines. More details on the [Hilton Twiki](https://twiki.cern.ch/twiki/bin/viewauth/CMS/HLTOnlineTestStand), including the prerequisites described on the [HLT DOC Twiki](https://twiki.cern.ch/twiki/bin/viewauth/CMS/HLTOnCallGuide).
+
+Repository of HLT Online Test Stand (Hilton) software used on online validation machines.
+A complete set of instructions can be found on the
+[Hilton Twiki](https://twiki.cern.ch/twiki/bin/viewauth/CMS/HLTOnlineTestStand),
+including the prerequisites described on the
+[HLT DOC Twiki](https://twiki.cern.ch/twiki/bin/viewauth/CMS/HLTOnCallGuide).
 
 ## Development
 

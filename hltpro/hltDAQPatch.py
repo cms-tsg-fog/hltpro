@@ -48,11 +48,18 @@ options.register ('transferMode',
                   VarParsing.VarParsing.varType.string,          # string, int, or float
                   "Selected transfer mode propagated by RCMS")
 
+options.register ('runUniqueKey',
+                  'InValid', # default value
+                  VarParsing.VarParsing.multiplicity.singleton,
+                  VarParsing.VarParsing.varType.string,          # string, int, or float
+                  "Unique run key from RCMS for Frontier")
+
 options.parseArguments()
 
 process.options = cms.untracked.PSet(
     numberOfThreads = cms.untracked.uint32(options.numThreads),
-    numberOfStreams = cms.untracked.uint32(options.numFwkStreams)
+    numberOfStreams = cms.untracked.uint32(options.numFwkStreams),
+    numberOfConcurrentLuminosityBlocks = cms.untracked.uint32(2)
 )
 
 process.EvFDaqDirector.buBaseDir    = options.buBaseDir
@@ -97,7 +104,7 @@ if options.fileBrokerHost:
         print "Unable to set process.EvFDaqDirector.fileBrokerHost =",options.fileBrokerHost
 
 try:
-    from HLTrigger.Configuration.customizeHLTforPatatrack import customizeHLTforPatatrack
-    process = customizeHLTforPatatrack(process)
-except ImportError:
+    process.BeamSpotESSource.frontierKey = cms.untracked.string(options.runUniqueKey)
+    print "Set BeamSpotESSource.frontierKey to", options.runUniqueKey
+except:
     pass

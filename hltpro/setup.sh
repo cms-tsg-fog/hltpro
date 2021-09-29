@@ -15,6 +15,8 @@ Usage:
 
 > source setup.sh [-h] [-a scram_arch] [-c cmsset_default.sh] [-r CMSSW_X_Y_Z]
 
+  (square brackets denote optional arguments; do not use them when sourcing the script)
+
 Options:
   -h, --help      Show this help message
   -a, --arch      Value of SCRAM_ARCH                [Default: ${defScramArch}]

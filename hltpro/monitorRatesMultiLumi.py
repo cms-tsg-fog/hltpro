@@ -1,7 +1,9 @@
 #!/bin/env python
 
 # Sam modified version of the script to deal with multiple lumisections
-import sys, os
+import sys
+import os
+import argparse
 import collections
 import datetime
 import json
@@ -97,18 +99,17 @@ def monitorRates(jsndata_files,outputRates):
             rateConversion=1./SECS_PER_LUMI/nrLumiSecs
             outputStr="%-60s    %10.2f Hz    %10.2f Hz    %10.2f Hz"
         else:
-            rateConversion=1.;
+            rateConversion=1.
             outputStr="%-60s    %10i    %10i     %10i "
-        
+
         print  outputStr % (pathname, rate['L1PASS'] * rateConversion, rate['PSPASS'] * rateConversion, rate['PACCEPT'] * rateConversion)
     print
 
-import argparse
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser(description='outputs the counts/rates of paths given the input rate files')
+  parser.add_argument('inputFiles',help='input filelist',nargs="+")
+  parser.add_argument('--outputRates',help="outputs rates rather than counts",dest='outputRates',action='store_true')
+  parser.set_defaults(outputRates=False)
+  args = parser.parse_args()
 
-parser = argparse.ArgumentParser(description='outputs the counts/rates of paths given the input rate files')
-parser.add_argument('inputFiles',help='input filelist',nargs="+")
-parser.add_argument('--outputRates',help="outputs rates rather than counts",dest='outputRates',action='store_true')
-parser.set_defaults(outputRates=False)
-args = parser.parse_args()
-
-monitorRates(args.inputFiles,args.outputRates)
+  monitorRates(args.inputFiles,args.outputRates)
