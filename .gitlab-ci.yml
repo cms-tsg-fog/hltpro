@@ -1,7 +1,7 @@
-# include all templates in https://gitlab.cern.ch/cms-cactus/ops/auto-devops/-/tree/0.0.8
+# include all templates in https://gitlab.cern.ch/cms-cactus/ops/auto-devops/-/tree/0.2.3
 include:
   - project: cms-cactus/ops/auto-devops
-    ref: 0.0.8
+    ref: 0.2.3
     file: presets/blank-slate.yml
 
 stages:
@@ -14,7 +14,7 @@ stages:
 #- 💣 cleanup
 
 builder image:
-  #image: gitlab-registry.cern.ch/cms-cactus/ops/auto-devops/basics-cc7:tag-0.0.8
+  #image: gitlab-registry.cern.ch/cms-cactus/ops/auto-devops/basics-cc7:tag-0.2.3
   stage: 🛠️ setup
   extends: .auto_devops_docker_builder_autotag_onchange
   variables:
@@ -26,6 +26,7 @@ synchronize:
   stage: synchronize
   variables:
     GIT_STRATEGY: fetch
+    GIT_CHECKOUT: "true"
     GIT_DEPTH: 0
     GIT_SUBMODULE_STRATEGY: normal
   rules:
@@ -44,12 +45,12 @@ synchronize:
       git checkout "$CI_COMMIT_BRANCH"
   script:
     - >
-      echo "Pulling and committing submodule updates" ||
+      echo "Pulling and committing submodule updates" &&
       git submodule foreach git pull origin master
 
       git diff --quiet && git diff --staged --quiet || 
-      git commit -am "Update submodules to latest commit" || 
-      git push origin-write $CI_COMMIT_BRANCH
+      { git commit -am "Update submodules to latest commit (Pipeline $CI_PIPELINE_ID)" && 
+      git push origin-write $CI_COMMIT_BRANCH ; }
 
       sed 
       -e "s/\${HLT_COMPRESSION_ALGORITHM}/""/" 
@@ -58,9 +59,9 @@ synchronize:
       hltpro/hltDAQPatch.py_template > hltpro/hltDAQPatch.py
 
       git diff hltpro/hltDAQPatch.py || 
-      echo "HLT config DAQ patch (hltDAQPatch.py) has changed. Committing changes." || 
-      git commit -am "Update HLT config DAQ patch (Pipeline $CI_PIPELINE_ID)" || 
-      git push origin-write $CI_COMMIT_BRANCH
+      { echo "HLT config DAQ patch (hltDAQPatch.py) has changed. Committing changes." && 
+      git commit -am "Update HLT config DAQ patch (Pipeline $CI_PIPELINE_ID)" && 
+      git push origin-write $CI_COMMIT_BRANCH ; } 
  
 build:RPMs:
   image: $CI_REGISTRY_IMAGE/builder:$CI_COMMIT_REF_NAME-latest
