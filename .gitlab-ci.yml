@@ -26,6 +26,7 @@ synchronize:
   stage: synchronize
   variables:
     GIT_STRATEGY: fetch
+    GIT_CHECKOUT: "true"
     GIT_DEPTH: 0
     GIT_SUBMODULE_STRATEGY: normal
   rules:
