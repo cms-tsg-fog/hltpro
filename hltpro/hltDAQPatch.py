@@ -69,7 +69,7 @@ process.EvFDaqDirector.runNumber    = options.runNumber
 try:
      process.EvFDaqDirector.selectedTransferMode = options.transferMode
 except:
-     print "unable to set process.EvFDaqDirector.selectedTransferMode=", options.transferMode
+     print("unable to set process.EvFDaqDirector.selectedTransferMode=", options.transferMode)
 
 C_ALGO_VALUE = ""
 C_ALGO_UNDEFINED = ""
@@ -91,20 +91,20 @@ except:
 try:
     process.EvFDaqDirector.useFileBroker  = True
 except:
-    print "no process.EvFDaqDirector.useFileBroker in Python configuration"
+    print("No process.EvFDaqDirector.useFileBroker in Python configuration")
 
 if options.fileBrokerHost:
     try:
         process.EvFDaqDirector.fileBrokerHostFromCfg = False
     except:
-        print "Unable to set process.EvFDaqDirector.fileBrokerHostFromCfg = True"
+        print("Unable to set process.EvFDaqDirector.fileBrokerHostFromCfg = True")
     try:
         process.EvFDaqDirector.fileBrokerHost = options.fileBrokerHost
     except:
-        print "Unable to set process.EvFDaqDirector.fileBrokerHost =",options.fileBrokerHost
+        print("Unable to set process.EvFDaqDirector.fileBrokerHost =", options.fileBrokerHost)
 
 try:
     process.BeamSpotESSource.frontierKey = cms.untracked.string(options.runUniqueKey)
-    print "Set BeamSpotESSource.frontierKey to", options.runUniqueKey
+    print("Set BeamSpotESSource.frontierKey to", options.runUniqueKey)
 except:
     pass
