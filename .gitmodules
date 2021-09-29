@@ -1,8 +1,10 @@
 [submodule "swt-fillers"]
 	path = swt-fillers
 	url = ../../cms-rcms/cdaq/swt-fillers.git
+	branch = master
 	shallow = true
 [submodule "ratemon"]
 	path = ratemon
 	url = ../ratemon.git
+	branch = master
 	shallow = true
