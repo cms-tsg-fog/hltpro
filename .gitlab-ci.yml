@@ -1,7 +1,7 @@
-# include all templates in https://gitlab.cern.ch/cms-cactus/ops/auto-devops/-/tree/0.0.8
+# include all templates in https://gitlab.cern.ch/cms-cactus/ops/auto-devops/-/tree/0.2.3
 include:
   - project: cms-cactus/ops/auto-devops
-    ref: 0.0.8
+    ref: 0.2.3
     file: presets/blank-slate.yml
 
 stages:
@@ -14,7 +14,7 @@ stages:
 #- 💣 cleanup
 
 builder image:
-  #image: gitlab-registry.cern.ch/cms-cactus/ops/auto-devops/basics-cc7:tag-0.0.8
+  #image: gitlab-registry.cern.ch/cms-cactus/ops/auto-devops/basics-cc7:tag-0.2.3
   stage: 🛠️ setup
   extends: .auto_devops_docker_builder_autotag_onchange
   variables:
