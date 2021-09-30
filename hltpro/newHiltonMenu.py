@@ -1,4 +1,7 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 """
  Usage: This script takes an HLT menu in ORCOFF as argument and changes the menu on the Hilton.
         It assumes that the HLT browser is currently not broken
@@ -43,87 +46,87 @@ def gt_override(tagname):
 def main(args):
 
     if os.getenv("CMSSW_VERSION") == None:
-        print "You need to do cmsenv first"
+        print("You need to do cmsenv first")
         raise SystemExit(1)
 
     scripts_dir = '.'
 
-    print "Dumping",args.menu,"from ConfDB..."
+    print(("Dumping",args.menu,"from ConfDB..."))
     hlt_cfg_cmd = [scripts_dir+'/hltConfigFromDB', '--v2', '--gdr', '--configName', args.menu]
     hlt_cfg_cmd += ['--services', '-PrescaleService'] # why? defies the purposes of args.unprescale
     if args.unprescale:
-        print "Removing HLT prescales..."
+        print("Removing HLT prescales...")
         hlt_cfg_cmd.extend(["--services", "-PrescaleService"])
     if args.gpu:
-        print "Running upgraded ConfDB converter..."
+        print("Running upgraded ConfDB converter...")
         hlt_cfg_cmd.append("--v2-gpu")
 
-    out,err = subprocess.Popen(hlt_cfg_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE).communicate()
+    out,err = subprocess.Popen(hlt_cfg_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True).communicate()
     if err:
-        print "error dumping menu:"
-        print err
+        print("error dumping menu:")
+        print(err)
 
     with open("hlt.py", "w") as f:
         f.write(out)
 
     if args.unprescale:
-        subprocess.Popen(['sed','-i','s~+ process.hltPSColumnMonitor~~g','hlt.py']).communicate() 
+        subprocess.Popen(['sed','-i','s~+ process.hltPSColumnMonitor~~g','hlt.py'],universal_newlines=True).communicate() 
 
     # check for errors in the menu
-    print "Checking dump consistency"
+    print("Checking dump consistency")
     try:
         from hlt import process
-        print "   Found HLT version: \t%s" % process.HLTConfigVersion.tableName.value()
+        print(("   Found HLT version: \t%s" % process.HLTConfigVersion.tableName.value()))
     except:
-        print "   HLT menu (dump is in hlt.py) is corrupted, most of the time this is a typo in menu name"
+        print("   HLT menu (dump is in hlt.py) is corrupted, most of the time this is a typo in menu name")
         raise SystemExit(1)
 
     # convert the hlt menu for online use in the Hilton
     # run the menu checker script
-    print "\nRunning MenuChecker.py"
-    subprocess.Popen(["python","MenuChecker.py",args.menu]).communicate()
+    print("\nRunning MenuChecker.py")
+    subprocess.Popen(["python","MenuChecker.py",args.menu],universal_newlines=True).communicate()
 
     # check to make sure no empty event content in any of the streams
-    print "\nchecking event content output commands..."
-    for output_module_name in process.outputModules.keys():
+    print("\nchecking event content output commands...")
+    for output_module_name in list(process.outputModules.keys()):
         output_commands = process.outputModules[output_module_name].outputCommands.value()
         if len(output_commands) == 0:
-            print "\tWARNING: OutputModule %s has no event content!" % output_module_name
+            print(("\tWARNING: OutputModule %s has no event content!" % output_module_name))
         elif output_commands[0].find('drop *') < 0:
-            print "\tWARNING: OutputModule %s missing drop * command!" % output_module_name
+            print(("\tWARNING: OutputModule %s missing drop * command!" % output_module_name))
 
     globaltag = process.GlobalTag.globaltag.value()
-    print " "
-    print "Checking L1 seeds in HLT menu against L1 XML in Global Tag",globaltag
-    subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh", "hlt.py",globaltag]).communicate()
+    print(" ")
+    print(("Checking L1 seeds in HLT menu against L1 XML in Global Tag",globaltag))
+    subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh", "hlt.py",globaltag],universal_newlines=True).communicate()
 
     if process.GlobalTag.toGet.value()==[]:
-        print "\nChecking for GlobalTag overrides: \033[32mSUCCEEDED\033[0m"
+        print("\nChecking for GlobalTag overrides: \033[32mSUCCEEDED\033[0m")
     else:
-        print "\nChecking for GlobalTag overrides: \033[31mFAIL\033[0m"
-        print "\033[31mERROR:\033[0m overriding records in GlobalTag, \033[31m this must be removed from the menu!\033[0m"
+        print("\nChecking for GlobalTag overrides: \033[31mFAIL\033[0m")
+        print("\033[31mERROR:\033[0m overriding records in GlobalTag, \033[31m this must be removed from the menu!\033[0m")
         for pset in process.GlobalTag.toGet.value():
-            print "   ",pset.dumpPython().replace("\n","\n    ")
+            print(("   ",pset.dumpPython().replace("\n","\n    ")))
 
-    print "Overriding menu with the DAQ patch"
+    print("Overriding menu with the DAQ patch")
     with open(scripts_dir+"/hltDAQPatch.py") as f:
         menu_overrides = f.read()
 
     if args.GT is not None:
-        print "Overriding GT for Hilton config with GT:", args.GT
+        print(("Overriding GT for Hilton config with GT:", args.GT))
         menu_overrides += '\n'+gt_override(args.GT)
 
     if args.l1XML is not None:
-        print "Overriding L1 menu for Hilton config with XML:", args.l1XML
+        print(("Overriding L1 menu for Hilton config with XML:", args.l1XML))
         menu_overrides += '\n'+l1xml_override(args.l1XML)
         # disable consistency check between L1 menus in GT and .xml file (if the two are not different, no need to use the .xml file)
         menu_overrides += 'process.hltGtStage2ObjectMap.RequireMenuToMatchAlgoBlkInput = False\n'
-        print "Rechecking HLT menu for missing seeds in XML"
+        print("Rechecking HLT menu for missing seeds in XML")
         # hlt.py is just used to check the list of seeds, so it does not matter that we have not rewritten the XML override to it yet
-        subprocess.Popen([scripts_dir+"/L1MenuCheck.sh", "hlt.py", args.l1XML]).communicate()
+        subprocess.Popen([scripts_dir+"/L1MenuCheck.sh", "hlt.py", args.l1XML],universal_newlines=True).communicate()
 
     if args.l1GT is not None:
-        print "Overriding L1 menu for Hilton config with GT record:", args.l1GT
+        print(("Overriding L1 menu for Hilton config with GT record:", args.l1GT))
         menu_overrides += '\n'+l1gt_override(args.l1GT)
 
     if args.l1_emulator is not None:
@@ -138,20 +141,20 @@ def main(args):
         f.write(menu_overrides)
 
     # HLT configuration and fffParameters.jsn copied to tmp directory to be picked up by the HLTD  
-    subprocess.Popen(["sudo","mkdir","-p","/tmp/hltpro/hlt"]).communicate()
-    subprocess.Popen(["sudo","cp","hlt.py","/tmp/hltpro/hlt/HltConfig.py"]).communicate()
-    subprocess.Popen(["sudo","cp","fffParameters.jsn","/tmp/hltpro/hlt"]).communicate()
+    subprocess.Popen(["sudo","mkdir","-p","/tmp/hltpro/hlt"],universal_newlines=True).communicate()
+    subprocess.Popen(["sudo","cp","hlt.py","/tmp/hltpro/hlt/HltConfig.py"],universal_newlines=True).communicate()
+    subprocess.Popen(["sudo","cp","fffParameters.jsn","/tmp/hltpro/hlt"],universal_newlines=True).communicate()
     os.remove("hlt.py")
     try: os.remove("hlt.pyc")
     except: pass
 
-    print "\nHLT Configuration:"
-    print "(heading of /tmp/hltpro/hlt/HltConfig.py)"
-    subprocess.Popen(["head","-1","/tmp/hltpro/hlt/HltConfig.py"]).communicate()
+    print("\nHLT Configuration:")
+    print("(heading of /tmp/hltpro/hlt/HltConfig.py)")
+    subprocess.Popen(["head","-1","/tmp/hltpro/hlt/HltConfig.py"],universal_newlines=True).communicate()
     
-    print "\nfff Parameters:"
-    print "(from /tmp/hltpro/hlt/fffParameters.jsn)"
-    print open("/tmp/hltpro/hlt/fffParameters.jsn").read()
+    print("\nfff Parameters:")
+    print("(from /tmp/hltpro/hlt/fffParameters.jsn)")
+    print((open("/tmp/hltpro/hlt/fffParameters.jsn").read()))
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='takes a HLT menu in ORCOFF and changes the menu on the Hilton')
