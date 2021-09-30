@@ -17,6 +17,9 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  344679 : [ # 2021 CRUZET / Cosmics (Cosmic_GPU menu) 
+    '/store/data/Commissioning2021/Cosmics/RAW/v1/000/344/679/00000/12c8dc44-3f1d-48ea-8dd6-9e24e3238f60.root',
+  ],
 
   343171 : [ # 2021 CRUZET / Cosmics
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/343/171/00000/fd7d4ede-2d31-4011-bea1-489444a23ed4.root',
