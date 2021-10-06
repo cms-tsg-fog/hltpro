@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -84,7 +84,7 @@ def main(args):
     # convert the hlt menu for online use in the Hilton
     # run the menu checker script
     print("\nRunning MenuChecker.py")
-    subprocess.Popen(["python","MenuChecker.py",args.menu],universal_newlines=True).communicate()
+    subprocess.Popen(["python3","MenuChecker.py",args.menu],universal_newlines=True).communicate()
 
     # check to make sure no empty event content in any of the streams
     print("\nchecking event content output commands...")
