@@ -57,9 +57,9 @@ def main(args):
     if args.unprescale:
         print("Removing HLT prescales...")
         hlt_cfg_cmd.extend(["--services", "-PrescaleService"])
-    if args.gpu:
-        print("Running upgraded ConfDB converter...")
-        hlt_cfg_cmd.append("--v2-gpu")
+    if args.dev_converter:
+        print("Running the upgraded (GPU-enabled) ConfDB converter...")
+        hlt_cfg_cmd.append("--v2-dev-converter")
 
     out,err = subprocess.Popen(hlt_cfg_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True).communicate()
     if err:
@@ -167,6 +167,6 @@ if __name__=='__main__':
                         choices = ['Full', 'FullMC', 'Full2015Data', 'uGT'], default = None, const = 'Full',
                         help = 'Run the Full stage-2 L1T emulator.')
     parser.add_argument('--unprescale',action='store_true',help='Remove HLT prescales')
-    parser.add_argument('--gpu',action='store_true',help='run the experimental GPU enabled converter')
+    parser.add_argument('--dev-converter',action='store_true',help='Run the upgraded (GPU-enabled) converter')
     args = parser.parse_args()
     main(args)

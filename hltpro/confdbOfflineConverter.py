@@ -198,10 +198,10 @@ def main():
         version = 'v2'
         args.remove('--v2')
 
-    if '--v2-gpu' in args:
+    if '--v2-dev-converter' in args:
         version = 'v2'
         url = 'http://confdb.web.cern.ch/confdb/v2-gpu/lib'
-        args.remove('--v2-gpu')
+        args.remove('--v2-dev-converter')
 
     if sum(('--hltdev' in args, '--orcoff' in args, '--daq' in args, '--gdr' in args)) > 1:
         sys.stderr.write( "ERROR: too many database specifications: \"--hltdev\", \"--orcoff\", \"--daq\", \"--gdr\"\n" )
