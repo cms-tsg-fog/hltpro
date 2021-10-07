@@ -44,7 +44,7 @@ elif len(fileNamesByRun_dict[options.runNumber]) == 0:
 process = cms.Process("FAKEBU")
 
 process.maxEvents = cms.untracked.PSet(
-  input = cms.untracked.int32(400)
+  input = cms.untracked.int32(5000)
 )
 
 process.MessageLogger = cms.Service("MessageLogger",
