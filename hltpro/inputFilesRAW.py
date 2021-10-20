@@ -17,6 +17,10 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  345920 : [ # 2021 Pilot Beam Test / ZeroBias (BPTX signal)
+    '/store/data/Commissioning2021/ZeroBias0/RAW/v1/000/345/920/00000/06e25651-d9ba-4d69-aca3-6fa61981f364.root'
+  ],
+
   345823 : [ # 2021 CRAFT / Cosmics
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/345/823/00000/06948445-a237-4d8b-91ce-727932458c03.root'
     #'/store/data/Commissioning2021/MinimumBias/RAW/v1/000/345/823/00000/2babeef2-32e9-41f9-906d-db8b43c0aa0f.root' 
