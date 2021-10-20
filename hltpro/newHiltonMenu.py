@@ -100,15 +100,38 @@ def main(args):
     print(("Checking L1 seeds in HLT menu against L1 XML in Global Tag",globaltag))
     subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh", "hlt.py",globaltag],universal_newlines=True).communicate()
 
-    if process.GlobalTag.toGet.value()==[]:
-        print("\nChecking for GlobalTag overrides: \033[32mSUCCEEDED\033[0m")
-    else:
-        print("\nChecking for GlobalTag overrides: \033[31mFAIL\033[0m")
-        print("\033[31mERROR:\033[0m overriding records in GlobalTag, \033[31m this must be removed from the menu!\033[0m")
-        for pset in process.GlobalTag.toGet.value():
-            print(("   ",pset.dumpPython().replace("\n","\n    ")))
+    print("\nChecking for Global Tag overrides:")
 
-    print("Overriding menu with the DAQ patch")
+    reqGToverrides_ = ["cms.PSet(record = cms.string('BeamSpotOnlineLegacyObjectsRcd'), refreshTime = cms.uint64(1))",
+                       "cms.PSet(record = cms.string('BeamSpotOnlineHLTObjectsRcd'),    refreshTime = cms.uint64(1))"]
+    reqGToverrides = []
+
+    for reqPset in reqGToverrides_: 
+        reqPset = ''.join(reqPset.split()) # strip of whitespace and newline
+        reqGToverrides.append(reqPset)  
+
+    if process.GlobalTag.toGet.value()!=[]:
+        print("\033[93mWARNING:\033[0m Found the following overriding records in Global Tag:")
+        print(process.GlobalTag.toGet.value())
+        for pset in process.GlobalTag.toGet.value():
+            pset_ = ''.join(pset.dumpPython().split()) # strip of whitespace and newline
+            if pset_ not in reqGToverrides:
+                print("\nChecking for Global Tag overrides: \033[31mFAIL\033[0m")
+                print("\033[31mERROR:\033[0m Found unexpected overriding records in the Global Tag,\033[31m This must be removed from the menu!\033[0m")
+                print(pset.dumpPython())
+            else:
+                print("\nChecking for Global Tag overrides: \033[32mSUCCEEDED\033[0m")
+                print("\nThis listed as a required Global Tag override (related to the new BeamSpot workflow)")
+                print("\033[93mWARNING:\033[0m Overriding records in the Global Tag,\033[93m Please make sure that this is what you want in the menu!\033[0m")
+                print(pset.dumpPython())
+    else:
+        print("\033[93mWARNING:\033[0m Found no overriding records in Global Tag!")
+        print("\nChecking for Global Tag overrides: \033[31mFAIL\033[0m")
+        print("Please add the following required Global Tag overrides (related to the new BeamSpot workflow):")
+        for reqPset in reqGToverrides_:
+            print(reqPset)
+
+    print("\nOverriding menu with the DAQ patch:")
     with open(scripts_dir+"/hltDAQPatch.py") as f:
         menu_overrides = f.read()
 
