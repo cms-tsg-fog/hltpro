@@ -17,10 +17,16 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  346304 : [ # 2021 Pilot Beam Test / Zero/MinimumBias (Collisions)
+    '/store/data/Commissioning2021/ZeroBias0/RAW/v1/000/346/304/00000/005923d0-12ad-4a31-a7af-d60ad7a75859.root'
+    #'/store/data/Commissioning2021/MinimumBias1/RAW/v1/000/346/304/00000/0949cd03-66a6-4034-a630-b9fef4dde3d2.root'
+  ],
+
   346236 : [ # 2021 Pilot Beam Test / Zero/MinimumBias (Collisions)
-    '/store/data/Commissioning2021/ZeroBias1/RAW/v1/000/346/236/00000/01a91018-a80b-40c0-b2ff-99befd48d014.root',
+    '/store/data/Commissioning2021/ZeroBias1/RAW/v1/000/346/236/00000/01a91018-a80b-40c0-b2ff-99befd48d014.root'
     #'/store/data/Commissioning2021/MinimumBias1/RAW/v1/000/346/236/00000/4ee5f9f3-a835-4ade-a027-838f4b355591.root'
   ],
+
   346026 : [ # 2021 Pilot Beam Test / Zero/MinimumBias (BPTX signal test)
     '/store/data/Commissioning2021/ZeroBias0/RAW/v1/000/346/026/00000/1a8c0b77-4ff0-4c09-adc1-8769f3ba4c2a.root'
     #'/store/data/Commissioning2021/MinimumBias0/RAW/v1/000/346/026/00000/01e52e3f-ce60-4d10-ac7e-99426956c8ab.root' # 10 events 
