@@ -97,14 +97,14 @@ if options.fileBrokerHost:
     try:
         process.EvFDaqDirector.fileBrokerHostFromCfg = False
     except:
-        print("Unable to set process.EvFDaqDirector.fileBrokerHostFromCfg = True")
+        print("Unable to set process.EvFDaqDirector.fileBrokerHostFromCfg = False")
     try:
         process.EvFDaqDirector.fileBrokerHost = options.fileBrokerHost
     except:
         print("Unable to set process.EvFDaqDirector.fileBrokerHost =", options.fileBrokerHost)
 
 try:
-    process.BeamSpotESSource.frontierKey = cms.untracked.string(options.runUniqueKey)
-    print("Set BeamSpotESSource.frontierKey to", options.runUniqueKey)
+    process.GlobalTag.frontierKey = cms.untracked.string(options.runUniqueKey)
+    print("Set GlobalTag.frontierKey to", options.runUniqueKey)
 except:
-    pass
+    print("Unable to set GlobalTag.frontierKey to", options.runUniqueKey)
