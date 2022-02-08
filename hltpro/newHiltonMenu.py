@@ -52,14 +52,14 @@ def main(args):
     scripts_dir = '.'
 
     print(("Dumping",args.menu,"from ConfDB..."))
-    hlt_cfg_cmd = [scripts_dir+'/hltConfigFromDB', '--v2', '--gdr', '--configName', args.menu]
+    hlt_cfg_cmd = [scripts_dir+'/hltConfigFromDB', '--online', '--configName', args.menu]
     hlt_cfg_cmd += ['--services', '-PrescaleService'] # why? defies the purposes of args.unprescale
     if args.unprescale:
         print("Removing HLT prescales...")
         hlt_cfg_cmd.extend(["--services", "-PrescaleService"])
-    if args.dev_converter:
-        print("Running the upgraded (GPU-enabled) ConfDB converter...")
-        hlt_cfg_cmd.append("--v2-dev-converter")
+    if args.converter!="daq":
+        print(f"Running a non standard ConfDB converter {args.converter}")
+    hlt_cfg_cmd.append(f"--{args.converter}")
 
     out,err = subprocess.Popen(hlt_cfg_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True).communicate()
     if err:
@@ -190,6 +190,6 @@ if __name__=='__main__':
                         choices = ['Full', 'FullMC', 'Full2015Data', 'uGT'], default = None, const = 'Full',
                         help = 'Run the Full stage-2 L1T emulator.')
     parser.add_argument('--unprescale',action='store_true',help='Remove HLT prescales')
-    parser.add_argument('--dev-converter',action='store_true',help='Run the upgraded (GPU-enabled) converter')
+    parser.add_argument('--converter',default="daq",help='Converter to  use (daq, v2, v3, v3-dev, v3-test)')
     args = parser.parse_args()
     main(args)
