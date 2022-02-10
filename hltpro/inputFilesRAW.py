@@ -17,32 +17,14 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
-  346304 : [ # 2021 Pilot Beam Test / Zero/MinimumBias (Collisions)
-    '/store/data/Commissioning2021/ZeroBias0/RAW/v1/000/346/304/00000/005923d0-12ad-4a31-a7af-d60ad7a75859.root'
-    #'/store/data/Commissioning2021/MinimumBias1/RAW/v1/000/346/304/00000/0949cd03-66a6-4034-a630-b9fef4dde3d2.root'
+  346452 : [ # 2021 Pilot Beam Test / Zero/MinimumBias (900 GeV Collisions)
+    '/store/data/Commissioning2021/ZeroBias0/RAW/v1/000/346/452/00000/38409370-1134-4f45-b3be-856633d53f4c.root'
+    #'/store/data/Commissioning2021/MinimumBias0/RAW/v1/000/346/452/00000/49591bec-6089-4058-b2e3-399734bd9506.root'
   ],
-
-  346236 : [ # 2021 Pilot Beam Test / Zero/MinimumBias (Collisions)
-    '/store/data/Commissioning2021/ZeroBias1/RAW/v1/000/346/236/00000/01a91018-a80b-40c0-b2ff-99befd48d014.root'
-    #'/store/data/Commissioning2021/MinimumBias1/RAW/v1/000/346/236/00000/4ee5f9f3-a835-4ade-a027-838f4b355591.root'
-  ],
-
-  346026 : [ # 2021 Pilot Beam Test / Zero/MinimumBias (BPTX signal test)
-    '/store/data/Commissioning2021/ZeroBias0/RAW/v1/000/346/026/00000/1a8c0b77-4ff0-4c09-adc1-8769f3ba4c2a.root'
-    #'/store/data/Commissioning2021/MinimumBias0/RAW/v1/000/346/026/00000/01e52e3f-ce60-4d10-ac7e-99426956c8ab.root' # 10 events 
-  ],
-
-  345920 : [ # 2021 Pilot Beam Test / ZeroBias (BPTX signal test)
-    '/store/data/Commissioning2021/ZeroBias0/RAW/v1/000/345/920/00000/06e25651-d9ba-4d69-aca3-6fa61981f364.root'
-  ],
-
+  
   345823 : [ # 2021 CRAFT / Cosmics
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/345/823/00000/06948445-a237-4d8b-91ce-727932458c03.root'
     #'/store/data/Commissioning2021/MinimumBias/RAW/v1/000/345/823/00000/2babeef2-32e9-41f9-906d-db8b43c0aa0f.root' 
-  ],
-
-  344679 : [ # 2021 CRUZET / Cosmics (Cosmic_GPU menu) 
-    '/store/data/Commissioning2021/Cosmics/RAW/v1/000/344/679/00000/12c8dc44-3f1d-48ea-8dd6-9e24e3238f60.root',
   ],
 
   343171 : [ # 2021 CRUZET / Cosmics
