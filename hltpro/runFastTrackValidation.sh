@@ -4,7 +4,7 @@
 # Also, need to make sure genTestFakeBuFromRAW_cfg.py is configured the way you want for
 # this test. For the fast-track validation, usually you want to run over an HLTPhysics
 # sample and a sample related to the conditions change you are validating. For example, for
-# a change in ECal conditions, you may want to run over an EGamma sample.
+# a change in ECAL conditions, you may want to run over an EGamma sample.
 
 if [ -z "${CMSSW_BASE}" ]; then
   printf "\n%s" "[runFastTrackValidation] environment variable CMSSW_BASE is not set"
@@ -14,10 +14,9 @@ fi
 
 ######### user params #########
 
-# Collisions
-testMenu=/cdaq/special/PilotBeamTest2021/Collisions/V55
-runNumber=346452
-testGT=120X_dataRun3_HLT_Candidate_2021_10_30_07_50_13
+testMenu=/cdaq/cosmic/commissioning2022/MWGR/v1.2/GPU/HLT/V1
+runNumber=347945
+testGT=122X_dataRun3_HLT_v4
 
 ###############################
 
@@ -29,7 +28,7 @@ outputbasedir=/cmsnfsscratch/globalscratch/hltpro/fastTrack
 mkdir -p $outputbasedir
 
 ## reference trial (GT in HLT menu)
-./newHiltonMenu.py $testMenu --dev-converter
+./newHiltonMenu.py $testMenu
 ./cleanGenerateAndRun.sh $runNumber skipRepack
 
 if [ -d "${outputbasedir}/reference_run${runNumber}" ]; then
@@ -41,7 +40,7 @@ printf "%s\n" "[runFastTrackValidation] copying /fff/BU0/output/run$runNumber to
 cp -r /fff/BU0/output/run$runNumber $outputbasedir/reference_run$runNumber
 
 ## test trial (test GT for fast-track validation)
-./newHiltonMenu.py $testMenu --dev-converter --GT $testGT
+./newHiltonMenu.py $testMenu --GT $testGT
 ./cleanGenerateAndRun.sh $runNumber # don't skip repack for test GT
 
 if [ -d "${outputbasedir}/test_run${runNumber}" ]; then
