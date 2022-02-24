@@ -17,6 +17,10 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  347945 : [ # 2022 MWGR1 / Cosmics
+    '/store/data/Commissioning2022/Cosmics/RAW/v1/000/347/945/00000/7ee8472c-59e0-469e-972a-a4e191dc500a.root'
+  ],
+
   346452 : [ # 2021 Pilot Beam Test / Zero/MinimumBias (900 GeV Collisions)
     '/store/data/Commissioning2021/ZeroBias0/RAW/v1/000/346/452/00000/38409370-1134-4f45-b3be-856633d53f4c.root'
     #'/store/data/Commissioning2021/MinimumBias0/RAW/v1/000/346/452/00000/49591bec-6089-4058-b2e3-399734bd9506.root'
