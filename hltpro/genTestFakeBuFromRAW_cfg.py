@@ -27,6 +27,8 @@ options.register('dataDir', '/fff/BU0/ramdisk', # default value (on standalone F
                  VarParsing.VarParsing.varType.string,
                  "BU data write directory")
 
+options.setDefault('maxEvents', 3000)
+
 options.parseArguments()
 
 if options.runNumber not in fileNamesByRun_dict:
@@ -44,7 +46,7 @@ elif len(fileNamesByRun_dict[options.runNumber]) == 0:
 process = cms.Process("FAKEBU")
 
 process.maxEvents = cms.untracked.PSet(
-  input = cms.untracked.int32(3000)
+  input = cms.untracked.int32(options.maxEvents)
 )
 
 process.MessageLogger = cms.Service("MessageLogger",

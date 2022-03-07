@@ -1,24 +1,54 @@
 #!/bin/bash
 
-# Usage: ./cleanGenerateAndRun.sh <run #> <# of cores (optional)> <skipRepack (optional)>
-# If no argument for the number of cores is provided, will run with `grep -c processor /proc/cpuinfo`/2 
-# See ./nCoresOnly.sh for details.
-# Repack check is now run by default after hltd jobs finish. If "skipRepack" is given as 2nd or 3rd arg,
-# the repack check will be skipped.
+usage() {
+  cat <<@EOF
+Usage:
+  ./cleanGenerateAndRun.sh --run RUN_NUMBER --nCores NUM_CORES --skipRepack --maxEvents NUM_EVENTS
 
-if [[ $# -ge 2 && $2 =~ [0-9]+$ ]]; then
-    nCores=$2
+If no argument for the number of cores is provided, `grep -c processor /proc/cpuinfo`/2 will be used (see ./nCoresOnly.sh for details)
+
+Repack check is now run by default after hltd jobs finish.
+  - If "--skipRepack" is specified, the repack check will be skipped.
+
+Options:
+  --run           Run number
+  --nCores        Number of cores           [Optional]
+  --maxEvents     Maximum number of events  [Optional]
+  --skipRepack    Skip data re-packing step [Optional]
+  -h, --help      Show this help message
+@EOF
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help) showHelpMsg=true ;;
+    --run) run="${2}"; shift ;;
+    --nCores) if [[ $2 =~ ^[0-9]+$ ]]; then nCores="${2}"; shift; fi ;;
+    --maxEvents) if [[ $2 =~ ^[0-9]+$ ]]; then maxEventsStr="maxEvents=${2}"; shift; fi ;;
+    --skipRepack) skipRepack=true ;;
+    *) echo "[cleanGenerateAndRun.sh] !!! INVALID ARGUMENT --> ${1}" ;;
+  esac
+  shift
+done
+
+if [ "${showHelpMsg}" = true ]; then
+    usage
+    exit 0
 fi
 
-run=$1
-if [[ $# -ge 1 && $run =~ [0-9]+$ ]]; then
-    ./cleanRun.sh $run
-    cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run
-    ./startHiltonRun.sh $run $nCores
-else
-    echo "Need at least one positive integer argument: the run number"
-    exit
+if [ -z $run ]; then
+    echo -e "\n[cleanGenerateAndRun.sh] ERROR --> Need to specify a run number with \"--run RUN_NUMBER\"\n"
+    usage
+    exit 1
+elif ! [[ $run =~ ^[0-9]+$ ]]; then
+    echo -e "\n[cleanGenerateAndRun.sh] ERROR --> Specified Run number is invalid (must be a positive integer): ${run}\n"
+    usage
+    exit 1
 fi
+
+./cleanRun.sh $run
+cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr}
+./startHiltonRun.sh $run $nCores
 
 # This loop looks for running cmsRun jobs and waits until there are no longer any
 sleep 10 #<-- this is needed here or else the rest will be skipped
@@ -43,8 +73,8 @@ while [ $(ps -u daqlocal | grep "valgrind" | grep -v "grep" | wc -l) -gt 0 ]; do
 done
 echo "Jobs finished."
 
-# Skip repack check if specified:
-if [[ $# -ge 2 && ($2 == "skipRepack" || $3 == "skipRepack") ]]; then
+# Skip repack check if specified
+if [ "${skipRepack}" = true ] ; then
     exit
 fi
 

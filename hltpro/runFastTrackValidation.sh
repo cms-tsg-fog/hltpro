@@ -17,11 +17,12 @@ fi
 testMenu=/cdaq/cosmic/commissioning2022/MWGR/v1.2/GPU/HLT/V1
 runNumber=347945
 testGT=122X_dataRun3_HLT_v4
+maxEvents=2000
 
 ###############################
 
 printf "%s\n  %s\n\n" "Running Fast-Track Validation:" "--> will compare rates and timing of HLT menu using reference and test GlobalTags."
-printf "%s\n\n%s\n%s\n%s\n\n" "CMSSW_BASE = ${CMSSW_BASE}" "HLT Menu = ${testMenu}" "Run      = ${runNumber}" "Test GT  = ${testGT}"
+printf "%s\n\n%s\n%s\n%s\n%s\n\n" "CMSSW_BASE  = ${CMSSW_BASE}" "HLT Menu  = ${testMenu}" "Run       = ${runNumber}" "Test GT   = ${testGT}" "maxEvents = ${maxEvents}"
 sleep 2
 
 outputbasedir=/cmsnfsscratch/globalscratch/hltpro/fastTrack
@@ -29,7 +30,7 @@ mkdir -p $outputbasedir
 
 ## reference trial (GT in HLT menu)
 ./newHiltonMenu.py $testMenu
-./cleanGenerateAndRun.sh $runNumber skipRepack
+./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} --skipRepack
 
 if [ -d "${outputbasedir}/reference_run${runNumber}" ]; then
   printf "%s\n" "[runFastTrackValidation] removing directory ${outputbasedir}/reference_run${runNumber} .."
@@ -41,7 +42,7 @@ cp -r /fff/BU0/output/run$runNumber $outputbasedir/reference_run$runNumber
 
 ## test trial (test GT for fast-track validation)
 ./newHiltonMenu.py $testMenu --GT $testGT
-./cleanGenerateAndRun.sh $runNumber # don't skip repack for test GT
+./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} # don't skip repack for test GT
 
 if [ -d "${outputbasedir}/test_run${runNumber}" ]; then
   printf "%s\n" "[runFastTrackValidation] removing directory ${outputbasedir}/test_run${runNumber} .."
