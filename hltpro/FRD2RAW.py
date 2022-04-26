@@ -20,7 +20,7 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source('ErrorStreamSource',
   fileNames = cms.untracked.vstring(options.inputFiles),
   firstRun = cms.untracked.uint32(options.firstRun),
-  firstLuminosityBlockForEachRun = cms.untracked.VLuminosityBlockID(*[cms.LuminosityBlockID(options.firstLS, options.firstRun)]),
+  firstLuminosityBlockForEachRun = cms.untracked.VLuminosityBlockID(*[cms.LuminosityBlockID(options.firstRun, options.firstLS)]),
 )
 
 from EventFilter.RawDataCollector.rawDataCollectorByLabel_cfi import rawDataCollector
