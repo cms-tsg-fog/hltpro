@@ -56,11 +56,9 @@ options.register ('runUniqueKey',
 
 options.parseArguments()
 
-process.options = cms.untracked.PSet(
-    numberOfThreads = cms.untracked.uint32(options.numThreads),
-    numberOfStreams = cms.untracked.uint32(options.numFwkStreams),
-    numberOfConcurrentLuminosityBlocks = cms.untracked.uint32(2)
-)
+process.options.numberOfThreads = options.numThreads
+process.options.numberOfStreams = options.numFwkStreams
+process.options.numberOfConcurrentLuminosityBlocks = 2
 
 process.EvFDaqDirector.buBaseDir    = options.buBaseDir
 process.EvFDaqDirector.baseDir      = options.dataDir
