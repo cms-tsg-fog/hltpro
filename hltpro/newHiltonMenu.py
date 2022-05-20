@@ -102,8 +102,8 @@ def main(args):
 
     print("\nChecking for Global Tag overrides:")
 
-    reqGToverrides_ = ["cms.PSet(record = cms.string('BeamSpotOnlineLegacyObjectsRcd'), refreshTime = cms.uint64(1))",
-                       "cms.PSet(record = cms.string('BeamSpotOnlineHLTObjectsRcd'),    refreshTime = cms.uint64(1))"]
+    reqGToverrides_ = ["cms.PSet(record = cms.string('BeamSpotOnlineLegacyObjectsRcd'), refreshTime = cms.uint64(2))",
+                       "cms.PSet(record = cms.string('BeamSpotOnlineHLTObjectsRcd'),    refreshTime = cms.uint64(2))"]
     reqGToverrides = []
 
     for reqPset in reqGToverrides_: 
