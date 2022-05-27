@@ -63,7 +63,7 @@ for line in $menulines ; do
                 break
             fi
         done
-        if [ $chk -eq 0 ]; then
+        if [ $chk -eq 0 ] && [[ $line != 'L1GlobalDecision' ]]; then # ignores L1GlobalDecision (not a standard seed)
             printf "%s\n" "[L1MenuCheck_FromGT.sh] --> !! L1 seed does not exist in the L1 menu of the GT: ${line}"
             ((count++))
         fi
