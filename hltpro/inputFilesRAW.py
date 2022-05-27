@@ -17,6 +17,10 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  352417 : [ # 2022 900 GeV Collisions / ZeroBias
+    '/store/data/Run2022A/ZeroBias0/RAW/v1/000/352/417/00000/20ded97e-4d10-44fc-943d-f9ef05521e35.root'
+  ],
+
   352173 : [ # 2022 900 GeV Collisions (Unstable) / ZeroBias
     '/store/data/Commissioning2022/ZeroBias0/RAW/v1/000/352/173/00000/054f8331-1703-4ce4-b099-428e37f42ff9.root'
   ],
