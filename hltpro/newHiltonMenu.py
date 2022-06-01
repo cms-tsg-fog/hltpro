@@ -159,6 +159,7 @@ def main(args):
           'from HLTrigger.Configuration.CustomConfigs import L1REPACK',
           'process = L1REPACK(process, "{:}")'.format(args.l1_emulator),
           ''])
+        subprocess.Popen(['sed','-i','s|process = cms.Process( "HLT" )|from Configuration.Eras.Era_Run3_cff import Run3\\nprocess = cms.Process( "HLT", Run3 )|g','hlt.py'], universal_newlines=True).communicate()
 
     with open("hlt.py", "a") as f:
         f.write(menu_overrides)

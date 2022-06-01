@@ -14,9 +14,9 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/cosmic/commissioning2022/MWGR/v1.2/GPU/HLT/V1
+testMenu=/cdaq/cosmic/commissioning2022/CRAFT/v3.1/HLT/V1
 runNumber=347945
-testGT=122X_dataRun3_HLT_v4
+testGT=123X_dataRun3_HLT_v7
 maxEvents=2000
 
 ###############################
@@ -29,7 +29,7 @@ outputbasedir=/cmsnfsscratch/globalscratch/hltpro/fastTrack
 mkdir -p $outputbasedir
 
 ## reference trial (GT in HLT menu)
-./newHiltonMenu.py $testMenu
+./newHiltonMenu.py $testMenu --l1GT L1Menu_Collisions2022_v1_0_1_xml --l1-emulator uGT
 ./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} --skipRepack
 
 if [ -d "${outputbasedir}/reference_run${runNumber}" ]; then
@@ -41,7 +41,7 @@ printf "%s\n" "[runFastTrackValidation] copying /fff/BU0/output/run$runNumber to
 cp -r /fff/BU0/output/run$runNumber $outputbasedir/reference_run$runNumber
 
 ## test trial (test GT for fast-track validation)
-./newHiltonMenu.py $testMenu --GT $testGT
+./newHiltonMenu.py $testMenu --GT $testGT --l1GT L1Menu_Collisions2022_v1_0_1_xml --l1-emulator uGT
 ./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} # don't skip repack for test GT
 
 if [ -d "${outputbasedir}/test_run${runNumber}" ]; then
