@@ -21,11 +21,15 @@ fileNamesByRun_dict = {
     '/store/data/Commissioning2022/Cosmics/RAW/v1/000/347/945/00000/7ee8472c-59e0-469e-972a-a4e191dc500a.root'
   ],
 
+  346512 : [ # 2021 Pilot Beam Test / HLTPhysics (900 GeV Collisions, last run)
+    '/store/data/Commissioning2021/HLTPhysics/RAW/v1/000/346/512/00000/9e1384d9-83b8-4240-8486-950fa0e22a77.root'
+  ],
+
   346452 : [ # 2021 Pilot Beam Test / Zero/MinimumBias (900 GeV Collisions)
     '/store/data/Commissioning2021/ZeroBias0/RAW/v1/000/346/452/00000/38409370-1134-4f45-b3be-856633d53f4c.root'
     #'/store/data/Commissioning2021/MinimumBias0/RAW/v1/000/346/452/00000/49591bec-6089-4058-b2e3-399734bd9506.root'
   ],
-  
+
   345823 : [ # 2021 CRAFT / Cosmics
     '/store/data/Commissioning2021/Cosmics/RAW/v1/000/345/823/00000/06948445-a237-4d8b-91ce-727932458c03.root'
     #'/store/data/Commissioning2021/MinimumBias/RAW/v1/000/345/823/00000/2babeef2-32e9-41f9-906d-db8b43c0aa0f.root' 
