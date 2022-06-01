@@ -17,7 +17,12 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
-  352417 : [ # 2022 900 GeV Collisions / Zero/MinimumBias
+  352568 : [ # 2022 900 GeV Collisions / Zero/MinimumBias
+    '/store/data/Run2022A/MinimumBias0/RAW/v1/000/352/568/00000/d4dcc6b1-0c5d-4b89-a117-d82fbceec7d1.root'
+    #'/store/data/Run2022A/ZeroBias0/RAW/v1/000/352/568/00000/78760484-60c3-49c8-818c-4a9ae589d28f.root'
+  ],
+
+  352417 : [ # 2022 900 GeV Collisions / Zero/MinimumBias (Note: HCAL timing scan, so data can not be trusted)
     '/store/data/Run2022A/MinimumBias0/RAW/v1/000/352/417/00000/33f8bcaa-00d6-4ef6-b7b5-c682b1779030.root'
     #'/store/data/Run2022A/ZeroBias0/RAW/v1/000/352/417/00000/20ded97e-4d10-44fc-943d-f9ef05521e35.root'
   ],
