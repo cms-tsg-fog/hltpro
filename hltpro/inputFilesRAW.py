@@ -17,6 +17,11 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  352929 : [ # 2022 900 GeV Collisions MinimumBias including PPS
+    '/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/FOG/minBias9_352929_LS1_6_withPPS.root'
+    #'/eos/cms/tier0/store/data/Run2022A/MinimumBias9/RAW/v1/000/352/929/00000/01c1f45d-ed04-472c-8263-4fe58d5c4f43.root'
+  ],
+
   352568 : [ # 2022 900 GeV Collisions / Zero/MinimumBias
     '/store/data/Run2022A/MinimumBias0/RAW/v1/000/352/568/00000/d4dcc6b1-0c5d-4b89-a117-d82fbceec7d1.root'
     #'/store/data/Run2022A/ZeroBias0/RAW/v1/000/352/568/00000/78760484-60c3-49c8-818c-4a9ae589d28f.root'
