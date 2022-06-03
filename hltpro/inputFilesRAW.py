@@ -18,7 +18,7 @@
 
 fileNamesByRun_dict = {
   352929 : [ # 2022 900 GeV Collisions MinimumBias including PPS
-    '/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/FOG/minBias9_352929_LS1_6_withPPS.root'
+    'root://eoscms//eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/FOG/minBias9_352929_LS1_6_withPPS.root'
     #'/eos/cms/tier0/store/data/Run2022A/MinimumBias9/RAW/v1/000/352/929/00000/01c1f45d-ed04-472c-8263-4fe58d5c4f43.root'
   ],
 
