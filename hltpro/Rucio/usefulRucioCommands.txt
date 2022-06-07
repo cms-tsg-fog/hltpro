@@ -1,0 +1,5 @@
+rucio add-rule --help
+rucio list-rules --account $RUCIO_ACCOUNT 
+rucio rule-info [RULE_HASH] 
+rucio list-account-limits $RUCIO_ACCOUNT
+rucio list-rse-attributes T2_CH_CERN
