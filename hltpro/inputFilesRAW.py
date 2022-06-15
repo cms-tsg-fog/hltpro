@@ -17,6 +17,10 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  353087 : [ # 2022 900 GeV Collisions MinimumBias
+    '/store/data/Run2022A/MinimumBias0/RAW/v1/000/353/087/00000/87be9c0d-1baa-4e31-a454-c0bac953dc27.root'
+  ],
+
   352929 : [ # 2022 900 GeV Collisions MinimumBias including PPS
     '/store/data/Run2022A/MinimumBias9/RAW/v1/000/352/929/00000/01c1f45d-ed04-472c-8263-4fe58d5c4f43.root'
   ],
