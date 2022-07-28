@@ -1,5 +1,5 @@
 {
    "SCRAM_ARCH" : "el8_amd64_gcc10",
-   "CMSSW_VERSION" : "CMSSW_12_3_7",
+   "CMSSW_VERSION" : "CMSSW_12_4_3",
    "TRANSFER_MODE" : "TIER0_TRANSFER_ON"
 }
