@@ -25,3 +25,14 @@ Note: Some useful commands are listed in `usefulRucioCommands.txt`
 - If you want to store the whole block, find the block name by updating and running `findBlock.sh`
 - Update the `setupRule.sh` with the file name or block name and lifetime multiplication factor in days
 - After setting everything up, to create the rule, simply run `createRule.sh` 
+
+## Example
+
+```
+source setupRucio.sh 
+dasgoclient --query="dataset dataset=/HLTPhysics19/Run2022*/RAW"
+dasgoclient --query="file dataset=/EphemeralHLTPhysics19/Run2022C-v1/RAW run=355991 lumi=9"
+#edit setupRule.sh (vi setupRule.sh)
+source setupRule.sh
+source createRule.sh 
+```

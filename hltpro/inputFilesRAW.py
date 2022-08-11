@@ -17,6 +17,10 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  355991 : [ # HLTPhysics PU~55 600b
+    '/store/data/Run2022C/EphemeralHLTPhysics19/RAW/v1/000/355/991/00000/15d87e6c-f718-454b-9fc6-d3073f98e630.root'
+  ],
+
   355134 : [ # 2022 First Run 3 Collisions at 13.6 TeV / ZeroBias
     '/store/data/Run2022B/ZeroBias8/RAW/v1/000/355/134/00000/44286f48-0494-4766-b077-bb573a3e085b.root'
   ],
