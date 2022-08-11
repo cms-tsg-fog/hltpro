@@ -17,6 +17,10 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+  357271 : [ # HLTPhysics PU~55 2100b - L1Menu_2022_v1_3_0
+    '/store/data/Run2022C/EphemeralHLTPhysics19/RAW/v1/000/357/271/00000/d75a3a15-fbb2-49c4-96ff-dbc3d4fafd12.root'
+  ],
+
   355991 : [ # HLTPhysics PU~55 600b
     '/store/data/Run2022C/EphemeralHLTPhysics19/RAW/v1/000/355/991/00000/15d87e6c-f718-454b-9fc6-d3073f98e630.root'
   ],
