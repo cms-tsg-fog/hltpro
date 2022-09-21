@@ -19,7 +19,7 @@ function remove_cmssw() {
   export VO_CMS_SW_DIR="$(readlink -e $1)"
   export LANG="C"
 
-  test -n "$SCRAM_ARCH" || SCRAM_ARCH=slc7_amd64_gcc900
+  test -n "$SCRAM_ARCH" || SCRAM_ARCH=el8_amd64_gcc10
   export SCRAM_ARCH
 
   if [ ! -d ${VO_CMS_SW_DIR}/${SCRAM_ARCH} ]; then
