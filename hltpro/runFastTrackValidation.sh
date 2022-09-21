@@ -14,9 +14,9 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/cosmic/commissioning2022/CRAFT/v3.1/HLT/V1
-runNumber=347945
-testGT=123X_dataRun3_HLT_v7
+testMenu=/cdaq/physics/Run2022/2e34/v1.3.7/HLT/V2
+runNumber=357542
+testGT=124X_dataRun3_HLT_v4
 maxEvents=2000
 
 ###############################
