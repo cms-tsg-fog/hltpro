@@ -39,3 +39,7 @@ process.output = cms.OutputModule( "PoolOutputModule",
 
 process.raw = cms.Path( process.rawDataCollector )
 process.end = cms.EndPath( process.output )
+
+process.maxEvents = cms.untracked.PSet(
+    input = cms.untracked.int32( -1 )
+)
