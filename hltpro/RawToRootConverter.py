@@ -6,7 +6,7 @@ options = VarParsing.VarParsing ('analysis')
 options.parseArguments()
 
 if len(options.inputFiles)<1:
-    raise Exception("Please insert an inputFile. Eg. cmsRun RawToRootConverter.py inputFile=/store/error_stream/run356997/run356997_ls0142_index000229_fu-c2b03-37-01_pid3478586.raw outputFile=outputFile.root")
+    raise Exception("Please insert an inputFile. Eg. cmsRun RawToRootConverter.py inputFiles=/store/error_stream/run356997/run356997_ls0142_index000229_fu-c2b03-37-01_pid3478586.raw outputFile=outputFile.root")
 
 if len(options.inputFiles)>1:
     raise Exception("Please insert only one inputFile")
