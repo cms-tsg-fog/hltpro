@@ -16,7 +16,7 @@ function bootstrap_and_install_cmssw() {
   export VO_CMS_SW_DIR="$(readlink -m $1)"
   export LANG="C"
 
-  test -n "$SCRAM_ARCH" || SCRAM_ARCH=slc7_amd64_gcc900
+  test -n "$SCRAM_ARCH" || SCRAM_ARCH=el8_amd64_gcc10
   export SCRAM_ARCH
 
   # if necessary, bootstrap the area
