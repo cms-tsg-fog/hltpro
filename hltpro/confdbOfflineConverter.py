@@ -246,6 +246,7 @@ def main():
         args.remove('--verbose')
 
     arg_count = Counter(args)
+    print(arg_count)
     db_count = arg_count['--v1'] + arg_count['--v2'] + arg_count['--v3'] + arg_count['--v3-beta'] + arg_count['--v3-test'] + arg_count['--daq']
     if db_count>1:
         sys.stderr.write( 'ERROR: conflicting database version specifications: "--v1", "--v2", "--v3", "--v3-beta", "--v3-test", and "--daq" are mutually exclusive options' )
@@ -319,6 +320,7 @@ def main():
         if not db in OfflineConverter.databases[version]:
             sys.stderr.write( "ERROR: database version \"%s\" incompatible with specification \"%s\"\n" % (version, db) )
             sys.exit(1)
+    #print(version, db, verbose, proxy, proxy_host,proxy_port)
     converter = OfflineConverter(version = version, database = db, verbose = verbose,
                                  proxy = proxy, proxyHost = proxy_host, proxyPort=proxy_port)
     out, err = converter.query( * args )
