@@ -17,6 +17,9 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    362047:[
+        '/store/data/Run2022F/Cosmics/RAW/v1/000/362/047/00000/20543d76-a962-41e9-bf6a-5a870707527a.root',
+    ],
     361468: [  # EphemeralHLTPhysics, Run2022F
         '/store/data/Run2022F/EphemeralHLTPhysics0/RAW/v1/000/361/468/00000/00095ea5-792d-461a-93cb-0a44f9bfe98e.root',
         '/store/data/Run2022F/EphemeralHLTPhysics0/RAW/v1/000/361/468/00000/01ffc938-4a3c-4fcf-9f47-2bb40c3771dc.root',
