@@ -17,6 +17,7 @@ fi
 testMenu=/cdaq/physics/Run2022/2e34/v1.5.0/HLT/V13
 runNumber=361468
 testGT=124X_dataRun3_HLT_v7
+>>>>>>> a97d4338585a7bcc6092ca500ee528a4e386d4a7
 maxEvents=2000
 
 ###############################
