@@ -246,7 +246,7 @@ def main():
         args.remove('--verbose')
 
     arg_count = Counter(args)
-    print(arg_count)
+    #print(arg_count)
     db_count = arg_count['--v1'] + arg_count['--v2'] + arg_count['--v3'] + arg_count['--v3-beta'] + arg_count['--v3-test'] + arg_count['--daq']
     if db_count>1:
         sys.stderr.write( 'ERROR: conflicting database version specifications: "--v1", "--v2", "--v3", "--v3-beta", "--v3-test", and "--daq" are mutually exclusive options' )
