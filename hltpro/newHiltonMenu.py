@@ -53,7 +53,7 @@ def main(args):
 
     print(("Dumping",args.menu,"from ConfDB..."))
     hlt_cfg_cmd = [scripts_dir+'/hltConfigFromDB', '--online', '--configName', args.menu]
-#    hlt_cfg_cmd += ['--services', '-PrescaleService'] # why? defies the purposes of args.unprescale
+    hlt_cfg_cmd += ['--services', '-PrescaleService'] # why? defies the purposes of args.unprescale
     if args.unprescale:
         print("Removing HLT prescales...")
         hlt_cfg_cmd.extend(["--services", "-PrescaleService"])
