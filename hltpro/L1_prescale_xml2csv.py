@@ -10,7 +10,7 @@
 # Mostly useful for when the L1 menu changes.
 # The logic is: L1 Menu maps numbersToNames, RunSettings key maps namesToColumns
 # Changed to be compatible with python3
-# Now adding warnings in stderr for L1 bits missing either in the RunSeetings key
+# Now adding warnings in stderr for L1 bits missing either in the RunSettings key
 # or in the L1Menu XML itself.
 
 from __future__ import print_function
@@ -33,8 +33,8 @@ class bcolors:
     UNDERLINE = "\033[4m"
 
 
-L1PrescalesName = "90mbetastartL1.xml"
-L1MenuName = "L1Menu_Special2018_v1_1_0-d1.xml"
+L1PrescalesName = "BSRT_update.xml"
+L1MenuName = "L1Menu_Collisions2022_v1_3_0"
 
 numbersToNames = dict()
 namesToColumns = dict()

@@ -46,8 +46,11 @@ elif ! [[ $run =~ ^[0-9]+$ ]]; then
     exit 1
 fi
 
+echo ./cleanRun.sh $run
 ./cleanRun.sh $run
+echo cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr}
 cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr}
+echo ./startHiltonRun.sh $run $nCores
 ./startHiltonRun.sh $run $nCores
 
 # This loop looks for running cmsRun jobs and waits until there are no longer any
@@ -115,5 +118,6 @@ for streamdir in "${streamList[@]}"; do
 
     cat ${inpfiles} > ${newfile}
 
+    echo cmsRun RunRepackCfg.py ${newfile} #> testRepack/output/$stream.log
     cmsRun RunRepackCfg.py ${newfile} #> testRepack/output/$stream.log
 done
