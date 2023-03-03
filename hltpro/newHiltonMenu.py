@@ -53,14 +53,14 @@ def main(args):
 
     print(("Dumping",args.menu,"from ConfDB..."))
     hlt_cfg_cmd = [scripts_dir+'/hltConfigFromDB', '--online', '--configName', args.menu]
-#    hlt_cfg_cmd += ['--services', '-PrescaleService'] # why? defies the purposes of args.unprescale
+    hlt_cfg_cmd += ['--services', '-PrescaleService'] # why? defies the purposes of args.unprescale
     if args.unprescale:
         print("Removing HLT prescales...")
         hlt_cfg_cmd.extend(["--services", "-PrescaleService"])
     if args.converter!="daq":
         print(f"Running a non standard ConfDB converter {args.converter}")
     hlt_cfg_cmd.append(f"--{args.converter}")
-
+    print(" ".join(hlt_cfg_cmd))
     out,err = subprocess.Popen(hlt_cfg_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True).communicate()
     if err:
         print("error dumping menu:")

@@ -17,6 +17,13 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    363862:[
+        '/store/data/Commissioning2023/Cosmics/RAW/v1/000/363/862/00000/8df101a9-b057-419d-93a4-06acd15d9f14.root',
+    ],
+    363833: [  # MWGR 2 2023 - overnight run
+        '/store/data/Commissioning2023/Cosmics/RAW/v1/000/363/833/00000/b949e1a7-935d-4ecf-9ee2-084ac67dd3bd.root',
+        '/store/data/Commissioning2023/Cosmics/RAW/v1/000/363/833/00000/bbe32f6e-8934-43e0-a29b-8371785882fb.root',
+    ],
     362047:[
         '/store/data/Run2022F/Cosmics/RAW/v1/000/362/047/00000/20543d76-a962-41e9-bf6a-5a870707527a.root',
     ],
