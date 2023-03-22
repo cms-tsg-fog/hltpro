@@ -17,7 +17,10 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
-    363862:[
+    364997 : [
+        '/store/data/Commissioning2023/Cosmics/RAW/v2/000/364/997/00000/3013b9b9-bafd-4de2-98f3-74424cbd47aa.root',
+    ],
+    363862 : [
         '/store/data/Commissioning2023/Cosmics/RAW/v1/000/363/862/00000/8df101a9-b057-419d-93a4-06acd15d9f14.root',
     ],
     363833: [  # MWGR 2 2023 - overnight run
@@ -66,6 +69,9 @@ fileNamesByRun_dict = {
     ],
     359686: [  # HLTPhysics only for FastTrackValidation test
         '/store/data/Run2022E/HLTPhysics/RAW/v1/000/359/686/00000/062f8a76-74e8-4e9d-be29-d0e87facf09c.root'
+    ],
+    357735: [
+        '/store/data/Run2022D/ZeroBias/RAW/v1/000/357/735/00000/03e2d5bb-efac-4b56-8149-fbe68152c9c3.root'
     ],
     357542: [  # HLTPhysics 2400b
         '/store/data/Run2022D/EphemeralHLTPhysics6/RAW/v1/000/357/542/00000/004e561f-17bd-48ae-915c-33589bc0e4eb.root'
