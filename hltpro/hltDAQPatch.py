@@ -63,21 +63,32 @@ process.options.numberOfConcurrentLuminosityBlocks = 2
 process.EvFDaqDirector.buBaseDir    = options.buBaseDir
 process.EvFDaqDirector.baseDir      = options.dataDir
 process.EvFDaqDirector.runNumber    = options.runNumber
+process.EvFDaqDirector.fileBrokerHost = options.fileBrokerHost
+process.EvFDaqDirector.useFileBroker  = True
 
+#parameter will be removed from future releases
 try:
-     process.EvFDaqDirector.selectedTransferMode = options.transferMode
+    process.EvFDaqDirector.fileBrokerHostFromCfg = False
 except:
-     print("unable to set process.EvFDaqDirector.selectedTransferMode=", options.transferMode)
+    print("Unable to set process.EvFDaqDirector.fileBrokerHostFromCfg = False")
 
-C_ALGO_VALUE = ""
+#pass transfer mode to the director module for setting stream destinations
+try:
+    process.EvFDaqDirector.selectedTransferMode = options.transferMode
+except:
+    print("unable to set process.EvFDaqDirector.selectedTransferMode =", options.transferMode)
+
+#options to override compression algorithm and level for the streamer output
+C_LEVEL_UNDEFINED = -1
 C_ALGO_UNDEFINED = ""
 for moduleName in process.__dict__['_Process__outputmodules']:
     modified_module = getattr(process,moduleName)
-    modified_module.compression_level=cms.untracked.int32(1)
-    if C_ALGO_VALUE != C_ALGO_UNDEFINED:
-        modified_module.compression_algorithm=cms.untracked.string(C_ALGO_VALUE)
+    if 1 != C_LEVEL_UNDEFINED:
+        modified_module.compression_level=cms.untracked.int32(1)
+    if "" != C_ALGO_UNDEFINED:
+        modified_module.compression_algorithm=cms.untracked.string("")
 
-# to be replaced with variable passed by hltd on command line
+#enable or disable parking depending on the transfer mode
 try:
     if options.transferMode.endswith("_NOPARKING"):
         process.hltEnableParking.result = False
@@ -86,21 +97,7 @@ try:
 except:
     pass
 
-try:
-    process.EvFDaqDirector.useFileBroker  = True
-except:
-    print("No process.EvFDaqDirector.useFileBroker in Python configuration")
-
-if options.fileBrokerHost:
-    try:
-        process.EvFDaqDirector.fileBrokerHostFromCfg = False
-    except:
-        print("Unable to set process.EvFDaqDirector.fileBrokerHostFromCfg = False")
-    try:
-        process.EvFDaqDirector.fileBrokerHost = options.fileBrokerHost
-    except:
-        print("Unable to set process.EvFDaqDirector.fileBrokerHost =", options.fileBrokerHost)
-
+#unique run key used to create a separate squid cache grouping per run for lumi-based conditions
 try:
     process.GlobalTag.frontierKey = cms.untracked.string(options.runUniqueKey)
     print("Set GlobalTag.frontierKey to", options.runUniqueKey)
