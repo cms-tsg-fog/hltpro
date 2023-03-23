@@ -83,8 +83,8 @@ C_LEVEL_UNDEFINED = -1
 C_ALGO_UNDEFINED = ""
 for moduleName in process.__dict__['_Process__outputmodules']:
     modified_module = getattr(process,moduleName)
-    if 1 != C_LEVEL_UNDEFINED:
-        modified_module.compression_level=cms.untracked.int32(1)
+    if -1 != C_LEVEL_UNDEFINED:
+        modified_module.compression_level=cms.untracked.int32(-1)
     if "" != C_ALGO_UNDEFINED:
         modified_module.compression_algorithm=cms.untracked.string("")
 
