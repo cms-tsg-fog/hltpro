@@ -54,7 +54,7 @@ synchronize:
 
       sed 
       -e "s/\${HLT_COMPRESSION_ALGORITHM}/""/" 
-      -e "s/\${HLT_COMPRESSION_LEVEL}/1/" 
+      -e "s/\${HLT_COMPRESSION_LEVEL}/-1/" 
       -e "s/\${USE_FILE_BROKER_PY_BOOLEAN}/True/" 
       hltpro/hltDAQPatch.py_template > hltpro/hltDAQPatch.py
 
