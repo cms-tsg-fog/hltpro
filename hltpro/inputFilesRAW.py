@@ -17,6 +17,13 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    366504 : [ # Run2023B, 13.6 TeV stable beams, 75b fill
+        '/store/data/Run2023B/EphemeralHLTPhysics13/RAW/v1/000/366/504/00000/a13518f4-7261-43fb-b8a4-b3377c3c5e04.root',
+    ],
+    366451 : [ # Run2023B, 13.6 TeV stable beams, 12b fill
+        '/store/data/Run2023B/EphemeralZeroBias0/RAW/v1/000/366/451/00000/06d3f724-cdb8-455f-8ba7-dbe2652ca526.root',
+        '/store/data/Run2023B/EphemeralZeroBias0/RAW/v1/000/366/451/00000/09662c68-7df8-4524-996b-ad53a92e98dc.root',
+    ],
     366043 :    
         '/store/data/Run2023A/EphemeralZeroBias0/RAW/v1/000/366/043/00000/d5d15bdb-780a-444e-b9fb-7f2a9080ef4f.root',                           
         '/store/data/Run2023A/EphemeralZeroBias0/RAW/v1/000/366/043/00000/5f470ec3-fa59-4c52-8b84-f9aec268b9ae.root',                           
