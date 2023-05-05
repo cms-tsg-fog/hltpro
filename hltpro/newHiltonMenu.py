@@ -84,7 +84,10 @@ def main(args):
     # convert the hlt menu for online use in the Hilton
     # run the menu checker script
     print("\nRunning MenuChecker.py")
-    subprocess.Popen(["python3","MenuChecker.py",args.menu],universal_newlines=True).communicate()
+    if args.mode:
+         subprocess.Popen(["python3","MenuChecker.py",args.menu,args.mode],universal_newlines=True).communicate()
+    else:
+         subprocess.Popen(["python3","MenuChecker.py",args.menu],universal_newlines=True).communicate()
 
     # check to make sure no empty event content in any of the streams
     print("\nchecking event content output commands...")
@@ -183,6 +186,7 @@ def main(args):
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='takes a HLT menu in ORCOFF and changes the menu on the Hilton')
     parser.add_argument('menu',help='HLT menu location in ORCOFF')
+    parser.add_argument('--mode',type=str,help='set HLT menu mode for event content check')
     parser.add_argument('--GT',help='Overrides the Global Tag in the resulting Hilton menu with this GT')
     parser.add_argument('--l1XML',help='Overrides the L1 menu in the resulting Hilton menu via an XML file ')
     parser.add_argument('--l1GT',help='Override the L1 menu in the resulting Hilton menu via a GlobalTag record')
