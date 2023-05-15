@@ -14,16 +14,16 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/physics/firstCollisions23/v1.1/HLT/V2
-runNumber=361468
-testGT=130X_dataRun3_HLT_v1
-maxEvents=2000
+testMenu=/cdaq/test/missirol/test/2023/week20/CMSHLT_2799/Test01/HLT/V10
+runNumber=367262
+testGT=130X_dataRun3_HLT_v2
+maxEvents=500
 
-# no HLT prescales
-testMenuOpts="--unprescale"
+## no HLT prescales
+#testMenuOpts="--unprescale"
 
-## no HLT prescales + re-emulation of Level-1 Global Trigger
-#testMenuOpts="--unprescale --l1-emu uGT --l1GT L1Menu_Collisions2023_v1_0_0_xml"
+# no HLT prescales + re-emulation of Level-1 Global Trigger
+testMenuOpts="--unprescale --l1-emu uGT --l1GT L1Menu_Collisions2023_v1_1_0-v2_xml"
 
 ###############################
 
