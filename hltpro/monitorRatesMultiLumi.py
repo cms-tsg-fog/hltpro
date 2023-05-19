@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/bin/env python3
 
 # Sam modified version of the script to deal with multiple lumisections
 import sys
@@ -35,7 +35,7 @@ def monitorRates(jsndata_files,outputRates):
         raw_pieces=file_raw.split( '_' , 3 ) # this is not an emoji!
 
         if len(raw_pieces) < 4:
-           print 'Invalid input file:', file_raw
+           print('Invalid input file:', file_raw)
            return False
 
         run_number=raw_pieces[0][3:] # 123456
@@ -44,7 +44,7 @@ def monitorRates(jsndata_files,outputRates):
         extra=raw_pieces[3]
 
         if stream != "HLTRates" and stream != "L1Rates":
-           print 'Unrecognized rate stream:', raw_pieces[2]
+           print('Unrecognized rate stream:', raw_pieces[2])
            return False
     
         # Open the jsndata file
@@ -53,7 +53,7 @@ def monitorRates(jsndata_files,outputRates):
         try:
             rates_json=open(jsndata_file).read()
         except (OSError, IOError) as e:
-            print 'Error finding or opening jsndata file: "'+jsndata_file+'"'
+            print('Error finding or opening jsndata file: "'+jsndata_file+'"')
             return False
         rates=json.loads(rates_json)
 
@@ -68,41 +68,47 @@ def monitorRates(jsndata_files,outputRates):
             try:
                 HLT_json=open(json_dir+'/'+ini_filename).read()
             except (OSError, IOError) as e:
-                print 'Error finding or opening ini file: "'+json_dir+'/'+ini_filename+'"'
+                print('Error finding or opening ini file: "'+json_dir+'/'+ini_filename+'"')
             HLT_names = json.loads(HLT_json)
-            
-                # Get the rates for each trigger path
+
+            # Get the rates for each trigger path
             for i, pathname in enumerate(HLT_names['Path-Names']):
                 if pathname not in HLT_rates:
                     HLT_rates[pathname] = {}
                 if 'L1PASS' in HLT_rates[pathname]:
-                    #print "adding"
-                    HLT_rates[pathname]['L1PASS']   += rates['data'][2][i]
-                    HLT_rates[pathname]['PSPASS']   += rates['data'][3][i]
-                    HLT_rates[pathname]['PACCEPT']  += rates['data'][4][i]
-                    HLT_rates[pathname]['PREJECT']  += rates['data'][5][i]
-                    HLT_rates[pathname]['PEXCEPT']  += rates['data'][6][i]
+                    #print("adding")
+                    HLT_rates[pathname]['L1PASS']  += rates['data'][2][i]
+                    HLT_rates[pathname]['PSPASS']  += rates['data'][3][i]
+                    HLT_rates[pathname]['PACCEPT'] += rates['data'][4][i]
+                    HLT_rates[pathname]['PREJECT'] += rates['data'][5][i]
+                    HLT_rates[pathname]['PEXCEPT'] += rates['data'][6][i]
                 else:
-                 #   print "not adding"
+                    #print("not adding")
                     HLT_rates[pathname]['L1PASS']   = rates['data'][2][i]
                     HLT_rates[pathname]['PSPASS']   = rates['data'][3][i]
                     HLT_rates[pathname]['PACCEPT']  = rates['data'][4][i]
                     HLT_rates[pathname]['PREJECT']  = rates['data'][5][i]
                     HLT_rates[pathname]['PEXCEPT']  = rates['data'][6][i]
 
+    # width of "HLT Path Name" column (5 + length of name of HLT Path with longest name)
+    pathColWidth = 5 + len(max(HLT_rates.keys(), key=len))
+
     sys.stdout.write("\x1b[0;0;32m")
-    if outputRates==True:  print "%-60s       %12s    %12s    %12s" % ("HLT Path Name", "L1 seed rate", "Prescale rate", "HLT path rate")
-    else: print "%-60s       %12s    %12s    %12s" % ("HLT Path Name", "L1 seed counts", "Prescale counts", "HLT path counts")
+    if outputRates:
+        print(f"%-{pathColWidth}s       %12s    %12s    %12s" % ("HLT Path Name", "L1 seed rate", "Prescale rate", "HLT path rate"))
+    else:
+        print(f"%-{pathColWidth}s       %12s    %12s    %12s" % ("HLT Path Name", "L1 seed counts", "Prescale counts", "HLT path counts"))
     sys.stdout.write("\x1b[0;0m")
-    for (pathname, rate) in HLT_rates.iteritems():
-        if outputRates==True:
+
+    for (pathname, rate) in HLT_rates.items():
+        if outputRates:
             rateConversion=1./SECS_PER_LUMI/nrLumiSecs
-            outputStr="%-60s    %10.2f Hz    %10.2f Hz    %10.2f Hz"
+            outputStr=f"%-{pathColWidth}s    %10.2f Hz    %10.2f Hz    %10.2f Hz"
         else:
             rateConversion=1.
-            outputStr="%-60s    %10i    %10i     %10i "
+            outputStr=f"%-{pathColWidth}s    %10i    %10i     %10i "
 
-        print  outputStr % (pathname, rate['L1PASS'] * rateConversion, rate['PSPASS'] * rateConversion, rate['PACCEPT'] * rateConversion)
+        print(outputStr % (pathname, rate['L1PASS'] * rateConversion, rate['PSPASS'] * rateConversion, rate['PACCEPT'] * rateConversion))
     print
 
 if __name__ == '__main__':
