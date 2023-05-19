@@ -37,6 +37,12 @@ def l1gt_override(tagname):
     l1gt_str+=")\n"
     return l1gt_str
 
+def psColumn_override(colname):
+    """ Returns the string needed to customise the HLT python configuration in order to choose a PS column."""
+    pscol_str=f"process.PrescaleService.lvl1DefaultLabel = '{colname}'\n"
+    pscol_str+="process.PrescaleService.forceDefault = True\n"
+    return pscol_str
+
 def gt_override(tagname):
     """ Returns a string of the python necessary to override the GT."""
     gt_str="process.GlobalTag.globaltag = '%s'\n" % tagname
@@ -51,15 +57,18 @@ def main(args):
 
     scripts_dir = '.'
 
-    print(("Dumping",args.menu,"from ConfDB..."))
+    print("Dumping",args.menu,"from ConfDB...")
     hlt_cfg_cmd = [scripts_dir+'/hltConfigFromDB', '--online', '--configName', args.menu]
-    hlt_cfg_cmd += ['--services', '-PrescaleService'] # why? defies the purposes of args.unprescale
-    if args.unprescale:
+
+    # remove PrescaleService if running unprescaled
+    if args.prescale == 'none':
         print("Removing HLT prescales...")
         hlt_cfg_cmd.extend(["--services", "-PrescaleService"])
+
     if args.converter!="daq":
         print(f"Running a non standard ConfDB converter {args.converter}")
     hlt_cfg_cmd.append(f"--{args.converter}")
+
     print(" ".join(hlt_cfg_cmd))
     out,err = subprocess.Popen(hlt_cfg_cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True).communicate()
     if err:
@@ -69,14 +78,14 @@ def main(args):
     with open("hlt.py", "w") as f:
         f.write(out)
 
-    if args.unprescale:
+    if args.prescale == 'none':
         subprocess.Popen(['sed','-i','s~+ process.hltPSColumnMonitor~~g','hlt.py'],universal_newlines=True).communicate() 
 
     # check for errors in the menu
     print("Checking dump consistency")
     try:
         from hlt import process
-        print(("   Found HLT version: \t%s" % process.HLTConfigVersion.tableName.value()))
+        print("   Found HLT version: \t%s" % process.HLTConfigVersion.tableName.value())
     except:
         print("   HLT menu (dump is in hlt.py) is corrupted, most of the time this is a typo in menu name")
         raise SystemExit(1)
@@ -91,14 +100,9 @@ def main(args):
     for output_module_name in list(process.outputModules.keys()):
         output_commands = process.outputModules[output_module_name].outputCommands.value()
         if len(output_commands) == 0:
-            print(("\tWARNING: OutputModule %s has no event content!" % output_module_name))
+            print("\tWARNING: OutputModule %s has no event content!" % output_module_name)
         elif output_commands[0].find('drop *') < 0:
-            print(("\tWARNING: OutputModule %s missing drop * command!" % output_module_name))
-
-    globaltag = process.GlobalTag.globaltag.value()
-    print(" ")
-    print(("Checking L1 seeds in HLT menu against L1 XML in Global Tag",globaltag))
-    subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh", "hlt.py",globaltag],universal_newlines=True).communicate()
+            print("\tWARNING: OutputModule %s missing drop * command!" % output_module_name)
 
     print("\nChecking for Global Tag overrides:")
 
@@ -131,35 +135,54 @@ def main(args):
         for reqPset in reqGToverrides_:
             print(reqPset)
 
-    print("\nOverriding menu with the DAQ patch:")
+    print("\nOverriding menu with the DAQ patch")
     with open(scripts_dir+"/hltDAQPatch.py") as f:
         menu_overrides = f.read()
 
     if args.GT is not None:
-        print(("Overriding GT for Hilton config with GT:", args.GT))
+        print(f'Overriding GT for Hilton config with GT: "{args.GT}"')
         menu_overrides += '\n'+gt_override(args.GT)
 
-    if args.l1XML is not None:
-        print(("Overriding L1 menu for Hilton config with XML:", args.l1XML))
-        menu_overrides += '\n'+l1xml_override(args.l1XML)
-        # disable consistency check between L1 menus in GT and .xml file (if the two are not different, no need to use the .xml file)
-        menu_overrides += 'process.hltGtStage2ObjectMap.RequireMenuToMatchAlgoBlkInput = False\n'
-        print("Rechecking HLT menu for missing seeds in XML")
-        # hlt.py is just used to check the list of seeds, so it does not matter that we have not rewritten the XML override to it yet
-        subprocess.Popen([scripts_dir+"/L1MenuCheck.sh", "hlt.py", args.l1XML],universal_newlines=True).communicate()
+    # change L1T menu (name of L1TMenu tag in conditions database)
+    if args.l1_menu_tag is not None:
+        print(f'Overriding L1T menu for Hilton config with conditions-db tag: "{args.l1_menu_tag}"')
+        menu_overrides += '\n'+l1gt_override(args.l1_menu_tag)
 
-    if args.l1GT is not None:
-        print(("Overriding L1 menu for Hilton config with GT record:", args.l1GT))
-        menu_overrides += '\n'+l1gt_override(args.l1GT)
+    # change L1T menu (path to .xml file)
+    elif args.l1_menu_xml is not None:
+        print(f'Overriding L1 menu for Hilton config with XML: "{args.l1_menu_xml}"')
+        menu_overrides += '\n'+l1xml_override(args.l1_menu_xml)
+        print("Checking HLT menu for missing L1T seeds in XML")
+        # hlt.py is just used to check the list of seeds, so it does not matter that we have not rewritten the XML override to it yet
+        subprocess.Popen([scripts_dir+"/L1MenuCheck.sh", "hlt.py", args.l1_menu_xml],universal_newlines=True).communicate()
+
+    # if no customisation of L1T menu, the L1T menu of the GT is used, and the L1T seeds are checked based on the GT
+    else:
+        globaltag = args.GT if args.GT is not None else process.GlobalTag.globaltag.value()
+        print(f'\nChecking L1T seeds in HLT menu against algos of L1T menu in the Global Tag: "{globaltag}"')
+        subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh", "hlt.py",globaltag],universal_newlines=True).communicate()
 
     if args.l1_emulator is not None:
         # Ref: https://github.com/cms-sw/cmssw/blob/CMSSW_12_0_0_pre4/HLTrigger/Configuration/python/Tools/confdb.py#L457-L465
         menu_overrides += '\n'.join(['',
-          '# run the Full L1T emulator, then repack the data into a new RAW collection, to be used by the HLT',
+          '# run the L1T emulator, then repack the data into a new RAW collection, to be used by the HLT',
           'from HLTrigger.Configuration.CustomConfigs import L1REPACK',
           'process = L1REPACK(process, "{:}")'.format(args.l1_emulator),
           ''])
         subprocess.Popen(['sed','-i','s|process = cms.Process( "HLT" )|from Configuration.Eras.Era_Run3_cff import Run3\\nprocess = cms.Process( "HLT", Run3 )|g','hlt.py'], universal_newlines=True).communicate()
+
+    if args.prescale != 'none':
+
+        if not hasattr(process, 'PrescaleService'):
+            print('\n>>> WARNING: the HLT configuration does not contain a PrescalService --> "--prescale {args.prescale}" will be ignored\n')
+
+        elif args.prescale not in process.PrescaleService.lvl1Labels:
+            print(f'\n>>> ERROR: the selected PS column does not exist in the HLT configuration: "{args.prescale}"\n')
+            raise SystemExit(1)
+
+        else:
+            print(f'Overriding Hilton config to use PS column: "{args.prescale}"')
+            menu_overrides += '\n'+psColumn_override(args.prescale)
 
     with open("hlt.py", "a") as f:
         f.write(menu_overrides)
@@ -178,19 +201,40 @@ def main(args):
     
     print("\nfff Parameters:")
     print("(from /tmp/hltpro/hlt/fffParameters.jsn)")
-    print((open("/tmp/hltpro/hlt/fffParameters.jsn").read()))
+    print(open("/tmp/hltpro/hlt/fffParameters.jsn").read())
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='takes a HLT menu in ORCOFF and changes the menu on the Hilton')
+
+    # HLT menu (name of ConfDB configuration)
     parser.add_argument('menu',help='HLT menu location in ORCOFF')
-    parser.add_argument('--GT',help='Overrides the Global Tag in the resulting Hilton menu with this GT')
-    parser.add_argument('--l1XML',help='Overrides the L1 menu in the resulting Hilton menu via an XML file ')
-    parser.add_argument('--l1GT',help='Override the L1 menu in the resulting Hilton menu via a GlobalTag record')
-                        # example would be "--l1GT L1Menu_Collisions2018_v2_1_0_xml" (see https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideL1TriggerMenu)
-    parser.add_argument('--l1-emulator', dest = 'l1_emulator', action = 'store', metavar = 'EMULATOR', nargs = '?',
-                        choices = ['Full', 'FullMC', 'Full2015Data', 'uGT'], default = None, const = 'Full',
-                        help = 'Run the Full stage-2 L1T emulator.')
-    parser.add_argument('--unprescale',action='store_true',help='Remove HLT prescales')
+
+    # ConfDB converter
     parser.add_argument('--converter',default="daq",help='Converter to  use (daq, v2, v3, v3-dev, v3-test)')
+
+    # GlobalTag [optional]
+    parser.add_argument('--GT',help='Overrides the Global Tag in the resulting Hilton menu with this GT')
+
+    # choice of HLT-prescale column [optional]
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--prescale', dest = 'prescale', action = 'store', default = 'none',
+                       help = 'Force using one specific prescale column.\nUse "--prescale none" to run without any HLT prescales' )
+    group.add_argument('--no-prescale', dest = 'prescale', action = 'store_const', const = 'none', help = 'Same as "--prescale none"' )
+    group.add_argument('--unprescale', dest = 'prescale', action = 'store_const', const = 'none', help = 'Same as "--prescale none"' )
+
+    # L1T emulator [optional]
+    parser.add_argument('--l1-emulator', dest = 'l1_emulator', action = 'store', metavar = 'L1T_EMULATOR', nargs = '?',
+                        choices = ['Full', 'FullMC', 'uGT'], default = None, const = 'Full',
+                        help = 'Run the Full stage-2 L1T emulator.')
+
+    # L1T menu (tag of conditions database, or .xml file) [optional]
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--l1Xml', dest = 'l1_menu_xml', action = 'store', metavar = 'L1T_MENU', default = None,
+                        help = 'Overrides the L1 menu in the resulting Hilton menu via an XML file')
+    group.add_argument('--l1', dest = 'l1_menu_tag', action = 'store', metavar = 'L1T_MENU', default = None,
+                       help = 'Override the L1 menu in the resulting Hilton menu by overriding the tag of the record L1TUtmTriggerMenuRcd via the GlobalTag ESSource module')
+
+    # parse arguments
     args = parser.parse_args()
+
     main(args)
