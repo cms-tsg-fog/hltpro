@@ -139,18 +139,18 @@ def main(args):
     with open(scripts_dir+"/hltDAQPatch.py") as f:
         menu_overrides = f.read()
 
-    if args.GT is not None:
-        print(f'Overriding GT for Hilton config with GT: "{args.GT}"')
-        menu_overrides += '\n'+gt_override(args.GT)
+    if args.globaltag != None:
+        print(f'Overriding GT for Hilton config with GT: "{args.globaltag}"')
+        menu_overrides += '\n'+gt_override(args.globaltag)
 
     # change L1T menu (name of L1TMenu tag in conditions database)
-    if args.l1_menu_tag is not None:
+    if args.l1_menu_tag != None:
         print(f'Overriding L1T menu for Hilton config with conditions-db tag: "{args.l1_menu_tag}"')
         menu_overrides += '\n'+l1gt_override(args.l1_menu_tag)
 
     # change L1T menu (path to .xml file)
-    elif args.l1_menu_xml is not None:
-        print(f'Overriding L1 menu for Hilton config with XML: "{args.l1_menu_xml}"')
+    elif args.l1_menu_xml != None:
+        print(f'Overriding L1T menu for Hilton config with XML: "{args.l1_menu_xml}"')
         menu_overrides += '\n'+l1xml_override(args.l1_menu_xml)
         print("Checking HLT menu for missing L1T seeds in XML")
         # hlt.py is just used to check the list of seeds, so it does not matter that we have not rewritten the XML override to it yet
@@ -158,11 +158,11 @@ def main(args):
 
     # if no customisation of L1T menu, the L1T menu of the GT is used, and the L1T seeds are checked based on the GT
     else:
-        globaltag = args.GT if args.GT is not None else process.GlobalTag.globaltag.value()
+        globaltag = args.globaltag if args.globaltag != None else process.GlobalTag.globaltag.value()
         print(f'\nChecking L1T seeds in HLT menu against algos of L1T menu in the Global Tag: "{globaltag}"')
         subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh", "hlt.py",globaltag],universal_newlines=True).communicate()
 
-    if args.l1_emulator is not None:
+    if args.l1_emulator != None:
         # Ref: https://github.com/cms-sw/cmssw/blob/CMSSW_12_0_0_pre4/HLTrigger/Configuration/python/Tools/confdb.py#L457-L465
         menu_overrides += '\n'.join(['',
           '# run the L1T emulator, then repack the data into a new RAW collection, to be used by the HLT',
@@ -198,7 +198,7 @@ def main(args):
     print("\nHLT Configuration:")
     print("(heading of /tmp/hltpro/hlt/HltConfig.py)")
     subprocess.Popen(["head","-1","/tmp/hltpro/hlt/HltConfig.py"],universal_newlines=True).communicate()
-    
+
     print("\nfff Parameters:")
     print("(from /tmp/hltpro/hlt/fffParameters.jsn)")
     print(open("/tmp/hltpro/hlt/fffParameters.jsn").read())
@@ -213,26 +213,26 @@ if __name__=='__main__':
     parser.add_argument('--converter',default="daq",help='Converter to  use (daq, v2, v3, v3-dev, v3-test)')
 
     # GlobalTag [optional]
-    parser.add_argument('--GT',help='Overrides the Global Tag in the resulting Hilton menu with this GT')
+    parser.add_argument('--globaltag',help='Overrides the Global Tag in the resulting Hilton menu with this GT')
 
-    # choice of HLT-prescale column [optional]
+    # choice of HLT-prescale column, if any [optional]
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--prescale', dest = 'prescale', action = 'store', default = 'none',
-                       help = 'Force using one specific prescale column.\nUse "--prescale none" to run without any HLT prescales' )
+                       help = 'Run in prescale column named PRESCALE (use "--prescale none" to run without any HLT prescales)' )
     group.add_argument('--no-prescale', dest = 'prescale', action = 'store_const', const = 'none', help = 'Same as "--prescale none"' )
     group.add_argument('--unprescale', dest = 'prescale', action = 'store_const', const = 'none', help = 'Same as "--prescale none"' )
 
     # L1T emulator [optional]
     parser.add_argument('--l1-emulator', dest = 'l1_emulator', action = 'store', metavar = 'L1T_EMULATOR', nargs = '?',
                         choices = ['Full', 'FullMC', 'uGT'], default = None, const = 'Full',
-                        help = 'Run the Full stage-2 L1T emulator.')
+                        help = 'Re-emulate the L1-Trigger results')
 
     # L1T menu (tag of conditions database, or .xml file) [optional]
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('--l1Xml', dest = 'l1_menu_xml', action = 'store', metavar = 'L1T_MENU', default = None,
-                        help = 'Overrides the L1 menu in the resulting Hilton menu via an XML file')
     group.add_argument('--l1', dest = 'l1_menu_tag', action = 'store', metavar = 'L1T_MENU', default = None,
                        help = 'Override the L1 menu in the resulting Hilton menu by overriding the tag of the record L1TUtmTriggerMenuRcd via the GlobalTag ESSource module')
+    group.add_argument('--l1Xml', dest = 'l1_menu_xml', action = 'store', metavar = 'L1T_MENU', default = None,
+                        help = 'Overrides the L1 menu in the resulting Hilton menu via an XML file')
 
     # parse arguments
     args = parser.parse_args()
