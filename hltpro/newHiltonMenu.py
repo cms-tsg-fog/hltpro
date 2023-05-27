@@ -55,9 +55,12 @@ def main(args):
         print("You need to do cmsenv first")
         raise SystemExit(1)
 
+    if args.l1_menu_xml == None and args.run_number == None:
+        raise RuntimeError('failed to specify run number [-r] (necessary to choose IOV of L1T-menu tag, see --help)')
+
     scripts_dir = '.'
 
-    print("Dumping",args.menu,"from ConfDB...")
+    print("Dumping",args.menu,"from ConfDB ...")
     hlt_cfg_cmd = [scripts_dir+'/hltConfigFromDB', '--online', '--configName', args.menu]
 
     # remove PrescaleService if running unprescaled
@@ -147,6 +150,8 @@ def main(args):
     if args.l1_menu_tag != None:
         print(f'Overriding L1T menu for Hilton config with conditions-db tag: "{args.l1_menu_tag}"')
         menu_overrides += '\n'+l1gt_override(args.l1_menu_tag)
+        print("Checking HLT menu for missing L1T seeds in conditions-db tag")
+        subprocess.Popen(f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -t {args.l1_menu_tag} -r {args.run_number}'.split(),universal_newlines=True).communicate()
 
     # change L1T menu (path to .xml file)
     elif args.l1_menu_xml != None:
@@ -154,13 +159,13 @@ def main(args):
         menu_overrides += '\n'+l1xml_override(args.l1_menu_xml)
         print("Checking HLT menu for missing L1T seeds in XML")
         # hlt.py is just used to check the list of seeds, so it does not matter that we have not rewritten the XML override to it yet
-        subprocess.Popen([scripts_dir+"/L1MenuCheck.sh", "hlt.py", args.l1_menu_xml],universal_newlines=True).communicate()
+        subprocess.Popen(f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -x {args.l1_menu_xml}'.split(),universal_newlines=True).communicate()
 
-    # if no customisation of L1T menu, the L1T menu of the GT is used, and the L1T seeds are checked based on the GT
+    # if no customisation of L1T menu, the L1T menu is taken from the GT, so the L1T seeds are checked based on the GT
     else:
         globaltag = args.globaltag if args.globaltag != None else process.GlobalTag.globaltag.value()
         print(f'\nChecking L1T seeds in HLT menu against algos of L1T menu in the Global Tag: "{globaltag}"')
-        subprocess.Popen([scripts_dir+"/L1MenuCheck_FromGT.sh", "hlt.py",globaltag],universal_newlines=True).communicate()
+        subprocess.Popen(f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -g {globaltag} -r {args.run_number}'.split(),universal_newlines=True).communicate()
 
     if args.l1_emulator != None:
         # Ref: https://github.com/cms-sw/cmssw/blob/CMSSW_12_0_0_pre4/HLTrigger/Configuration/python/Tools/confdb.py#L457-L465
@@ -207,13 +212,13 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser(description='takes a HLT menu in ORCOFF and changes the menu on the Hilton')
 
     # HLT menu (name of ConfDB configuration)
-    parser.add_argument('menu',help='HLT menu location in ORCOFF')
+    parser.add_argument('menu', help='HLT menu location in ORCOFF')
 
     # ConfDB converter
-    parser.add_argument('--converter',default="daq",help='Converter to  use (daq, v2, v3, v3-dev, v3-test)')
+    parser.add_argument('-c', '--converter', default="daq", help='Converter to  use (daq, v2, v3, v3-dev, v3-test)')
 
     # GlobalTag [optional]
-    parser.add_argument('--globaltag',help='Overrides the Global Tag in the resulting Hilton menu with this GT')
+    parser.add_argument('-g', '--globaltag', help='Overrides the Global Tag in the resulting Hilton menu with this GT')
 
     # choice of HLT-prescale column, if any [optional]
     group = parser.add_mutually_exclusive_group()
@@ -232,7 +237,11 @@ if __name__=='__main__':
     group.add_argument('--l1', dest = 'l1_menu_tag', action = 'store', metavar = 'L1T_MENU', default = None,
                        help = 'Override the L1 menu in the resulting Hilton menu by overriding the tag of the record L1TUtmTriggerMenuRcd via the GlobalTag ESSource module')
     group.add_argument('--l1Xml', dest = 'l1_menu_xml', action = 'store', metavar = 'L1T_MENU', default = None,
-                        help = 'Overrides the L1 menu in the resulting Hilton menu via an XML file')
+                       help = 'Overrides the L1 menu in the resulting Hilton menu via an XML file')
+
+    # Run number [optional]
+    parser.add_argument('-r', '--run-number', dest = 'run_number', type = int, default = None,
+                        help='Run number (required if "--l1Xml" option is not used, in order to choose IOV of L1T-menu tag')
 
     # parse arguments
     args = parser.parse_args()
