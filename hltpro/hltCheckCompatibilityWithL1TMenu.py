@@ -50,6 +50,9 @@ def getXMLFileFromL1TMenuTag(tag_name, run_number):
         xml_outfile_path = tmp.name
 
     get_output(f'conddb --db "{_db_str}" dump {payload} > {xml_outfile_path}')
+
+    print(f'L1T menu taken from conditions-db tag "{tag_name}" (payload = {payload})')
+
     return xml_outfile_path
 
 def getL1TMenuTagFromGlobalTag(globaltag):
@@ -109,6 +112,13 @@ def getL1TSeedUsedInHLTMenu(hltConfig_file_path):
         tmplist = [bar.replace('(','').replace(')','') for foo in mod.triggerConditions for bar in foo.split()]
         ret += [foo for foo in tmplist if foo.startswith('L1_') and (('*' not in foo) and ('?' not in foo))]
 
+    try:
+        hltConfigVersionStr = f' (HLTConfigVersion.tableName = "{process.HLTConfigVersion.tableName.value()}")'
+    except:
+        hltConfigVersionStr = ''
+
+    print(f'HLT menu taken from configuration file: {hltConfig_file_path}{hltConfigVersionStr}')
+
     return sorted(list(set(ret)))
 
 ###
@@ -124,9 +134,6 @@ def main():
 
     parser.add_argument('hltConfig_file_path', type = str,
                         help = 'Path to cmsRun configuration file for HLT jobs')
-
-    parser.add_argument('-v', '--verbose', dest = 'verbose', action = 'store_true', default = False,
-                        help = 'Enable verbose mode [default: False]')
 
     parser.add_argument('-r', '--run-number', dest = 'run_number', action = 'store', type = int, default = None,
                         help = 'Run number (necessary to choose IOV of L1T-menu tag, if options "-g" or "-t" are used)')
@@ -149,6 +156,7 @@ def main():
 
     l1tMenuAlgos = None
     if args.l1t_menu_xml_file_path != None:
+        print(f'L1T menu taken from .xml file: {args.l1t_menu_xml_file_path}')
         l1tMenuAlgos = getL1TSeedsFromXMLFile(args.l1t_menu_xml_file_path)
     else:
         if args.run_number == None:
@@ -175,11 +183,14 @@ def main():
         if hltSeed not in l1tMenuAlgos:
             l1tAlgosMissing += [hltSeed]
     l1tAlgosMissing = sorted(list(set(l1tAlgosMissing)))
+
     if l1tAlgosMissing:
-        print(f'ERROR -- The following {len(l1tAlgosMissing)} L1T algos are required in the HLT menu, but missing in the L1T menu.')
+        print(f'\033[31m\033[1mERROR: -- The following {len(l1tAlgosMissing)} L1T algos are required in the HLT menu, but missing in the L1T menu.\033[0m')
         for l1tAlgo in l1tAlgosMissing:
-            print(' ', l1tAlgo)
+            print(f' \033[31m\033[1m{l1tAlgo}\033[0m')
         raise SystemExit(1)
+
+    print('These L1T and HLT menus are compatible.')
 
 if __name__ == '__main__':
     main()

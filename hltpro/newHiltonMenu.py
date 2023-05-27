@@ -151,7 +151,7 @@ def main(args):
         print(f'Overriding L1T menu for Hilton config with conditions-db tag: "{args.l1_menu_tag}"')
         menu_overrides += '\n'+l1gt_override(args.l1_menu_tag)
         print("Checking HLT menu for missing L1T seeds in conditions-db tag")
-        subprocess.Popen(f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -t {args.l1_menu_tag} -r {args.run_number}'.split(),universal_newlines=True).communicate()
+        checkCompL1T_cmd = f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -t {args.l1_menu_tag} -r {args.run_number}'
 
     # change L1T menu (path to .xml file)
     elif args.l1_menu_xml != None:
@@ -159,13 +159,18 @@ def main(args):
         menu_overrides += '\n'+l1xml_override(args.l1_menu_xml)
         print("Checking HLT menu for missing L1T seeds in XML")
         # hlt.py is just used to check the list of seeds, so it does not matter that we have not rewritten the XML override to it yet
-        subprocess.Popen(f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -x {args.l1_menu_xml}'.split(),universal_newlines=True).communicate()
+        checkCompL1T_cmd = f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -x {args.l1_menu_xml}'
 
     # if no customisation of L1T menu, the L1T menu is taken from the GT, so the L1T seeds are checked based on the GT
     else:
         globaltag = args.globaltag if args.globaltag != None else process.GlobalTag.globaltag.value()
         print(f'\nChecking L1T seeds in HLT menu against algos of L1T menu in the Global Tag: "{globaltag}"')
-        subprocess.Popen(f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -g {globaltag} -r {args.run_number}'.split(),universal_newlines=True).communicate()
+        checkCompL1T_cmd = f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -g {globaltag} -r {args.run_number}'
+
+    checkCompL1T_prc = subprocess.Popen(checkCompL1T_cmd.split(), universal_newlines = True)
+    checkCompL1T_prc.communicate()
+    if checkCompL1T_prc.returncode != 0:
+        raise RuntimeError(f'L1T and HLT menus are not compatible: cmd="{checkCompL1T_cmd}"')
 
     if args.l1_emulator != None:
         # Ref: https://github.com/cms-sw/cmssw/blob/CMSSW_12_0_0_pre4/HLTrigger/Configuration/python/Tools/confdb.py#L457-L465
