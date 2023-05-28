@@ -15,8 +15,8 @@ fi
 ######### user params #########
 
 testMenu=/cdaq/physics/Run2023/2e34/v1.1.1/HLT/V6
-runNumber=367262 
-testGT=130X_dataRun3_HLT_Candidate_2023_05_24_12_46_25 #130X_dataRun3_HLT_Candidate_2023_05_15_13_34_33
+runNumber=367262
+testGT=130X_dataRun3_HLT_Candidate_2023_05_24_12_46_25
 maxEvents=500
 
 # no HLT prescales + re-emulation of Level-1 Global Trigger

@@ -21,14 +21,15 @@ Usage:
 Options:
   -h, --help         Show this help message
 
-  -r, --runNumber    Run number
-                     (a wildcard is appended: for example, if "-r 123" is used, all runs matching "123*" will be considered)
+  -r, --runNumber    Run number (a wildcard is appended: for example,
+                     if "-r 123" is used, all runs matching "123*" will be considered)
 
-  -t, --threads      Number of threads and CMSSW streams                              [Optional] [Default: ${numThreadsDefault}]
+  -t, --threads      Number of threads and CMSSW streams   [Optional] [Default: ${numThreadsDefault}]
 
-  -i, --input-dir    Path to error-stream directory containing one sub-folder per run [Optional] [Default: ${errDirPathDefault}]
+  -i, --input-dir    Path to error-stream directory        [Optional] [Default: ${errDirPathDefault}]
+                     containing one sub-folder per run
 
-  -o, --output-dir   Path to output directory                                         [Optional] [Default: ${outDirPathDefault}]
+  -o, --output-dir   Path to output directory              [Optional] [Default: ${outDirPathDefault}]
 
   If optional arguments are not specified, the corresponding default values will be used.
 @EOF
@@ -50,6 +51,12 @@ done
 if [ "${showHelpMsg}" == true ]; then
   usage
   exit 0
+fi
+
+runNumRegex='^[0-9]+$'
+if ! [[ "${runNumKeyword}" =~ ${runNumRegex} ]] ; then
+  printf "\n\033[31m\033[1m%s\033[0m%s\n\n" ">> ERROR" " -- invalid run number (must be a positive integer without sign) [-r]: ${runNumKeyword}"
+  exit 1
 fi
 
 if [ "${runNumKeyword}" -le 0 ]; then
@@ -76,6 +83,11 @@ fi
 
 errDirAbsPath=$(readlink -e "${errDirPath}")
 runDirPrePath="${errDirAbsPath}"/run"${runNumKeyword}"
+
+if [ $(ls -d "${runDirPrePath}"* 2> /dev/null | wc -l) -eq 0 ]; then
+  printf "\n\033[31m\033[1m%s\033[0m%s\n\n" ">> ERROR" " -- no input directories found: ${runDirPrePath}*"
+  exit 1
+fi
 
 mkdir -p "${outDirPath}"
 cd "${outDirPath}"
