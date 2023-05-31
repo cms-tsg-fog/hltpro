@@ -17,6 +17,23 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    367771 : [ # Run2023C, 13.6 TeV, 2400 bunches, PU60
+        '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v2/000/367/771/00000/f9ced4c2-6587-40b4-836b-8dd2f8170fbc.root',
+        '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v2/000/367/771/00000/fcd1dad5-b33b-4b58-891d-32b6baafbef1.root',
+        '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v2/000/367/771/00000/fceeb6eb-eabb-43be-8744-26e7d60ea50b.root',
+    ],
+    367667 : [ # Run2023C, cosmics
+        '/store/data/Run2023C/Cosmics/RAW/v1/000/367/667/00000/d398f7c0-d76a-4f62-82a4-6ca8c4b3af78.root',
+    ],
+    367262 : [ # Run2023C, 13.6 TeV stable beams, 1800 bunches
+        '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v1/000/367/262/00000/e4b8c5ee-35a7-42f9-b956-295902b1a879.root',
+    ],
+    366875 : [
+        '/store/data/Run2023B/EGamma0/RAW/v1/000/366/895/00000/baef5b0a-48ba-4b99-86d8-61449551d128.root',
+    ],
+    366729 : [
+        '/store/data/Run2023B/EphemeralZeroBias0/RAW/v1/000/366/729/00000/004148e5-7796-4476-93b4-cd0f775b59bd.root',
+    ],
     366504 : [ # Run2023B, 13.6 TeV stable beams, 75b fill
         '/store/data/Run2023B/EphemeralHLTPhysics13/RAW/v1/000/366/504/00000/a13518f4-7261-43fb-b8a4-b3377c3c5e04.root',
     ],
@@ -24,7 +41,7 @@ fileNamesByRun_dict = {
         '/store/data/Run2023B/EphemeralZeroBias0/RAW/v1/000/366/451/00000/06d3f724-cdb8-455f-8ba7-dbe2652ca526.root',
         '/store/data/Run2023B/EphemeralZeroBias0/RAW/v1/000/366/451/00000/09662c68-7df8-4524-996b-ad53a92e98dc.root',
     ],
-    366043 :    
+    366043 : [
         '/store/data/Run2023A/EphemeralZeroBias0/RAW/v1/000/366/043/00000/d5d15bdb-780a-444e-b9fb-7f2a9080ef4f.root',                           
         '/store/data/Run2023A/EphemeralZeroBias0/RAW/v1/000/366/043/00000/5f470ec3-fa59-4c52-8b84-f9aec268b9ae.root',                           
         '/store/data/Run2023A/EphemeralZeroBias0/RAW/v1/000/366/043/00000/187f40e0-fe10-44bf-9f14-96c138ffbad8.root',                           
@@ -73,6 +90,7 @@ fileNamesByRun_dict = {
         '/store/data/Run2023A/EphemeralZeroBias0/RAW/v1/000/365/844/00000/09117e0d-8fbe-4d80-977d-6bb34cf3f060.root',                                                                                                                      
         '/store/data/Run2023A/EphemeralZeroBias0/RAW/v1/000/365/844/00000/09370205-48e2-4057-8f45-bd6109e92a7a.root',                                                                                                                      
         '/store/data/Run2023A/EphemeralZeroBias0/RAW/v1/000/365/844/00000/09b9e0fb-db7b-497f-aac8-841a94dcc0ca.root',   
+    ],
     364997 : [
         '/store/data/Commissioning2023/Cosmics/RAW/v2/000/364/997/00000/3013b9b9-bafd-4de2-98f3-74424cbd47aa.root',
     ],

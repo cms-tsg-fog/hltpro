@@ -14,21 +14,18 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/physics/firstCollisions23/v1.1/HLT/V2
-runNumber=361468
-testGT=130X_dataRun3_HLT_v1
-maxEvents=2000
+testMenu=/cdaq/physics/Run2023/2e34/v1.1.1/HLT/V6
+runNumber=367262
+testGT=130X_dataRun3_HLT_Candidate_2023_05_24_12_46_25
+maxEvents=500
 
-# no HLT prescales
-testMenuOpts="--unprescale"
-
-## no HLT prescales + re-emulation of Level-1 Global Trigger
-#testMenuOpts="--unprescale --l1-emu uGT --l1GT L1Menu_Collisions2023_v1_0_0_xml"
+# no HLT prescales + re-emulation of Level-1 Global Trigger
+testMenuOpts="-r ${runNumber} --l1-emu uGT --l1 L1Menu_Collisions2023_v1_1_0-d1_xml --prescale 2p1E34+ZeroBias"
 
 ###############################
 
 printf "%s\n  %s\n\n" "Running Fast-Track Validation:" "--> will compare rates and timing of HLT menu using reference and test GlobalTags."
-printf "%s\n\n%s\n%s\n%s\n%s\n\n" "CMSSW_BASE  = ${CMSSW_BASE}" "HLT Menu  = ${testMenu}" "Run       = ${runNumber}" "Test GT   = ${testGT}" "maxEvents = ${maxEvents}"
+printf "%s\n\n%s\n%s\n%s\n%s\n\n" "CMSSW_BASE = ${CMSSW_BASE}" "HLT Menu   = ${testMenu}" "Run number = ${runNumber}" "Test GT    = ${testGT}" "maxEvents  = ${maxEvents}"
 sleep 2
 
 outputbasedir=/cmsnfsscratch/globalscratch/hltpro/fastTrack
@@ -37,6 +34,8 @@ mkdir -p $outputbasedir
 ## reference trial (GT in HLT menu)
 #./newHiltonMenu.py $testMenu
 ./newHiltonMenu.py $testMenu ${testMenuOpts}
+[ $? -eq 0 ] || exit 1
+
 ./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} --skipRepack
 
 if [ -d "${outputbasedir}/reference_run${runNumber}" ]; then
@@ -48,7 +47,9 @@ printf "%s\n" "[runFastTrackValidation] copying /fff/BU0/output/run$runNumber to
 cp -r /fff/BU0/output/run$runNumber $outputbasedir/reference_run$runNumber
 
 ## test trial (test GT for fast-track validation)
-./newHiltonMenu.py $testMenu ${testMenuOpts} --GT $testGT
+./newHiltonMenu.py $testMenu ${testMenuOpts} -g $testGT
+[ $? -eq 0 ] || exit 1
+
 ./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} # don't skip repack for test GT
 
 if [ -d "${outputbasedir}/test_run${runNumber}" ]; then
