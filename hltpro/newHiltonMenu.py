@@ -96,8 +96,10 @@ def main(args):
     # convert the hlt menu for online use in the Hilton
     # run the menu checker script
     print("\nRunning MenuChecker.py")
-    subprocess.Popen(["python3","MenuChecker.py",args.menu],universal_newlines=True).communicate()
-
+    if args.mode:
+        subprocess.Popen(["python3","MenuChecker.py",args.menu,args.mode],universal_newlines=True).communicate()
+    else:
+        subprocess.Popen(["python3","MenuChecker.py",args.menu],universal_newlines=True).communicate()
     # check to make sure no empty event content in any of the streams
     print("\nchecking event content output commands...")
     for output_module_name in list(process.outputModules.keys()):
@@ -218,6 +220,9 @@ if __name__=='__main__':
 
     # HLT menu (name of ConfDB configuration)
     parser.add_argument('menu', help='HLT menu location in ORCOFF')
+
+    # HLT menu mode
+    parser.add_argument('--mode',type=str,help='set HLT menu mode for event content check')
 
     # ConfDB converter
     parser.add_argument('-c', '--converter', default="daq", help='Converter to  use (daq, v2, v3, v3-dev, v3-test)')
