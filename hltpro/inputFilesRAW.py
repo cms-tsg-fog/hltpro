@@ -17,6 +17,9 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    367910 : [ # Run2023C, 13.6 TeV, 2400 bunches, for the June HLT DOC Tutorial
+        '/store/data/Run2023C/HLTPhysics/RAW/v1/000/367/910/00000/89ed2513-ade2-4971-8f97-28a87bbafc22.root',
+    ],
     367771 : [ # Run2023C, 13.6 TeV, 2400 bunches, PU60
         '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v2/000/367/771/00000/f9ced4c2-6587-40b4-836b-8dd2f8170fbc.root',
         '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v2/000/367/771/00000/fcd1dad5-b33b-4b58-891d-32b6baafbef1.root',
