@@ -17,6 +17,18 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    370293 : [ # Run2023D, 13.6 TeV, 2400 bunches
+        '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/003420ea-0f24-49f4-a69f-0528ffc517c2.root',
+        '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/2e11918b-1e89-4b23-ae81-3d1c4143df6e.root',
+        '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/c5969a31-adf2-482f-b726-8c67d34b490a.root',
+        '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/8292e2f8-be91-4bbb-97f1-3a7457b8c89b.root',
+    ],
+    369596 : [ # Run2023C, TOTEM run
+        '/store/data/Run2023C/HLTPhysics/RAW/v1/000/369/596/00000/60925a12-e21d-4df7-80d7-82b8021a9340.root'
+    ],
+    369339 : [ # Run2023C, cosmics
+        '/store/data/Run2023C/Cosmics/RAW/v1/000/369/339/00000/8fd811e1-e622-4b3c-a35b-86faa0875eb5.root',
+    ],
     367910 : [ # Run2023C, 13.6 TeV, 2400 bunches, for the June HLT DOC Tutorial
         '/store/data/Run2023C/HLTPhysics/RAW/v1/000/367/910/00000/89ed2513-ade2-4971-8f97-28a87bbafc22.root',
     ],

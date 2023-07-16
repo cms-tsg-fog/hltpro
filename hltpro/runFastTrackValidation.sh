@@ -14,13 +14,14 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/physics/Run2023/2e34/v1.1.1/HLT/V6
-runNumber=367262
-testGT=130X_dataRun3_HLT_Candidate_2023_05_24_12_46_25
-maxEvents=500
+testMenu=/cdaq/physics/Run2023/2e34/v1.2.3/HLT/V4
+runNumber=370293
+testGT=130X_dataRun3_HLT_Candidate_2023_07_13_10_14_52
+maxEvents=3000
 
 # no HLT prescales + re-emulation of Level-1 Global Trigger
-testMenuOpts="-r ${runNumber} --l1-emu uGT --l1 L1Menu_Collisions2023_v1_1_0-d1_xml --prescale 2p1E34+ZeroBias"
+testMenuOpts="-r ${runNumber} --unprescale"
+#--l1-emu uGT --l1 L1Menu_Collisions2023_v1_2_0-d1_xml --prescale 2p0E34"
 
 ###############################
 
