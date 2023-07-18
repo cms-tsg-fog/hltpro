@@ -6,8 +6,6 @@ import tempfile
 
 from HLTrigger.Configuration.common import filters_by_type
 
-_db_str = "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%2F%2Flocalhost%3A3128%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29/CMS_CONDITIONS"
-
 def get_output(cmd, permissive=False):
     prc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
     out, err = prc.communicate()
@@ -26,9 +24,16 @@ def command_output_lines(cmd, stdout=True, stderr=False, permissive=False):
 
     return _tmp_out_ls
 
+def conddb_exe():
+    # setting CMSSW_RELEASE_BASE when running conddb is a workaround
+    # needed to use conddb in read-only CMSSW installations
+    ret = 'CMSSW_RELEASE_BASE=${CMSSW_BASE} conddb'
+    ret += ' --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%2F%2Flocalhost%3A3128%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29/CMS_CONDITIONS"'
+    return ret
+
 def getXMLFileFromL1TMenuTag(tag_name, run_number):
     # find hash of payload for the selected IOV of the L1T-menu tag (last IOV up the snapshot time, if available)
-    conddb_cmd = f'conddb --db "{_db_str}" list {tag_name} | grep L1TUtmTriggerMenu'
+    conddb_cmd = f'{conddb_exe()} list {tag_name} | grep L1TUtmTriggerMenu'
     out_lines = [foo for foo in command_output_lines(conddb_cmd) if len(foo) > 0]
     payload = None
     for tag_iov_line in reversed(out_lines):
@@ -49,14 +54,14 @@ def getXMLFileFromL1TMenuTag(tag_name, run_number):
     with tempfile.NamedTemporaryFile() as tmp:
         xml_outfile_path = tmp.name
 
-    get_output(f'conddb --db "{_db_str}" dump {payload} > {xml_outfile_path}')
+    get_output(f'{conddb_exe()} dump {payload} > {xml_outfile_path}')
 
     print(f'L1T menu taken from conditions-db tag "{tag_name}" (payload = {payload})')
 
     return xml_outfile_path
 
 def getL1TMenuTagFromGlobalTag(globaltag):
-    conddb_cmd = f'conddb --db "{_db_str}" list {globaltag} | grep L1TUtmTriggerMenuRcd | sed "s/ *$//g" | sed "s/^.* //g"'
+    conddb_cmd = f'{conddb_exe()} list {globaltag} | grep L1TUtmTriggerMenuRcd | sed "s/ *$//g" | sed "s/^.* //g"'
     out_lines = [foo for foo in command_output_lines(conddb_cmd) if len(foo) > 0]
     if len(out_lines) != 1:
         raise RuntimeError('failed parsing output of conddb (failed to find tag of L1T menu in GlobalTag): cmd="{conddb_cmd}"\n{out_lines}')
