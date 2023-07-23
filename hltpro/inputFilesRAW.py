@@ -23,6 +23,9 @@ fileNamesByRun_dict = {
         '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/c5969a31-adf2-482f-b726-8c67d34b490a.root',
         '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/8292e2f8-be91-4bbb-97f1-3a7457b8c89b.root',
     ],
+    369956 : [ # Run2023D, SpecialZeroBias data
+        '/store/data/Run2023D/SpecialZeroBias0/RAW/v1/000/369/956/00000/0b236b9e-57da-4d5d-8ab6-bbac5f6f17f2.root'
+    ],
     369596 : [ # Run2023C, TOTEM run
         '/store/data/Run2023C/HLTPhysics/RAW/v1/000/369/596/00000/60925a12-e21d-4df7-80d7-82b8021a9340.root'
     ],
