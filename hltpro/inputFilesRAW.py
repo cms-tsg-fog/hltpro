@@ -17,7 +17,13 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
-    370293 : [ # Run2023D, 13.6 TeV, 2400 bunches
+    371290 : [ # Run2023D, Cosmics
+        '/store/data/Run2023D/Cosmics/RAW/v1/000/371/290/00000/00a5ef35-50bc-4140-8e23-5d06e43e3e02.root',
+    ],
+    370772 : [ # Run2023D, HLTPhysics, 13.6 TeV, 2400 bunches, PU 60
+        '/store/data/Run2023D/HLTPhysics/RAW/v1/000/370/772/00000/5b085242-fa0c-4a8b-b6c8-b0b98b4c4816.root',
+    ],
+    370293 : [ # Run2023D, EphemeralHLTPhysics, 13.6 TeV, 2400 bunches, PU 60
         '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/003420ea-0f24-49f4-a69f-0528ffc517c2.root',
         '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/2e11918b-1e89-4b23-ae81-3d1c4143df6e.root',
         '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/c5969a31-adf2-482f-b726-8c67d34b490a.root',
@@ -29,21 +35,21 @@ fileNamesByRun_dict = {
     369596 : [ # Run2023C, TOTEM run
         '/store/data/Run2023C/HLTPhysics/RAW/v1/000/369/596/00000/60925a12-e21d-4df7-80d7-82b8021a9340.root'
     ],
-    369339 : [ # Run2023C, cosmics
+    369339 : [ # Run2023C, Cosmics
         '/store/data/Run2023C/Cosmics/RAW/v1/000/369/339/00000/8fd811e1-e622-4b3c-a35b-86faa0875eb5.root',
     ],
     367910 : [ # Run2023C, 13.6 TeV, 2400 bunches, for the June HLT DOC Tutorial
         '/store/data/Run2023C/HLTPhysics/RAW/v1/000/367/910/00000/89ed2513-ade2-4971-8f97-28a87bbafc22.root',
     ],
-    367771 : [ # Run2023C, 13.6 TeV, 2400 bunches, PU60
+    367771 : [ # Run2023C, 13.6 TeV, 2400 bunches, PU 60
         '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v2/000/367/771/00000/f9ced4c2-6587-40b4-836b-8dd2f8170fbc.root',
         '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v2/000/367/771/00000/fcd1dad5-b33b-4b58-891d-32b6baafbef1.root',
         '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v2/000/367/771/00000/fceeb6eb-eabb-43be-8744-26e7d60ea50b.root',
     ],
-    367667 : [ # Run2023C, cosmics
+    367667 : [ # Run2023C, Cosmics
         '/store/data/Run2023C/Cosmics/RAW/v1/000/367/667/00000/d398f7c0-d76a-4f62-82a4-6ca8c4b3af78.root',
     ],
-    367262 : [ # Run2023C, 13.6 TeV stable beams, 1800 bunches
+    367262 : [ # Run2023C, EphemeralHLTPhysics, 13.6 TeV, 1800 bunches
         '/store/data/Run2023C/EphemeralHLTPhysics0/RAW/v1/000/367/262/00000/e4b8c5ee-35a7-42f9-b956-295902b1a879.root',
     ],
     366875 : [
