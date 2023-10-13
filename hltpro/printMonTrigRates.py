@@ -1,1 +1,0 @@
-../ratemon/ratemon/printMonTrigRates.py
