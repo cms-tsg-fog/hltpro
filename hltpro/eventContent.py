@@ -6,6 +6,7 @@ full = [
         'keep edmTriggerResults_*_*_*',
         'keep triggerTriggerEvent_*_*_*']
 
+# core content
 core_content = {
         'A': full,
         'B': full,
@@ -103,7 +104,10 @@ core_content = {
           'keep triggerTriggerEvent_*_*_*'],
         }
 
-collision_extra_content = {
+# extra content
+extra_content = {}
+
+extra_content['collisions'] = {
         'DQM':[
           'keep *_hltL3NoFiltersNoVtxMuonCandidates_*_*',
           'keep *_hltPFJetForBtag_*_*',
@@ -125,8 +129,13 @@ collision_extra_content = {
           'keep *_hltFEDSelectorOnlineMetaData_*_*']
        }
 
-cosmic_extra_content = {}
+extra_content['cosmics'] = {}
 
-requiredEventContent_collision = {key:core_content.get(key,[]) + collision_extra_content.get(key,[]) for key in set(list(core_content.keys()) + list(collision_extra_content.keys()))}
-requiredEventContent_cosmic    = {key:core_content.get(key,[]) + cosmic_extra_content.get(key,[])    for key in set(list(core_content.keys()) + list(cosmic_extra_content.keys()))}
-requiredEventContent_circulating = requiredEventContent_cosmic
+# final event content
+event_content = {}
+
+event_content['collisions']   = {key:core_content.get(key,[]) + extra_content['collisions'].get(key,[]) for key in set(list(core_content.keys()) + list(extra_content['collisions'].keys()))}
+event_content['collisionsHI'] = event_content['collisions']
+
+event_content['cosmics']      = {key:core_content.get(key,[]) + extra_content['cosmics'].get(key,[])    for key in set(list(core_content.keys()) + list(extra_content['cosmics'].keys()))}
+event_content['circulating']  = event_content['cosmics']

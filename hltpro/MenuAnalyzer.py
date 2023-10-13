@@ -6,64 +6,69 @@ import cx_Oracle
 import eventContent
 import pdb
 import string
-
-try:  ## set is builtin in python 2.6.4 and sets is deprecated
-    set
-except NameError:
-    from sets import Set
+from termcolor import colored
 
 class MenuAnalyzer:
-    def __init__(self,name):
-        ##default ranges
+    def __init__(self, name, menuType=None):
+        # default ranges
         self.maxModuleNameLength = 300
         self.maxModulesPerPath   = 50
         self.maxPaths = 1000
         self.maxEndPaths = 100 # arbitrary maximum number of EndPaths, increased to 100 end of Run 2 
         self.requiredContent = {}
  
-        ##required streams
-        self.requiredStreamsAndPDs = { 'Calibration' : ['TestEnablesEcalHcal'],
+        # menu type
+        if not menuType: # try to determine menu type automatically from menu name
+            if ('physics' in name):
+                if ('HI' in name):
+                    self.menuType = 'collisionsHI'
+                else:
+                    self.menuType = 'collisions'
+            elif ('circulating' in name):
+                self.menuType = 'circulating'
+            elif ('cosmic' in name):
+                self.menuType = 'cosmics'
+            else:
+                print(colored("Menu type not detected from menu name (usually contains 'physics', 'circulating' or 'cosmic'), and no menu type specified from command line. Assuming standard p-p 'collisions' type."))
+                self.menuType = 'collisions'
+                print(colored("To manually set a certain menu type, add the following to the command line --menuType collisions / collisionsHI / circulating / cosmics.",'yellow'))
+        else:
+            print(colored("Manually setting menu type from input options."))
+            self.menuType = menuType # menu type override from input parameter
+        
+        print("Using menu type:", colored(self.menuType,'blue'))
+        
+        # required streams and PDs
+        self.requiredStreamsAndPDs = { 'Calibration'     : ['TestEnablesEcalHcal'],
                                        'EcalCalibration' : ['EcalLaser'],
-                                       'DQMCalibration' : ['TestEnablesEcalHcalDQM'],
-                                       'DQM' : ['OnlineMonitor']}
+                                       'DQMCalibration'  : ['TestEnablesEcalHcalDQM'],
+                                       'DQM'             : ['OnlineMonitor']}
+       
+        if self.menuType == 'collisionsHI': self.requiredStreamsAndPDs['DQM'] = ['HIOnlineMonitor']
+        
         self.requiredEndPaths = ['DQMHistograms']
+       
+        # express and event contents
+        self.expressStreamNames = {
+            'collisions'  :'Express',
+            'collisionsHI':'HIExpress',
+            'Protonion'   :'ExpressPA',
+            'circulating' :'ExpressCosmics',
+            'cosmics'     :'ExpressCosmics'
+        }
+        
+        self.expressPDs = {'ExpressPhysics'  :'Collisions',
+                           'HIExpressPhysics':'PbPb Collisions',
+                           'ExpressPhysicsPA':'pPb Collisions',
+                           'ExpressCosmics'  :'Cosmics'}
+        
+        self.ExpressStreamName = self.expressStreamNames[self.menuType] 
+        self.requiredContent = eventContent.event_content[self.menuType]
 
-        self.useMenuName = True
-        ##eventContent for different menus
-        if ('physics' in name):
-            self.requiredContent_collision()
-            self.menuMode = 'collision'
-        elif ('circulating' in name):
-            self.requiredContent_circulating()
-            self.menuMode = 'circulating'
-        elif ('cosmic' in name):
-            self.requiredContent_cosmic()
-            self.menuMode = 'cosmic'
-        else:
-            self.requiredContent_collision()
-            self.menuMode = 'collision'
-            self.useMenuName = False
-
-        ##express stream name for different menus
-        if ('physics' in name):
-            self.ExpressStreamName = 'Express'
-        elif ('Protonion' in name):
-            self.ExpressStreamName = 'ExpressPA'
-        elif ('circulating' in name):
-            self.ExpressStreamName = 'ExpressCosmics'
-        elif ('cosmic' in name):
-            self.ExpressStreamName = 'ExpressCosmics'
-        else:
-            self.ExpressStreamName = 'Express'
-
-        self.expressPDs      = { 'ExpressPhysics' : 'Collisions',
-                                 'ExpressCosmics' : 'Cosmics', 
-                                 'ExpressPhysicsPA' : 'pPb Collisions' }
-
-        self.expressType = ''
-
+        # other parameters
         self.menuName = name
         self.processName=''
+        self.expressType = ''
         self.endPathList = set()
         self.perPathModuleList={}
         self.perModuleTypeList={}
@@ -99,7 +104,7 @@ class MenuAnalyzer:
             'numberOfEndPaths':'Too many endpaths',
             'reqStreamsAndPDs':'Missing required stream/PD',
             'reqEndPaths':'Missing required endpaths',
-            'checkExpress' : 'Invalid or missing express stream/PD \n[Note: This check will fail if a cosmics menu does not contain "cosmic" in its name]',
+            'checkExpress' : 'Invalid or missing express stream/PD',
             'checkNameFormats' : 'Invalid stream, PD or path name format',
             'checkReqEventContent' : 'Missing Event Content',
             'checkNotReqEventContent' : 'Extra Event Content',
@@ -450,14 +455,3 @@ class MenuAnalyzer:
         # should be exactly 1 entry and that will have a tuple with one entry "processName"
         self.processName = cursor.fetchall()[0][0]
 
-    def requiredContent_collision(self):
-        self.requiredContent = eventContent.requiredEventContent_collision
-        return self.requiredContent
-
-    def requiredContent_circulating(self):
-        self.requiredContent = eventContent.requiredEventContent_circulating
-        return self.requiredContent
-
-    def requiredContent_cosmic(self):
-        self.requiredContent = eventContent.requiredEventContent_cosmic
-        return self.requiredContent
