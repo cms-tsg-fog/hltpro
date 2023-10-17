@@ -96,10 +96,10 @@ def main(args):
     # convert the hlt menu for online use in the Hilton
     # run the menu checker script
     print("\nRunning MenuChecker.py")
-    if args.mode:
-        subprocess.Popen(["python3","MenuChecker.py",args.menu,args.mode],universal_newlines=True).communicate()
+    if args.menuType:
+        subprocess.Popen(["python3","MenuChecker.py", args.menu, "--menuType", args.menuType], universal_newlines=True).communicate()
     else:
-        subprocess.Popen(["python3","MenuChecker.py",args.menu],universal_newlines=True).communicate()
+        subprocess.Popen(["python3","MenuChecker.py", args.menu], universal_newlines=True).communicate()
     # check to make sure no empty event content in any of the streams
     print("\nchecking event content output commands...")
     for output_module_name in list(process.outputModules.keys()):
@@ -216,19 +216,19 @@ def main(args):
     print(open("/tmp/hltpro/hlt/fffParameters.jsn").read())
 
 if __name__=='__main__':
-    parser = argparse.ArgumentParser(description='takes a HLT menu in ORCOFF and changes the menu on the Hilton')
+    parser = argparse.ArgumentParser(description='Takes a HLT menu in ORCOFF and changes the menu on the Hilton')
 
     # HLT menu (name of ConfDB configuration)
-    parser.add_argument('menu', help='HLT menu location in ORCOFF')
+    parser.add_argument('menu', help = 'HLT menu location in ORCOFF')
 
-    # HLT menu mode
-    parser.add_argument('--mode',type=str,help='set HLT menu mode for event content check')
+    # HLT menu type
+    parser.add_argument("--menuType", dest = "menuType", type = str, default = None, help = "Set a specific menu type", choices = ["collisions", "collisionsHI", "circulating", "cosmics"]) 
 
     # ConfDB converter
-    parser.add_argument('-c', '--converter', default="daq", help='Converter to  use (daq, v2, v3, v3-dev, v3-test)')
+    parser.add_argument('-c', '--converter', default = "daq", help = 'Converter to  use (daq, v2, v3, v3-dev, v3-test)')
 
     # GlobalTag [optional]
-    parser.add_argument('-g', '--globaltag', help='Overrides the Global Tag in the resulting Hilton menu with this GT')
+    parser.add_argument('-g', '--globaltag', help = 'Overrides the Global Tag in the resulting Hilton menu with this GT')
 
     # choice of HLT-prescale column, if any [optional]
     group = parser.add_mutually_exclusive_group()

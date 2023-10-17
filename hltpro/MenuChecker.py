@@ -2,64 +2,35 @@
 
 import os
 import sys
-import getopt
-from MenuAnalyzer import *
+import argparse
+from MenuAnalyzer import MenuAnalyzer
 from termcolor import colored
 
-def usage():
-    print("Usage: "+sys.argv[0]+" <path to cdaq area>")
-    print("Options: ")
-    print("-v                          Verbose mode (print out ALL checks)")
-    print("--doAnalysis=<analysis>     Specify a specific check to so (default: do all)")
+def get_parser():
+    parser = argparse.ArgumentParser(description = "Argument parser for command line input options")
+    parser.add_argument('menu', type = str, help = 'HLT menu location in ORCOFF') # HLT menu (name of ConfDB configuration)
+    parser.add_argument("--menuType",   dest = "menuType",   type = str, default = None,              help = "Force a specific menu type", choices = ["collisions", "collisionsHI", "circulating", "cosmics"]) 
+    parser.add_argument("--doAnalysis", dest = "doAnalysis", type = str, default = None, nargs = "*", help = "Specify a specific check to so (default: do all)") 
+    #parser.add_argument("--verbose", "-v",  dest = "verbose",    action="store_true",                     help = "Verbose mode (print out ALL checks)") # FIXME: never used anywhere
+    return parser
 
 def main():
-    try:
-        opt, args = getopt.getopt(sys.argv[1:],"v",["doAnalysis=","collision","circulating","cosmic"])
-    except getopt.GetoptError as err:
-        print(str(err))
-        usage()
-        sys.exit(2)
+    # get options passed on the command line
+    parser = get_parser()
+    args = parser.parse_args()
+    
+    # run analyzer
+    analyzer = MenuAnalyzer(args.menu, args.menuType)
 
-    if len(args)<1:
-        usage()
-        sys.exit()
-
-    menu = args[0]
-    verbose = False
-    toDo = []
-    analyzer = MenuAnalyzer(menu)
-    useCommandOption = False
-    if len(args) == 2: # get options passed on the command line
-        useCommandOption = True
-        label = args[1]
-        if label == "-v":
-            Verbose = True
-        elif label == "--doAnalysis":
-            toDo.append(args)
-        elif label == "collision":
-            analyzer.requiredContent_collision()
-            analyzer.menuMode = 'collision'
-            analyzer.ExpressStreamName = 'Express'
-        elif label == "circulating":
-            analyzer.requiredContent_circulating()
-            analyzer.menuMode = 'circulating'
-            analyzer.ExpressStreamName = 'ExpressCosmics'
-        elif label == "cosmic":
-            analyzer.requiredContent_cosmic()
-            analyzer.menuMode = 'cosmic'
-            analyzer.ExpressStreamName = 'ExpressCosmics'
-        else:
-            print("\nUnknown option "+label)
-            sys.exit()
-
-    if len(toDo)==0: analyzer.AddAllAnalyses()
+    if not args.doAnalysis:
+        analyzer.AddAllAnalyses()
     else:
-        for a in toDo: analyzer.AddAnalysis(a)
+        for a in args.doAnalysis: analyzer.AddAnalysis(a)
     analyzer.Analyze()
 
-    ## check the results
+    # check the results
     if not analyzer.expressType=='':
-        print("\nEXPRESS Reconstruction will be:  %s" % analyzer.expressType)
+        print("\nEXPRESS Reconstruction will be: %s" % analyzer.expressType)
     else:
         print("WARNING: Cannot determine express reconstruction")
 
@@ -87,13 +58,6 @@ def main():
         print(colored(analyzer.ProblemDescriptions[analysis]+":  ",'red'))
         for line in analyzer.Results[analysis]: print(colored(line,'yellow'))
         print("")
-    # Check menu mode
-    print("Using menu mode:", analyzer.menuMode)
-    if useCommandOption == False and analyzer.useMenuName == False:
-        note1_txt = colored("Default collision mode: Menu mode not detected from menu name (usually contains 'physics', 'circulating' or 'cosmic'), and no menu mode specified from command line",'yellow')
-        print(note1_txt)
-    if useCommandOption == False:
-        note2_txt = colored("To manually set a certain menu mode for Event Content check: add to the command line --mode collision / circulating / cosmic",'yellow')
-        print(note2_txt)
+
 if __name__=='__main__':
     main()
