@@ -44,7 +44,9 @@ class MenuAnalyzer:
                                        'DQMCalibration'  : ['TestEnablesEcalHcalDQM'],
                                        'DQM'             : ['OnlineMonitor']}
        
-        if self.menuType == 'collisionsHI': self.requiredStreamsAndPDs['DQM'] = ['HIOnlineMonitor']
+        if self.menuType == 'collisionsHI':
+            print(colored("We are running in collisionsHI mode, remember to run ./cleanGenerateAndRun.sh with --sourceLabel rawDataRepacker",'yellow'))
+            self.requiredStreamsAndPDs['DQM'] = ['HIOnlineMonitor']
         
         self.requiredEndPaths = ['DQMHistograms']
        

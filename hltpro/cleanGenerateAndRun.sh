@@ -12,9 +12,10 @@ Repack check is now run by default after hltd jobs finish.
 
 Options:
   --run           Run number
-  --nCores        Number of cores           [Optional]
-  --maxEvents     Maximum number of events  [Optional]
-  --skipRepack    Skip data re-packing step [Optional]
+  --nCores        Number of cores            [Optional]
+  --maxEvents     Maximum number of events   [Optional]
+  --sourceLabel   FEDRawDataCollection label [Optional]
+  --skipRepack    Skip data re-packing step  [Optional]
   -h, --help      Show this help message
 @EOF
 }
@@ -25,6 +26,7 @@ while [[ $# -gt 0 ]]; do
     --run) run="${2}"; shift ;;
     --nCores) if [[ $2 =~ ^[0-9]+$ ]]; then nCores="${2}"; shift; fi ;;
     --maxEvents) if [[ $2 =~ ^[0-9]+$ ]]; then maxEventsStr="maxEvents=${2}"; shift; fi ;;
+    --sourceLabel) sourceLabelStr="sourceLabel=${2}"; shift ;;
     --skipRepack) skipRepack=true ;;
     *) echo "[cleanGenerateAndRun.sh] !!! INVALID ARGUMENT --> ${1}" ;;
   esac
@@ -48,8 +50,8 @@ fi
 
 echo ./cleanRun.sh $run
 ./cleanRun.sh $run
-echo cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr}
-cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr}
+echo cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr} ${sourceLabelStr}
+cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr} ${sourceLabelStr}
 echo ./startHiltonRun.sh $run $nCores
 ./startHiltonRun.sh $run $nCores
 

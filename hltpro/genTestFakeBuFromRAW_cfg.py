@@ -27,6 +27,11 @@ options.register('dataDir', '/fff/BU0/ramdisk', # default value (on standalone F
                  VarParsing.VarParsing.varType.string,
                  "BU data write directory")
 
+options.register('sourceLabel', 'rawDataCollector', # default value (regular pp data)
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.string,
+                 "FEDRawDataCollection label")
+
 options.setDefault('maxEvents', 3000)
 
 options.parseArguments()
@@ -82,7 +87,7 @@ process.EvFDaqDirector = cms.Service("EvFDaqDirector",
 )
 
 process.out = cms.OutputModule("RawStreamFileWriterForBU",
-  source = cms.InputTag("rawDataCollector"),
+  source = cms.InputTag(options.sourceLabel),
   numEventsPerFile = cms.uint32(10),
   frdVersion = cms.uint32(6),    # new FRD format
   frdFileVersion = cms.uint32(1) # new FRD format
