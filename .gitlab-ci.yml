@@ -56,9 +56,9 @@ synchronize:
       -e "s/\${HLT_COMPRESSION_ALGORITHM}/""/" 
       -e "s/\${HLT_COMPRESSION_LEVEL}/-1/" 
       -e "s/\${USE_FILE_BROKER_PY_BOOLEAN}/True/" 
-      hltpro/hltDAQPatch.py_template > hltpro/hltDAQPatch.py
+      hilton/hltDAQPatch.py_template > hilton/hltDAQPatch.py
 
-      git diff --quiet hltpro/hltDAQPatch.py || 
+      git diff --quiet hilton/hltDAQPatch.py || 
       { echo "HLT config DAQ patch (hltDAQPatch.py) has changed. Committing changes." && 
       git commit -am "Update HLT config DAQ patch (Pipeline $CI_PIPELINE_ID)" && 
       git push origin-write $CI_COMMIT_BRANCH ; } 
