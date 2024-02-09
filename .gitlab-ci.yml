@@ -1,7 +1,7 @@
-# include all templates in https://gitlab.cern.ch/cms-cactus/ops/auto-devops/-/tree/0.2.3
+# include all templates in https://gitlab.cern.ch/cms-cactus/ops/auto-devops/-/tree/0.4.25
 include:
   - project: cms-cactus/ops/auto-devops
-    ref: 0.2.3
+    ref: 0.4.25
     file: presets/blank-slate.yml
 
 stages:
@@ -14,7 +14,7 @@ stages:
 #- 💣 cleanup
 
 builder image:
-  #image: gitlab-registry.cern.ch/cms-cactus/ops/auto-devops/basics-cc7:tag-0.2.3
+  #image: gitlab-registry.cern.ch/cms-cactus/ops/auto-devops/basics-cc7:tag-0.4.25
   stage: 🛠️ setup
   extends: .auto_devops_docker_builder_autotag_onchange
   variables:
@@ -32,7 +32,7 @@ synchronize:
   rules:
     - if: "$PROJECT_ACCESS_TOKEN"
       #changes:
-      # - hltpro/hltDAQPatch.py_template # rules: changes always evaluates to true when there is no Git push event (eg. submodule fetch)
+      # - hilton/hltDAQPatch.py_template # rules: changes always evaluates to true when there is no Git push event (eg. submodule fetch)
       #when: manual
       allow_failure: true
   before_script:
@@ -72,32 +72,6 @@ build:RPMs:
     paths:
       - rpms
 
-#publish:docker:
-#  extends: .auto_devops_docker_builder_autotag
-#  stage: 📦 publish
-#  variables:
-#    BUILD_ARG_CI_COMMIT_REF_NAME: $CI_COMMIT_REF_NAME
-
-#publish:RPMs:
-#  stage: 📦 publish
-#  extends: .auto_devops_upload_yum_repo_eos_template
-#  variables:
-#    LOCAL_FOLDER: rpms/python36
-#    CERNBOX_FOLDER: /eos/user/c/cactus/www/cactus/release/cms-tsg-fog/ratemon/$CI_COMMIT_REF_SLUG/python36/$CI_COMMIT_SHA/centos7_gcc8_x86_64/
-
-# deploy:test:
-#   stage: 🚀 deploy
-#   extends: .auto_devops_k8s_basic_deployment
-#   variables:
-#     HTTP_PORT: 8085
-#   environment:
-#     on_stop: cleanup:test
-
-# cleanup:test:
-#   stage: 💣 cleanup
-#   extends: .auto_devops_k8s_basic_deployment_stop
-#   dependencies: ["deploy:test"]
-
 # trigger this job by manually creating a pipeline with your P5 credentials
 deploy:P5:
   stage: 🚀 deploy
@@ -115,6 +89,6 @@ deploy:P5:
     LOCAL_FOLDER: rpms/python27
     DROPBOX_OS: cc7
     DROPBOX_ZONE: cms
-    DROPBOX_NAME: hltpro
+    DROPBOX_NAME: hilton
     SSH_USERNAME: $P5_USER
     SSH_PASS: $P5_PASS
