@@ -16,9 +16,9 @@ $(info Python version '${PYTHON_VERSION}')
 
 #.PHONY: build
 #build: rpm
-#	make -C hltpro
+#	make -C hilton
 
-RPM_NAME = hltpro-${VERSION}.${ARCH}.${BRANCH}.${HASH}
+RPM_NAME = hilton-${VERSION}.${ARCH}.${BRANCH}.${HASH}
 
 .PHONY: rpm
 rpm: ${RPM_NAME}
@@ -27,23 +27,23 @@ ${RPM_NAME}:
 	rm -rf rpmroot
 	# Create /opt
 	mkdir -p rpmroot/opt
-	# Copy the hltpro folder
-	cp -r hltpro rpmroot/opt
+	# Copy the hilton folder
+	cp -r hilton rpmroot/opt
 
 	mkdir -p rpms/${PYTHON_VERSION}
 
 	# Launch fpm to package the prepared folder	
 	fpm \
 	-p ${RPM_NAME}-${PYTHON_VERSION}.rpm \
-	-n hltpro \
+	-n hilton \
 	-s dir \
 	-t rpm \
 	-v ${VERSION} \
 	-a ${ARCH} \
 	-d root -d ${PYTHON_VERSION}-root \
 	--iteration ${RELEASE} \
-	--description "HLT Online Test Stand (Hilton) software used on online validation machines" \
-	--url "https://gitlab.cern.ch/cms-tsg-fog/hltpro" \
+	--description "HLT Online Test Stand (Hilton) software, for testing High Level Trigger (HLT) menus and reconstruction in a manner as close as possible to the online environment at P5." \
+	--url "https://gitlab.cern.ch/cms-tsg/fog/hilton" \
 	--vendor "CERN" \
 	rpmroot/=/
 
