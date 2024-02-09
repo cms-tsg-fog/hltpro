@@ -1,5 +1,5 @@
 [submodule "swt-fillers"]
 	path = swt-fillers
-	url = ../../cms-rcms/cdaq/swt-fillers.git
+	url = ../../../cms-rcms/cdaq/swt-fillers.git
 	branch = master
 	shallow = true
