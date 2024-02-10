@@ -1205,10 +1205,10 @@ def ConnectDB(user='trg'):
     connect = 'cms_%s_r/%s@cms_omds_lb' % (user,magic,)
     try:
         orcl = cx_Oracle.connect(connect)
+        return orcl.cursor()
     except:
-        print('Error connecting to database')
-    return orcl.cursor()
-    
+        print('ERROR Connecting to database')
+        return
 
 def GetLatestRunNumber(runNo=9999999,newRun=False):
     

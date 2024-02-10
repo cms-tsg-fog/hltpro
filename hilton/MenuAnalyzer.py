@@ -140,6 +140,9 @@ class MenuAnalyzer:
 
     def Analyze(self):
         cursor = ConnectDB('hlt')
+        if not cursor: 
+            print(colored("ERROR There is an issue connecting to the database",'red'))
+            return
         self.GetModules(cursor)
         self.GetESModules(cursor)
         self.GetStreamsPathsPDs(cursor)

@@ -32,7 +32,7 @@ def main():
     if not analyzer.expressType=='':
         print("\nEXPRESS Reconstruction will be: %s" % analyzer.expressType)
     else:
-        print("WARNING: Cannot determine express reconstruction")
+        print(colored("WARNING: Cannot determine express reconstruction",'yellow'))
 
     print("\n")
     failed=[]
