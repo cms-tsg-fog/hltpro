@@ -1178,31 +1178,30 @@ class DatabaseParser:
 def ConnectDB(user='trg'):
     try:
         host = os.uname()[1]
-        #offline = 1 if host.startswith('lxplus') else 0
         if host.startswith('lxplus'):
-            offline=1
+            offline = 1
         else:
-            offline=0
+            offline = 0
     except:
         print("Please setup database parsing:\nsource set.sh")
-    ##print offline
-    trg = ['~centraltspro/secure/cms_trg_r.txt','~/secure/cms_trg_r.txt']
-    hlt = ['~hltpro/secure/cms_hlt_r.txt','~/secure/cms_hlt_r.txt']
+    
+    trg = ['~centraltspro/secure/cms_trg_r.txt',    '~/secure/cms_trg_r.txt']
+    hlt = ['~centraltspro/secure/cms_hlt_r_bkp.txt','~/secure/cms_hlt_r.txt'] # NOTE: using cms_hlt_gdr_r passwd instead
 
     if user == 'trg':
-        cmd = 'cat %s' % (trg[offline],)
+        cmd = 'cat %s' % (trg[offline])
     elif user == 'hlt':
-        cmd='cat %s' % (hlt[offline],)
+        cmd='cat %s' % (hlt[offline])
 
     try:
         line=os.popen(cmd).readlines()
     except:
         print("ERROR Getting the database password!")
-        print("They should be in %s and %s" % (trg[offline],hlt[offline],))
+        print("They should be in %s and %s" % (trg[offline],hlt[offline]))
         print("You may need to copy them from the online machines")
         sys.exit(0)
     magic = line[0].rstrip("\n\r")
-    connect = 'cms_%s_r/%s@cms_omds_lb' % (user,magic,)
+    connect = 'cms_%s_gdr_r/%s@cms_omds_lb' % (user,magic)
     try:
         orcl = cx_Oracle.connect(connect)
         return orcl.cursor()
