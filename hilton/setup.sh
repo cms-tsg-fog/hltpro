@@ -2,7 +2,7 @@
 
 # defaults
 showHelpMsg=false
-defScramArch=el8_amd64_gcc11
+defScramArch=el8_amd64_gcc12
 defCmssetDefault=/opt/offline/cmsset_default.sh
 
 # help message
