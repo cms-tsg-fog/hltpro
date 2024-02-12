@@ -31,7 +31,7 @@ fileNamesByRun_dict = {
         '/store/data/Run2023D/Cosmics/RAW/v1/000/371/290/00000/00a5ef35-50bc-4140-8e23-5d06e43e3e02.root',
     ],
     370772 : [ # Run2023D, HLTPhysics, 13.6 TeV, 2400 bunches, PU 60
-        '/store/data/Run2023D/HLTPhysics/RAW/v1/000/370/772/00000/5b085242-fa0c-4a8b-b6c8-b0b98b4c4816.root',
+        '/store/data/Run2023D/HLTPhysics/RAW/v1/000/370/772/00000/a9e5dc8f-b4fe-407a-9f3e-918c8bd28ecb.root',
     ],
     370293 : [ # Run2023D, EphemeralHLTPhysics, 13.6 TeV, 2400 bunches, PU 60
         '/store/data/Run2023D/EphemeralHLTPhysics0/RAW/v1/000/370/293/00000/003420ea-0f24-49f4-a69f-0528ffc517c2.root',
