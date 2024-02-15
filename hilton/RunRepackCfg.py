@@ -1,7 +1,10 @@
 import FWCore.ParameterSet.Config as cms
 from sys import argv
+ 
+## preserve compatibility with <= CMSSW_13_3_0_pre3 (PR #42823)
+if sys.argv[0] == "cmsRun": del sys.argv[0]
 
-input=argv[2] 
+input=argv[1] 
 stream=input.rsplit('/',1)[-1].rstrip('.dat')
 outbasedir=input.rsplit('testRepack',1)[0]
 

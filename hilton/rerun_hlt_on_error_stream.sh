@@ -148,11 +148,15 @@ for dirPath in $(ls -d "${runDirPrePath}"*); do
   hltCfg=$(readlink -e "${hltCfg}")
   cat <<EOF >> "${hltCfg}"
 import sys
-if len(sys.argv) < 3:
+
+## preserve compatibility with <= CMSSW_13_3_0_pre3 (PR #42823)
+if sys.argv[0] == "cmsRun": del sys.argv[0]
+
+if len(sys.argv) < 2:
     raise RuntimeError("one command-line argument required: path to file in FEDRawData (FRD) format")
 
 process.source.fileListMode = True
-process.source.fileNames = [sys.argv[2]]
+process.source.fileNames = [sys.argv[1]]
 
 process.options.numberOfThreads = ${numThreads}
 process.options.numberOfStreams = ${numStreams}
