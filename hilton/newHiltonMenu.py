@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 """
  Usage: This script takes an HLT menu in ORCOFF as argument and changes the menu on the Hilton.
         It assumes that the HLT browser is currently not broken
@@ -10,6 +7,9 @@ from __future__ import print_function
 import argparse
 import subprocess
 import os
+
+def conddb_db():
+    return 'oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%2F%2Flocalhost%3A3128%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29/CMS_CONDITIONS'
 
 def l1xml_override(l1xml_filename):
     """ Returns a string of the python module necessary to override the L1 menu using an XML."""
@@ -37,6 +37,38 @@ def l1gt_override(tagname):
     l1gt_str+=")\n"
     return l1gt_str
 
+def append_customisation_function(custom_func):
+    append_failed = False
+    try:
+        custom_func_split = custom_func.split('.')
+        try:
+            foo = custom_func_split[2]
+            append_failed = True
+        except:
+            custom_func_file = custom_func_split[0].replace('/', '.')
+            custom_func_name = custom_func_split[1]
+    except:
+        append_failed = True
+
+    if append_failed:
+        warning_msg = 'WARNING: failed to append customisation function "{custom_func}"'
+        print('\n>>> {warning_msg}')
+        return f'# {warning_msg}'
+
+    customFunc_str=f'from {custom_func_file} import {custom_func_name}\n'
+    customFunc_str+=f'process = {custom_func_name}(process)\n'
+    return customFunc_str
+
+def customise_outputModules_selectNoEvents():
+    """ Customise all the OutputModules of the HLT configuration in order to store no events in the output files of the cmsRun jobs."""
+    # The Path "HLTriggerFirstPath" is guaranteed to be in every TSG menu supported by TSG, and to always reject every event
+    outMod_str="for out_mod_label, out_mod in process.outputModules_().items():\n"
+    outMod_str+="    try:\n"
+    outMod_str+="        out_mod.SelectEvents.SelectEvents = ['HLTriggerFirstPath']\n"
+    outMod_str+="    except:\n"
+    outMod_str+="        pass\n"
+    return outMod_str
+
 def psColumn_override(colname):
     """ Returns the string needed to customise the HLT python configuration in order to choose a PS column."""
     pscol_str=f"process.PrescaleService.lvl1DefaultLabel = '{colname}'\n"
@@ -45,9 +77,7 @@ def psColumn_override(colname):
 
 def gt_override(tagname):
     """ Returns a string of the python necessary to override the GT."""
-    gt_str="process.GlobalTag.globaltag = '%s'\n" % tagname
-    gt_str+="\n"
-    return gt_str
+    return f"process.GlobalTag.globaltag = '{tagname}'\n"
 
 def main(args):
 
@@ -153,7 +183,7 @@ def main(args):
         print(f'Overriding L1T menu for Hilton config with conditions-db tag: "{args.l1_menu_tag}"')
         menu_overrides += '\n'+l1gt_override(args.l1_menu_tag)
         print("Checking HLT menu for missing L1T seeds in conditions-db tag")
-        checkCompL1T_cmd = f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -t {args.l1_menu_tag} -r {args.run_number}'
+        checkCompL1T_cmd = f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -t {args.l1_menu_tag} -r {args.run_number} --db "{conddb_db()}"'
 
     # change L1T menu (path to .xml file)
     elif args.l1_menu_xml != None:
@@ -167,7 +197,7 @@ def main(args):
     else:
         globaltag = args.globaltag if args.globaltag != None else process.GlobalTag.globaltag.value()
         print(f'\nChecking L1T seeds in HLT menu against algos of L1T menu in the Global Tag: "{globaltag}"')
-        checkCompL1T_cmd = f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -g {globaltag} -r {args.run_number}'
+        checkCompL1T_cmd = f'{scripts_dir}/hltCheckCompatibilityWithL1TMenu.py hlt.py -g {globaltag} -r {args.run_number} --db "{conddb_db()}"'
 
     checkCompL1T_prc = subprocess.Popen(checkCompL1T_cmd.split(), universal_newlines = True)
     checkCompL1T_prc.communicate()
@@ -196,6 +226,17 @@ def main(args):
             print(f'Overriding Hilton config to use PS column: "{args.prescale}"')
             menu_overrides += '\n'+psColumn_override(args.prescale)
 
+    for custom_func in args.customisation_functions:
+        menu_overrides += '\n'+append_customisation_function(custom_func)
+
+    if args.empty_output_files:
+        menu_overrides += '\n'+customise_outputModules_selectNoEvents()
+
+    if args.customisation_commands:
+        menu_overrides += '\n'
+        for custom_cmd in args.customisation_commands.split('\\n'):
+            menu_overrides += f'{custom_cmd}\n'
+
     with open("hlt.py", "a") as f:
         f.write(menu_overrides)
 
@@ -215,6 +256,9 @@ def main(args):
     print("(from /tmp/hltpro/hlt/fffParameters.jsn)")
     print(open("/tmp/hltpro/hlt/fffParameters.jsn").read())
 
+###
+### main
+###
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='Takes a HLT menu in ORCOFF and changes the menu on the Hilton')
 
@@ -222,7 +266,8 @@ if __name__=='__main__':
     parser.add_argument('menu', help = 'HLT menu location in ORCOFF')
 
     # HLT menu type
-    parser.add_argument("--menuType", dest = "menuType", type = str, default = None, help = "Set a specific menu type", choices = ["collisions", "collisionsHI", "circulating", "cosmics"]) 
+    parser.add_argument("--menuType", dest = "menuType", type = str, default = None,
+                        help = "Set a specific menu type", choices = ["collisions", "collisionsHI", "circulating", "cosmics"])
 
     # ConfDB converter
     parser.add_argument('-c', '--converter', default = "daq", help = 'Converter to  use (daq, v2, v3, v3-dev, v3-test)')
@@ -230,7 +275,7 @@ if __name__=='__main__':
     # GlobalTag [optional]
     parser.add_argument('-g', '--globaltag', help = 'Overrides the Global Tag in the resulting Hilton menu with this GT')
 
-    # choice of HLT-prescale column, if any [optional]
+    # Choice of HLT-prescale column, if any [optional]
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--prescale', dest = 'prescale', action = 'store', default = 'none',
                        help = 'Run in prescale column named PRESCALE (use "--prescale none" to run without any HLT prescales)' )
@@ -251,9 +296,20 @@ if __name__=='__main__':
 
     # Run number [optional]
     parser.add_argument('-r', '--run-number', dest = 'run_number', type = int, default = None,
-                        help='Run number (required if "--l1Xml" option is not used, in order to choose IOV of L1T-menu tag')
+                        help='Run number (necessary to choose IOV of the L1T-menu tag, unless the "--l1Xml" option is used)')
 
-    # parse arguments
+    # Additional customisation functions
+    parser.add_argument('--customise', dest = 'customisation_functions', action = 'append', default = [],
+                        help = 'List of customisation functions to be applied to the HLT configuration')
+
+    parser.add_argument('--customise_commands', dest = 'customisation_commands', action = 'store', default = '',
+                        help = 'String to be appended at the bottom of the HLT configuration')
+
+    # Empty output files
+    parser.add_argument('--empty-output-files', dest = 'empty_output_files', default = False, action = 'store_true',
+                        help = 'Customise output modules in order to store no events in the HLT output files')
+
+    # Parse arguments
     args = parser.parse_args()
 
     main(args)

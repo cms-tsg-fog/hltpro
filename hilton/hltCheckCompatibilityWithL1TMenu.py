@@ -6,14 +6,14 @@ import tempfile
 
 from HLTrigger.Configuration.common import filters_by_type
 
-def get_output(cmd, permissive=False):
-    prc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+def get_output(cmd, permissive = False):
+    prc = subprocess.Popen(cmd, shell = True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines = True)
     out, err = prc.communicate()
     if (not permissive) and prc.returncode:
        raise RuntimeError('get_output -- shell command failed (execute command to reproduce the error):\n'+' '*14+'> '+cmd)
     return (out, err)
 
-def command_output_lines(cmd, stdout=True, stderr=False, permissive=False):
+def command_output_lines(cmd, stdout = True, stderr = False, permissive = False):
     if not (stdout or stderr):
        print('command_output_lines -- options "stdout" and "stderr" both set to FALSE, returning empty list')
        return []
@@ -24,16 +24,13 @@ def command_output_lines(cmd, stdout=True, stderr=False, permissive=False):
 
     return _tmp_out_ls
 
-def conddb_exe():
-    # setting CMSSW_RELEASE_BASE when running conddb is a workaround
-    # needed to use conddb in read-only CMSSW installations
-    ret = 'CMSSW_RELEASE_BASE=${CMSSW_BASE} conddb'
-    ret += ' --db "oracle+frontier://@frontier%3A%2F%2F%28proxyurl%3Dhttp%3A%2F%2Flocalhost%3A3128%29%28serverurl%3Dhttp%3A%2F%2Flocalhost%3A8000%2FFrontierOnProd%29/CMS_CONDITIONS"'
+def conddb_exe(database):
+    ret = 'conddb'+(database != None)*f' --db "{database}"'
     return ret
 
-def getXMLFileFromL1TMenuTag(tag_name, run_number):
+def getXMLFileFromL1TMenuTag(tag_name, run_number, database = None):
     # find hash of payload for the selected IOV of the L1T-menu tag (last IOV up the snapshot time, if available)
-    conddb_cmd = f'{conddb_exe()} list {tag_name} | grep L1TUtmTriggerMenu'
+    conddb_cmd = f'{conddb_exe(database)} list {tag_name} | grep L1TUtmTriggerMenu'
     out_lines = [foo for foo in command_output_lines(conddb_cmd) if len(foo) > 0]
     payload = None
     for tag_iov_line in reversed(out_lines):
@@ -54,14 +51,14 @@ def getXMLFileFromL1TMenuTag(tag_name, run_number):
     with tempfile.NamedTemporaryFile() as tmp:
         xml_outfile_path = tmp.name
 
-    get_output(f'{conddb_exe()} dump {payload} > {xml_outfile_path}')
+    get_output(f'{conddb_exe(database)} dump {payload} > {xml_outfile_path}')
 
     print(f'L1T menu taken from conditions-db tag "{tag_name}" (payload = {payload})')
 
     return xml_outfile_path
 
-def getL1TMenuTagFromGlobalTag(globaltag):
-    conddb_cmd = f'{conddb_exe()} list {globaltag} | grep L1TUtmTriggerMenuRcd | sed "s/ *$//g" | sed "s/^.* //g"'
+def getL1TMenuTagFromGlobalTag(globaltag, database = None):
+    conddb_cmd = f'{conddb_exe(database)} list {globaltag} | grep L1TUtmTriggerMenuRcd | sed "s/ *$//g" | sed "s/^.* //g"'
     out_lines = [foo for foo in command_output_lines(conddb_cmd) if len(foo) > 0]
     if len(out_lines) != 1:
         raise RuntimeError('failed parsing output of conddb (failed to find tag of L1T menu in GlobalTag): cmd="{conddb_cmd}"\n{out_lines}')
@@ -85,12 +82,12 @@ def getL1TSeedsFromXMLFile(xml_file_path):
             break
     return ret
 
-def getL1TSeedsFromGlobalTag(globaltag, run_number):
-    l1tMenu_tag = getL1TMenuTagFromGlobalTag(globaltag)
-    return getL1TSeedsFromL1TMenuTag(l1tMenu_tag, run_number)
+def getL1TSeedsFromGlobalTag(globaltag, run_number, database = None):
+    l1tMenu_tag = getL1TMenuTagFromGlobalTag(globaltag, database)
+    return getL1TSeedsFromL1TMenuTag(l1tMenu_tag, run_number, database)
 
-def getL1TSeedsFromL1TMenuTag(tag_name, run_number):
-    xml_file_path = getXMLFileFromL1TMenuTag(tag_name, run_number)
+def getL1TSeedsFromL1TMenuTag(tag_name, run_number, database = None):
+    xml_file_path = getXMLFileFromL1TMenuTag(tag_name, run_number, database)
     return getL1TSeedsFromXMLFile(xml_file_path)
 
 def getL1TSeedUsedInHLTMenu(hltConfig_file_path):
@@ -143,6 +140,9 @@ def main():
     parser.add_argument('-r', '--run-number', dest = 'run_number', action = 'store', type = int, default = None,
                         help = 'Run number (necessary to choose IOV of L1T-menu tag, if options "-g" or "-t" are used)')
 
+    parser.add_argument('-d', '--db', dest = 'db', action = 'store', default = None,
+                        help = 'Database to run the command on (this string is passed to the --db argument of conddb)')
+
     group = parser.add_mutually_exclusive_group(required = True)
     group.add_argument('-g', '--globaltag', dest = 'globaltag', type = str, default = None,
                        help = 'Name of GlobalTag')
@@ -167,9 +167,9 @@ def main():
         if args.run_number == None:
             raise RuntimeError('failed to specify run number [-r] (necessary to choose IOV of L1T-menu tag)')
         if args.globaltag != None:
-            l1tMenuAlgos = getL1TSeedsFromGlobalTag(args.globaltag, args.run_number)
+            l1tMenuAlgos = getL1TSeedsFromGlobalTag(args.globaltag, args.run_number, args.db)
         elif args.l1t_menu_tag_name != None:
-            l1tMenuAlgos = getL1TSeedsFromL1TMenuTag(args.l1t_menu_tag_name, args.run_number)
+            l1tMenuAlgos = getL1TSeedsFromL1TMenuTag(args.l1t_menu_tag_name, args.run_number, args.db)
 
     if l1tMenuAlgos == None:
         raise RuntimeError('failed to specify a L1T menu (see options "-g", "-t" and "-x" with "--help")')
