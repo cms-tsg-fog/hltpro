@@ -17,6 +17,16 @@ options.register('runNumber', 1,
                  VarParsing.VarParsing.varType.int,
                  "Run Number")
 
+options.register('numThreads', 1,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.int,
+                 "Number of threads")
+
+options.register('numStreams', 0,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.int,
+                 "Number of CMSSW streams")
+
 options.register('buBaseDir', '/fff/BU0', # default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
@@ -49,6 +59,14 @@ elif len(fileNamesByRun_dict[options.runNumber]) == 0:
 # -----------------------------------------------------------------------------------------------------------------
 
 process = cms.Process("FAKEBU")
+
+process.options.numberOfThreads = options.numThreads
+process.options.numberOfStreams = options.numStreams
+
+noConcurrentLumiBlocks = process.options.numberOfStreams > 1
+noConcurrentLumiBlocks |= (process.options.numberOfStreams == 0 and process.options.numberOfThreads > 1)
+if noConcurrentLumiBlocks:
+    process.options.numberOfConcurrentLuminosityBlocks = 1
 
 process.maxEvents = cms.untracked.PSet(
   input = cms.untracked.int32(options.maxEvents)
