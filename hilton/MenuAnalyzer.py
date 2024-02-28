@@ -94,7 +94,7 @@ class MenuAnalyzer:
             'checkExpress' : self.checkExpress,
             'checkNameFormats' :self.checkNameFormats,
             'checkReqEventContent':self.checkReqEventContent,
-            'checkNotReqEventContent':self.checkNotReqEventContent,
+            #'checkExtraEventContent':self.checkExtraEventContent, # NOTE: extra event contents are not considered a real issue, as collections are not produced
             'checkL1Unmask':self.checkL1Unmask,
             'checkDQMStream':self.checkDQMStream,
             'checkProcessName':self.checkProcessName
@@ -109,7 +109,7 @@ class MenuAnalyzer:
             'checkExpress' : 'Invalid or missing express stream/PD',
             'checkNameFormats' : 'Invalid stream, PD or path name format',
             'checkReqEventContent' : 'Missing Event Content',
-            'checkNotReqEventContent' : 'Extra Event Content',
+            'checkExtraEventContent' : 'Extra Event Content',
             'checkL1Unmask' : 'L1 Unmask Module in Menu',
             'checkDQMStream' : 'Check that the DQM stream contains correct trigger',
             'checkProcessName' : 'Check that process name is "HLT"'
@@ -248,12 +248,12 @@ class MenuAnalyzer:
                 if not entry in content:
                     self.Results['checkReqEventContent'].append(stream+'::'+entry)
     
-    def checkNotReqEventContent(self):
-        self.Results['checkNotReqEventContent']=[]
+    def checkExtraEventContent(self):
+        self.Results['checkExtraEventContent']=[]
         for stream,content in self.eventContent.items():
             #first check for a drop statement
             if not ('drop *' in content or 'drop *_hlt*_*_*' in content):
-                self.Results['checkNotReqEventContent'].append(stream+'::drop *')
+                self.Results['checkExtraEventContent'].append(stream+'::drop *')
             if stream not in self.requiredContent:
                 continue
             elif ('Protonion' in self.menuName) and stream == 'DQM':
@@ -263,7 +263,7 @@ class MenuAnalyzer:
             for entry in content:
                 if (entry!='drop *' and entry!='drop *_hlt*_*_*'):
                     if not entry in requiredContent:
-                        self.Results['checkNotReqEventContent'].append(stream+'::'+entry)
+                        self.Results['checkExtraEventContent'].append(stream+'::'+entry)
 
     def checkL1Unmask(self):
         self.Results['checkL1Unmask']=[]
