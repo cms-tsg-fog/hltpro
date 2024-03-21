@@ -11,17 +11,17 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/test/missirol/test/2024/online/GRun/240224_GRunHiltonTest_01/HLT/V1
+testMenu=/cdaq/test/missirol/test/2024/online/GRun/v1.0/HLT/V1
 runNumber=370293
 testGT=140X_dataRun3_HLT_v1
-maxEvents=1000
+maxEvents=200
 
 # no HLT prescales + re-emulation of Level-1 Global Trigger
 testMenuOpts="-r ${runNumber} --no-prescale"
-#testMenuOpts+=" --l1-emu uGT --l1 L1Menu_Collisions2024_v0_0_0_xml"
+testMenuOpts+=" --l1-emu uGT --l1 L1Menu_Collisions2024_v1_0_0_xml"
 testMenuOpts+=" --empty-output-files"
-testMenuOpts+=" --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseForOffline"
-testMenuOpts+=" --customise HLTrigger/Configuration/customizeHLTforAlpaka.customizeHLTforAlpaka"
+#testMenuOpts+=" --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseForOffline"
+#testMenuOpts+=" --customise HLTrigger/Configuration/customizeHLTforAlpaka.customizeHLTforAlpaka"
 testMenuOpts_customCmds="del process.MessageLogger\nprocess.load('FWCore.MessageLogger.MessageLogger_cfi')"
 
 ###############################
@@ -34,7 +34,7 @@ outputbasedir=/cmsnfsscratch/globalscratch/hltpro/hiltonTest
 mkdir -p "${outputbasedir}"
 
 ## test trial (test GT for fast-track validation)
-./newHiltonMenu.py "${testMenu}" -g "${testGT}" ${testMenuOpts} --customise_commands "${testMenuOpts_customCmds}"
+./newHiltonMenu.py "${testMenu}" -g "${testGT}" ${testMenuOpts} --customise_commands "${testMenuOpts_customCmds}" -c v3
 [ $? -eq 0 ] || exit 1
 
 ./cleanGenerateAndRun.sh --run "${runNumber}" --maxEvents "${maxEvents}" # do not skip repack
