@@ -14,7 +14,7 @@ class MenuAnalyzer:
         self.maxModuleNameLength = 300
         self.maxModulesPerPath   = 50
         self.maxPaths = 1000
-        self.maxEndPaths = 100 # arbitrary maximum number of EndPaths, increased to 100 end of Run 2 
+        self.maxEndPaths = 120 # arbitrary maximum number of EndPaths, increased to 120 beggining of Run 2024
         self.requiredContent = {}
  
         # menu type
