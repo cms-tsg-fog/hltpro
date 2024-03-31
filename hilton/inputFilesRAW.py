@@ -17,6 +17,10 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    378238 : [ # Fill 9400, Run2024A, HLTPhysics, 2 bunches
+        '/store/data/Run2024A/HLTPhysics/RAW/v1/000/378/238/00000/fd49502f-7fca-4325-ba70-9b2ae392aa0f.root',
+        '/store/data/Run2024A/HLTPhysics/RAW/v1/000/378/238/00000/fd8984f7-6069-47a0-94a6-b6aeac5ef61e.root',
+    ],
     375013 : [ # Fill 9247, Run2023HI, HLTPhysics, 1240 bunches
         '/store/hidata/HIRun2023A/HIHLTPhysics/RAW/v1/000/375/013/00000/fcb1850b-1898-4b18-b23d-d0a754595286.root',
         '/store/hidata/HIRun2023A/HIHLTPhysics/RAW/v1/000/375/013/00000/fb3ea037-cc5c-462c-ae04-120cd5bf87b4.root',
