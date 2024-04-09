@@ -103,3 +103,8 @@ try:
     print("Set GlobalTag.frontierKey to", options.runUniqueKey)
 except:
     print("Unable to set GlobalTag.frontierKey to", options.runUniqueKey)
+
+try:
+    process.ProcessAcceleratorAlpaka.setBackend("cuda_async")
+except Exception as ex:
+   print("Unable to apply a change to ProcessAcceleratorAlpaka:", ex)
