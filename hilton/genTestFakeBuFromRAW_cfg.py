@@ -119,3 +119,15 @@ process.a = cms.EDAnalyzer("ExceptionGenerator",
 process.p = cms.Path(process.a)
 
 process.ep = cms.EndPath(process.out)
+
+## if you are running on .raw file, process.source needs to be adapted
+if process.source.fileNames[0][-4:]==".raw":
+    print("WARNING: You are using '.raw' files instad of '.root' files as input.")
+    # check that you are not mixing .root files with .raw files
+    for f in process.source.fileNames: assert f[-4:]==".raw", "You are mixing .root files with .raw files"
+    from EventFilter.Utilities.FedRawDataInputSource_cfi import source as _source
+    process.source = _source.clone(
+        fileListMode = True,
+        fileNames = fileNamesByRun_dict[options.runNumber]
+    )   
+
