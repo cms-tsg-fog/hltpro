@@ -21,7 +21,7 @@ fileNamesByRun_dict = {
         '/store/data/Run2024B/Cosmics/RAW/v1/000/379/070/00000/d844923b-5e69-42ef-8da7-27e7e38591c1.root',
         '/store/data/Run2024B/Cosmics/RAW/v1/000/379/070/00000/ed803fc0-2a96-47d7-b387-4e017cee7946.root'
     ],
-    379154 : [ # Run2024B, EphemeralHLTPhysics
+    379154 : [ # Run2024B, EphemeralHLTPhysics, 13.6 TeV, 62b colliding, PU ~ 60 (leveling) 
         '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/9693f794-3962-4fdf-9625-f434d8dc9729.root',
         '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/cb686c8b-0cb8-4654-ad67-bd69f1c2b2bd.root',
         '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/44098a74-d89f-4440-930f-6778bb470fea.root',
