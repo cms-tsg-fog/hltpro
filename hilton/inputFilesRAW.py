@@ -17,6 +17,23 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    379793 : [ # Run2024C, Cosmics (L1Menu_Collisions2024_v1_1_0)
+        '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/7ae3a695-9581-4227-af54-216876989e08.root',
+        '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/2930aed3-7d05-4fc2-abe7-67dfdf0dfd62.root'
+    ],
+    379728 : [ # Run2024C, Circulating (L1Menu_Collisions2024_v1_1_0)
+        '/store/data/Run2024C/MinimumBias/RAW/v1/000/379/728/00000/222c8979-4816-49d8-8929-4bf719555767.root'
+    ],
+    379070 : [ # Run2024B, Cosmics (L1Menu_Collisions2024_v1_0_0)
+        '/store/data/Run2024B/Cosmics/RAW/v1/000/379/070/00000/d844923b-5e69-42ef-8da7-27e7e38591c1.root',
+        '/store/data/Run2024B/Cosmics/RAW/v1/000/379/070/00000/ed803fc0-2a96-47d7-b387-4e017cee7946.root'
+    ],
+    379154 : [ # Run2024B, EphemeralHLTPhysics, 13.6 TeV, 62b colliding, PU ~ 60 (leveling) (L1Menu_Collisions2024_v1_0_0)
+        '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/9693f794-3962-4fdf-9625-f434d8dc9729.root',
+        '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/cb686c8b-0cb8-4654-ad67-bd69f1c2b2bd.root',
+        '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/44098a74-d89f-4440-930f-6778bb470fea.root',
+        '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/a31cbad9-22de-43c6-addf-e4c1845cff1b.root',
+    ],
     378238 : [ # Fill 9400, Run2024A, HLTPhysics, 2 bunches
         '/store/data/Run2024A/HLTPhysics/RAW/v1/000/378/238/00000/fd49502f-7fca-4325-ba70-9b2ae392aa0f.root',
         '/store/data/Run2024A/HLTPhysics/RAW/v1/000/378/238/00000/fd8984f7-6069-47a0-94a6-b6aeac5ef61e.root',
