@@ -17,11 +17,21 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
-    379070 : [ # Run2024B, Cosmics
+    379793 : [ # Run2024C, Cosmics (L1Menu_Collisions2024_v1_1_0)
+        '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/7ae3a695-9581-4227-af54-216876989e08.root',
+        '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/2930aed3-7d05-4fc2-abe7-67dfdf0dfd62.root'
+    ],
+    379729 : [ # Run2024C, HLTPhysics, Collisions, (L1Menu_Collisions2024_v1_1_0, LS 194-205)
+        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024C/HLTPhysics/RAW/v1/000/379/729/00000/9a4c061e-39e4-496a-9cb6-285be4b77367.root',
+    ],
+    379728 : [ # Run2024C, Circulating (L1Menu_Collisions2024_v1_1_0)
+        '/store/data/Run2024C/MinimumBias/RAW/v1/000/379/728/00000/222c8979-4816-49d8-8929-4bf719555767.root'
+    ],
+    379070 : [ # Run2024B, Cosmics (L1Menu_Collisions2024_v1_0_0)
         '/store/data/Run2024B/Cosmics/RAW/v1/000/379/070/00000/d844923b-5e69-42ef-8da7-27e7e38591c1.root',
         '/store/data/Run2024B/Cosmics/RAW/v1/000/379/070/00000/ed803fc0-2a96-47d7-b387-4e017cee7946.root'
     ],
-    379154 : [ # Run2024B, EphemeralHLTPhysics, 13.6 TeV, 62b colliding, PU ~ 60 (leveling) 
+    379154 : [ # Run2024B, EphemeralHLTPhysics, 13.6 TeV, 62b colliding, PU ~ 60 (leveling) (L1Menu_Collisions2024_v1_0_0)
         '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/9693f794-3962-4fdf-9625-f434d8dc9729.root',
         '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/cb686c8b-0cb8-4654-ad67-bd69f1c2b2bd.root',
         '/store/data/Run2024B/EphemeralHLTPhysics0/RAW/v1/000/379/154/00000/44098a74-d89f-4440-930f-6778bb470fea.root',

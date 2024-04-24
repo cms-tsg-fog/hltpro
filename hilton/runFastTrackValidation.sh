@@ -14,10 +14,10 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/physics/Run2023/2e34/v1.2.3/HLT/V4
-runNumber=370293
-testGT=130X_dataRun3_HLT_Candidate_2023_07_13_10_14_52
-maxEvents=3000
+testMenu=/cdaq/physics/Run2024/2e34/v1.0.10/HLT/V5
+runNumber=379154
+testGT=140X_dataRun3_HLT_Candidate_2024_04_22_10_09_41
+maxEvents=10000
 
 # no HLT prescales + re-emulation of Level-1 Global Trigger
 testMenuOpts="-r ${runNumber} --unprescale"
