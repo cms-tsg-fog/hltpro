@@ -21,6 +21,9 @@ fileNamesByRun_dict = {
         '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/7ae3a695-9581-4227-af54-216876989e08.root',
         '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/2930aed3-7d05-4fc2-abe7-67dfdf0dfd62.root'
     ],
+    379729 : [ # Run2024C, HLTPhysics, Collisions, (L1Menu_Collisions2024_v1_1_0, LS 194-205)
+        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024C/HLTPhysics/RAW/v1/000/379/729/00000/9a4c061e-39e4-496a-9cb6-285be4b77367.root',
+    ],
     379728 : [ # Run2024C, Circulating (L1Menu_Collisions2024_v1_1_0)
         '/store/data/Run2024C/MinimumBias/RAW/v1/000/379/728/00000/222c8979-4816-49d8-8929-4bf719555767.root'
     ],
