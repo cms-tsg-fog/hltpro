@@ -17,6 +17,12 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    380346 : [ #Run2024D, EphemeralHLTPhysics, Collision, (L1Menu_Collisions2024_v1_1_0), LS 180-183
+        '/store/data/Run2024D/EphemeralHLTPhysics0/RAW/v1/000/380/346/00000/0022f303-1189-4153-bc42-28a68d2104bb.root',
+        '/store/data/Run2024D/EphemeralHLTPhysics0/RAW/v1/000/380/346/00000/0cea2f25-7409-4fbd-a162-f3082088d94d.root',
+        '/store/data/Run2024D/EphemeralHLTPhysics0/RAW/v1/000/380/346/00000/c78380b6-65d6-460f-84ae-8ae369bd412e.root',
+        '/store/data/Run2024D/EphemeralHLTPhysics0/RAW/v1/000/380/346/00000/4372e803-964a-4062-b3b0-ce0344a18aae.root'
+    ],
     379793 : [ # Run2024C, Cosmics (L1Menu_Collisions2024_v1_1_0)
         '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/7ae3a695-9581-4227-af54-216876989e08.root',
         '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/2930aed3-7d05-4fc2-abe7-67dfdf0dfd62.root'
