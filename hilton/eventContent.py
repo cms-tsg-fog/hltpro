@@ -63,7 +63,7 @@ core_content = {
 
         'NanoDST': [
           'keep *_hltFEDSelectorTCDS_*_*',
-          'keep *_hltGtStage2Digis_*_*',
+          'keep *_hltFEDSelectorL1_*_*',
           'keep edmTriggerResults_*_*_*'],
 
         'PhysicsDST': [
