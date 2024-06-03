@@ -17,7 +17,7 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
-    381455 : [ # Run2024E, Cosmics (L1Menu_Collisions2024_v1_2_0), LS 450
+    381455 : [ # Run2024E, Cosmics (L1Menu_Collisions2024_v1_2_0), LS 443-452
         '/store/data/Run2024E/Cosmics/RAW/v1/000/381/455/00000/e8278873-33b0-4114-b15b-3e693db7a943.root'
     ],
     381065 : [ #Run2024E, EphemeralHLTPhysics, Collision, (L1Menu_Collisions2024_v1_2_0), LS ???
