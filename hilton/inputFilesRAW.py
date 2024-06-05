@@ -20,10 +20,14 @@ fileNamesByRun_dict = {
     381455 : [ # Run2024E, Cosmics (L1Menu_Collisions2024_v1_2_0), LS 443-452
         '/store/data/Run2024E/Cosmics/RAW/v1/000/381/455/00000/e8278873-33b0-4114-b15b-3e693db7a943.root'
     ],
-    381065 : [ #Run2024E, EphemeralHLTPhysics, Collision, (L1Menu_Collisions2024_v1_2_0), LS ???
+    381443 : [ #Run2024E, HLTPhysics, Collisions, (L1Menu_Collisions2024_v1_2_0), LS 257-272
+        '/store/data/Run2024E/HLTPhysics/RAW/v1/000/381/443/00000/2dd5dd33-b3ae-4ab8-9903-b855655de25f.root',
+        '/store/data/Run2024E/HLTPhysics/RAW/v1/000/381/443/00000/d9ebc5ce-b138-46e8-b93a-45cd68f15483.root'
+    ],
+    381065 : [ #Run2024E, EphemeralHLTPhysics, Collisions, (L1Menu_Collisions2024_v1_2_0), LS ???
         '/store/data/Run2024E/EphemeralHLTPhysics0/RAW/v1/000/381/065/00000/98923c2f-92d0-4022-80bd-4d2928e4d372.root'
     ],
-    380346 : [ #Run2024D, EphemeralHLTPhysics, Collision, (L1Menu_Collisions2024_v1_1_0), LS 180-183
+    380346 : [ #Run2024D, EphemeralHLTPhysics, Collisions, (L1Menu_Collisions2024_v1_1_0), LS 180-183
         '/store/data/Run2024D/EphemeralHLTPhysics0/RAW/v1/000/380/346/00000/0022f303-1189-4153-bc42-28a68d2104bb.root',
         '/store/data/Run2024D/EphemeralHLTPhysics0/RAW/v1/000/380/346/00000/0cea2f25-7409-4fbd-a162-f3082088d94d.root',
         '/store/data/Run2024D/EphemeralHLTPhysics0/RAW/v1/000/380/346/00000/c78380b6-65d6-460f-84ae-8ae369bd412e.root',
