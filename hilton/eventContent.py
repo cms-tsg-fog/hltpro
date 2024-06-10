@@ -93,7 +93,6 @@ core_content = {
           'keep *_hltMuonDTDigis_*_*',
           'keep *_hltMuonRPCDigis_*_*',
           'keep *_hltRpcRecHits_*_*',
-          'keep *_hltGtStage2Digis_*_*',
           'keep edmTriggerResults_*_*_*',
           'keep triggerTriggerEvent_*_*_*',
           'keep *_hltFEDSelectorTCDS_*_*',
