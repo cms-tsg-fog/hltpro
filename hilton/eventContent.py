@@ -4,7 +4,6 @@ import copy
 full = [
         'keep GlobalObjectMapRecord_hltGtStage2ObjectMap_*_*',
         'keep FEDRawDataCollection_rawDataCollector_*_*',
-        'keep FEDRawDataCollection_source_*_*',
         'keep edmTriggerResults_*_*_*',
         'keep triggerTriggerEvent_*_*_*']
 
@@ -86,13 +85,6 @@ core_content = {
           'keep edmTriggerResults_*_*_*'],
 
         'RPCMON': [
-          'keep *_hltCscSegments_*_*',
-          'keep *_hltDt4DSegments_*_*',
-          'keep *_hltMuonCSCDigis_MuonCSCStripDigi_*',
-          'keep *_hltMuonCSCDigis_MuonCSCWireDigi_*',
-          'keep *_hltMuonDTDigis_*_*',
-          'keep *_hltMuonRPCDigis_*_*',
-          'keep *_hltRpcRecHits_*_*',
           'keep edmTriggerResults_*_*_*',
           'keep triggerTriggerEvent_*_*_*',
           'keep *_hltFEDSelectorTCDS_*_*',
@@ -107,8 +99,13 @@ core_content = {
           'keep *_hltOnlineBeamSpot_*_*',
           'keep *_hltPixelTracks_*_*',
           'keep *_hltSiPixelClusters_*_*',
+          'keep *_hltTrimmedPixelVertices_*_*',               # from CMSHLT-3274 (core or extra?)
+          'keep *_hltEgammaGsfTracks_*_*',                    # from CMSHLT-3274 (core or extra?)
+          'keep *_hltGlbTrkMuonCandsNoVtx_*_*',               # from CMSHLT-3274 (core or extra?)
+          'keep *_hltVerticesPFFilter_*_*',                   # from CMSHLT-3274 (core or extra?)
+          'keep *_hltIter0PFlowTrackSelectionHighPurity_*_*', # from CMSHLT-3274 (core or extra?)
+          'keep *_hltIter0PFlowCtfWithMaterialTracks_*_*',    # from CMSHLT-3274 (core or extra?)
           'keep FEDRawDataCollection_rawDataCollector_*_*',
-          'keep FEDRawDataCollection_source_*_*',
           'keep GlobalObjectMapRecord_hltGtStage2ObjectMap_*_*',
           'keep edmTriggerResults_*_*_*',
           'keep triggerTriggerEvent_*_*_*'],
@@ -120,18 +117,12 @@ extra_content = {}
 extra_content['collisions'] = {
         'DQM': [
           'keep *_hltL3NoFiltersNoVtxMuonCandidates_*_*',
-          'keep *_hltPFJetForBtag_*_*',
           'keep *_hltSelector8CentralJetsL1FastJet_*_*',
           'keep *_hltSiStripRawToClustersFacility_*_*',
           'keep *_hltHoreco_*_*',
-          'keep *_hltSiPixelClustersCache_*_*',
-          'keep *_hltDeepCombinedSecondaryVertexBJetTagsPF_*_*',
-          'keep *_hltDeepCombinedSecondaryVertexBJetTagsCalo_*_*',
           'keep *_hltHfreco_*_*',
           'keep *_hltHbhereco_*_*',
           'keep *_hltEcalRecHit_*_*',
-          'keep *_hltIter0HighPtTkMuTrackSelectionHighPurity_*_*',
-          'keep *_hltEgammaGsfElectrons_*_*',
           'keep *_hltEgammaCandidates_*_*',
           'keep *_hltPixelVertices_*_*',
           'keep *_hltMergedTracks_*_*'],
@@ -145,18 +136,11 @@ extra_content['collisions'] = {
 extra_content['collisionsHI'] = {
         'DQM': [
           'keep *_hltL3NoFiltersNoVtxMuonCandidates_*_*',
-          'keep *_hltPFJetForBtag_*_*',
-          'keep *_hltSelector8CentralJetsL1FastJet_*_*',
           'keep *_hltSiStripRawToClustersFacility_*_*',
           'keep *_hltHoreco_*_*',
-          'keep *_hltSiPixelClustersCache_*_*',
-          'keep *_hltDeepCombinedSecondaryVertexBJetTagsPF_*_*',
-          'keep *_hltDeepCombinedSecondaryVertexBJetTagsCalo_*_*',
           'keep *_hltHfreco_*_*',
           'keep *_hltHbhereco_*_*',
           'keep *_hltEcalRecHit_*_*',
-          'keep *_hltIter0HighPtTkMuTrackSelectionHighPurity_*_*',
-          'keep *_hltEgammaGsfElectrons_*_*',
           'keep *_hltEgammaCandidates_*_*',
           'keep *_hltPixelVertices_*_*',
           'keep *_hltMergedTracks_*_*',
