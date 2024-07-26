@@ -117,7 +117,6 @@ extra_content = {}
 extra_content['collisions'] = {
         'DQM': [
           'keep *_hltL3NoFiltersNoVtxMuonCandidates_*_*',
-          'keep *_hltSelector8CentralJetsL1FastJet_*_*',
           'keep *_hltSiStripRawToClustersFacility_*_*',
           'keep *_hltHoreco_*_*',
           'keep *_hltHfreco_*_*',
