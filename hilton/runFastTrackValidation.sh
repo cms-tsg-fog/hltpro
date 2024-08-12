@@ -14,14 +14,15 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/physics/Run2024/2e34/v1.0.10/HLT/V5
-runNumber=379154
-testGT=140X_dataRun3_HLT_Candidate_2024_04_22_10_09_41
+testMenu=/cdaq/physics/Run2024/2e34/v1.4.3/HLT/V2
+runNumber=384291
+refGT=140X_dataRun3_HLT_v3
+testGT=140X_dataRun3_HLT_Candidate_2024_08_10_16_36_32
 maxEvents=10000
 
 # no HLT prescales + re-emulation of Level-1 Global Trigger
-testMenuOpts="-r ${runNumber} --unprescale"
-#--l1-emu uGT --l1 L1Menu_Collisions2023_v1_2_0-d1_xml --prescale 2p0E34"
+#testMenuOpts="-r ${runNumber} --unprescale"
+testMenuOpts="-r ${runNumber} --l1-emu uGT --l1 L1Menu_Collisions2024_v1_3_0_xml --unprescale" ## --prescale 2p0E34"
 
 ###############################
 
@@ -34,7 +35,7 @@ mkdir -p $outputbasedir
 
 ## reference trial (GT in HLT menu)
 #./newHiltonMenu.py $testMenu
-./newHiltonMenu.py $testMenu ${testMenuOpts}
+./newHiltonMenu.py $testMenu ${testMenuOpts} -g $refGT
 [ $? -eq 0 ] || exit 1
 
 ./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} --skipRepack
@@ -45,13 +46,16 @@ if [ -d "${outputbasedir}/reference_run${runNumber}" ]; then
 fi
 
 printf "%s\n" "[runFastTrackValidation] copying /fff/BU0/output/run$runNumber to $outputbasedir/reference_run$runNumber .."
-cp -r /fff/BU0/output/run$runNumber $outputbasedir/reference_run$runNumber
+#cp -r /fff/BU0/output/run$runNumber $outputbasedir/reference_run$runNumber
+mkdir $outputbasedir/reference_run$runNumber
+cp -r /fff/BU0/output/run$runNumber/streamHLTRates $outputbasedir/reference_run$runNumber/
+cp -r /fff/BU0/output/run$runNumber/streamDQMHistograms $outputbasedir/reference_run$runNumber/
 
 ## test trial (test GT for fast-track validation)
 ./newHiltonMenu.py $testMenu ${testMenuOpts} -g $testGT
 [ $? -eq 0 ] || exit 1
 
-./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} # don't skip repack for test GT
+./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} --skipRepack # don't skip repack for test GT
 
 if [ -d "${outputbasedir}/test_run${runNumber}" ]; then
   printf "%s\n" "[runFastTrackValidation] removing directory ${outputbasedir}/test_run${runNumber} .."
@@ -59,7 +63,10 @@ if [ -d "${outputbasedir}/test_run${runNumber}" ]; then
 fi
 
 printf "%s\n" "[runFastTrackValidation] copying /fff/BU0/output/run$runNumber to $outputbasedir/test_run$runNumber .."
-cp -r /fff/BU0/output/run$runNumber $outputbasedir/test_run$runNumber
+#cp -r /fff/BU0/output/run$runNumber $outputbasedir/test_run$runNumber
+mkdir $outputbasedir/test_run$runNumber
+cp -r /fff/BU0/output/run$runNumber/streamHLTRates $outputbasedir/test_run$runNumber/
+cp -r /fff/BU0/output/run$runNumber/streamDQMHistograms $outputbasedir/test_run$runNumber/
 
 ## analysis of reference and test results
 echo " "
