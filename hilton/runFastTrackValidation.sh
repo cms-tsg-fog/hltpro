@@ -15,14 +15,17 @@ fi
 ######### user params #########
 
 testMenu=/cdaq/physics/Run2024/2e34/v1.4.3/HLT/V2
-runNumber=384291
+runNumber=384377
 refGT=140X_dataRun3_HLT_v3
-testGT=140X_dataRun3_HLT_Candidate_2024_08_10_16_36_32
+testGT=140X_dataRun3_HLT_Candidate_2024_08_12_18_09_40
 maxEvents=10000
 
-# no HLT prescales + re-emulation of Level-1 Global Trigger
-#testMenuOpts="-r ${runNumber} --unprescale"
-testMenuOpts="-r ${runNumber} --l1-emu uGT --l1 L1Menu_Collisions2024_v1_3_0_xml --unprescale" ## --prescale 2p0E34"
+# Default configuration: no HLT prescales
+testMenuOpts="-r ${runNumber} --unprescale"
+# To perform a test in a faster way:
+#testMenuOpts="-r ${runNumber} --prescale 2p0E34"
+# Custom L1 menu required: no HLT prescales + re-emulation of Level-1 Global Trigger
+#testMenuOpts="-r ${runNumber} --l1-emu uGT --l1 L1Menu_Collisions2024_v1_3_0_xml --unprescale" ## --prescale 2p0E34"
 
 ###############################
 
