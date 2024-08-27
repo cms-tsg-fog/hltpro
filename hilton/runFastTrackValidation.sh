@@ -14,11 +14,11 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/physics/Run2024/2e34/v1.4.3/HLT/V2
-runNumber=384377
+testMenu=/cdaq/physics/Run2024/2e34/v1.4.4/HLT/V1
+runNumber=385016
 refGT=140X_dataRun3_HLT_v3
-testGT=140X_dataRun3_HLT_Candidate_2024_08_12_18_09_40
-maxEvents=10000
+testGT=140X_dataRun3_HLT_Candidate_2024_08_27_09_46_54
+maxEvents=3000
 
 # Default configuration: no HLT prescales
 testMenuOpts="-r ${runNumber} --unprescale"

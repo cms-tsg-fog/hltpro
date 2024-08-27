@@ -17,6 +17,13 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    385016: [
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/016/00000/00237177-3afe-4042-8cb2-45169f041299.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/016/00000/04cf8c95-a8e5-44b3-977f-95677ffd1a10.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/016/00000/097554da-d30c-4887-8493-5ccee4bcd63f.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/016/00000/09d21d02-ad59-410d-b2e3-07b868f4848d.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/016/00000/0bce2108-d059-458e-9e00-04cae2a89b68.root',
+    ],
     384377: [
         'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/377/00000/0b0dcd48-bb34-40b9-b3d7-87bd0bd19006.root',
         'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/377/00000/1a50265e-7d29-40de-a3ac-05e56884c828.root',
