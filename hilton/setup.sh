@@ -67,6 +67,8 @@ export https_proxy="http://cmsproxy.cms:3128/"
 export NO_PROXY=".cms,localhost"
 
 export SCRAM_ARCH=${scramArch}
+export USER_SCRAM_TARGET=x86-64-v3
+
 source ${cmssetDefault}
 
 export TZ='-01:00'
