@@ -17,6 +17,11 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    385094: [ # /cdaq/physics/Run2024/2e34/v1.4.4/HLT/V1, LS 1003, Run2024G, 2024-08-28
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/094/00000/0212b6f9-c79a-4ddc-a6d2-3449d6b6814a.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/094/00000/be2c8eb8-0632-419c-bfc7-7cbb0ca97444.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/094/00000/a5c8735c-7fd2-494f-ad44-c15ddb1eb70a.root'
+    ],
     385016: [
         'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/016/00000/00237177-3afe-4042-8cb2-45169f041299.root',
         'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/016/00000/04cf8c95-a8e5-44b3-977f-95677ffd1a10.root',
