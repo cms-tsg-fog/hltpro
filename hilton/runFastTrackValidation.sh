@@ -26,6 +26,8 @@ testMenuOpts="-r ${runNumber} --unprescale"
 #testMenuOpts="-r ${runNumber} --prescale 2p0E34"
 # Custom L1 menu required: no HLT prescales + re-emulation of Level-1 Global Trigger
 #testMenuOpts="-r ${runNumber} --l1-emu uGT --l1 L1Menu_Collisions2024_v1_3_0_xml --unprescale" ## --prescale 2p0E34"
+# Do not write output files, to avoid filling disk space. NOTE: this requires to pass --skipRepack to cleanGenerateAndRun.sh
+testMenuOpts+=" --empty-output-files"
 
 ###############################
 
