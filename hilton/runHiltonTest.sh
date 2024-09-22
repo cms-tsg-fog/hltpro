@@ -11,30 +11,29 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/test/missirol/test/2024/online/GRun/v1.0/HLT/V1
-runNumber=370293
-testGT=140X_dataRun3_HLT_v1
-maxEvents=200
+testMenu=/cdaq/special/2024/ECALTiming/v1.5.0/HLT/V2
+runNumber=385016
+maxEvents=2000
 
 # no HLT prescales + re-emulation of Level-1 Global Trigger
 testMenuOpts="-r ${runNumber} --no-prescale"
-testMenuOpts+=" --l1-emu uGT --l1 L1Menu_Collisions2024_v1_0_0_xml"
 testMenuOpts+=" --empty-output-files"
+#testMenuOpts+=" --l1-emu uGT --l1 L1Menu_Collisions2024_v1_3_0_xml"
 #testMenuOpts+=" --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseForOffline"
-#testMenuOpts+=" --customise HLTrigger/Configuration/customizeHLTforAlpaka.customizeHLTforAlpaka"
-testMenuOpts_customCmds="del process.MessageLogger\nprocess.load('FWCore.MessageLogger.MessageLogger_cfi')"
+
+#testMenuOpts_customCmds="del process.MessageLogger\nprocess.load('FWCore.MessageLogger.MessageLogger_cfi')"
 
 ###############################
 
 printf "%s\n  %s\n\n" "Running Hilton Test:" "--> will compare rates and timing of HLT menu using reference and test GlobalTags."
-printf "%s\n\n%s\n%s\n%s\n%s\n\n" "CMSSW_BASE = ${CMSSW_BASE}" "HLT Menu   = ${testMenu}" "Run number = ${runNumber}" "Test GT    = ${testGT}" "maxEvents  = ${maxEvents}"
+printf "%s\n\n%s\n%s\n%s\n%s\n\n" "CMSSW_BASE = ${CMSSW_BASE}" "HLT Menu   = ${testMenu}" "Run number = ${runNumber}" "maxEvents  = ${maxEvents}"
 sleep 2
 
 outputbasedir=/cmsnfsscratch/globalscratch/hltpro/hiltonTest
 mkdir -p "${outputbasedir}"
 
 ## test trial (test GT for fast-track validation)
-./newHiltonMenu.py "${testMenu}" -g "${testGT}" ${testMenuOpts} --customise_commands "${testMenuOpts_customCmds}" -c v3
+./newHiltonMenu.py "${testMenu}" ${testMenuOpts} --customise_commands "${testMenuOpts_customCmds}" -c v3
 [ $? -eq 0 ] || exit 1
 
 ./cleanGenerateAndRun.sh --run "${runNumber}" --maxEvents "${maxEvents}" # do not skip repack
@@ -56,7 +55,7 @@ sleep 1
 
 ./monitorRatesMultiLumi.py "${outputbasedir}"/test_run"${runNumber}"/streamHLTRates/data/run"${runNumber}"*jsndata > hiltonTest_HLT_rates.txt
 
-echo "HLT Rates of menu ${testMenu} using test GT ${testGT} dumped to hiltonTest_HLT_rates.txt"
+echo "HLT Rates of menu ${testMenu} dumped to hiltonTest_HLT_rates.txt"
 echo " "
 sleep 1
 
