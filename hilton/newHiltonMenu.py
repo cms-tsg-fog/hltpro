@@ -276,7 +276,7 @@ if __name__=='__main__':
     parser.add_argument('-c', '--converter', default = "daq", help = 'Converter to  use (daq, v2, v3, v3-dev, v3-test)')
 
     # GlobalTag [optional]
-    parser.add_argument('-g', '--globaltag', help = 'Overrides the Global Tag in the resulting Hilton menu with this GT')
+    parser.add_argument('-g', '--globaltag', default = None, help = 'Overrides the Global Tag in the resulting Hilton menu with this GT')
 
     # Choice of HLT-prescale column, if any [optional]
     group = parser.add_mutually_exclusive_group()
