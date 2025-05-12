@@ -42,61 +42,6 @@ fileNamesByRun_dict = {
         'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/016/00000/09d21d02-ad59-410d-b2e3-07b868f4848d.root',
         'root://eoscms.cern.ch//eos/cms/store/data/Run2024G/HLTPhysics/RAW/v1/000/385/016/00000/0bce2108-d059-458e-9e00-04cae2a89b68.root',
     ],
-    384377: [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/377/00000/0b0dcd48-bb34-40b9-b3d7-87bd0bd19006.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/377/00000/1a50265e-7d29-40de-a3ac-05e56884c828.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/377/00000/e3820104-8f42-4d30-b96d-cea5d1f40820.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/377/00000/8b394d3c-1426-48d7-9df5-b0baa00a57ca.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/377/00000/9d050eff-78cd-418d-97ff-c732ae67a080.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/377/00000/b526a63b-191a-4823-b1ea-b54bf07c221a.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/377/00000/372bd449-642f-4aa3-9d42-9854e4219e8c.root'
-    ],
-    384291: [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/291/00000/c648bf77-11cd-4984-9ee0-370dcc638ba6.root',
-    ],
-    384209: [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/209/00000/d7a50556-de34-459a-bdb9-23458c45b5a3.root',
-    ],
-    384052: [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/384/052/00000/dc6601e0-f456-4c69-82e1-7cc30ca3086b.root',
-    ],
-    383907: [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/813a5cd0-dd36-4fd6-8173-e44c4f3325aa.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/21a5afc4-4a78-497c-8590-e12783709332.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/191f1b8b-1526-4932-b0d4-4f6fde151fe3.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/519c27d8-2195-4689-9ee5-7d7f86483f70.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/58c24d9d-7a85-43cc-9b11-749cc152eb26.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/ee1540e6-91aa-42e1-bb97-868580633d0d.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/5146855a-70c2-4685-bcc5-d4b00dd78e57.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/f1b791c7-877d-4514-b7ee-b8f9720de4f9.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/e7dd29b5-265e-4c1d-80c9-f1dc1dda857e.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/41793a95-08ce-44f6-96d1-b2aae845bd10.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/03e117f3-6bc7-4158-b3f2-061f887b2b87.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/f7c21cb3-b5ab-471f-8148-740a8bb3da48.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/8a8a6a91-b73e-4a39-8f15-cb4cb8a0fa14.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/aecf2f28-93bb-4365-962c-6f7d1da77628.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/a8abf3c8-588e-4821-b742-65a4c37ea99b.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/907/00000/98c3284b-9595-4d32-8acf-448fe5284252.root',
-    ],
-    383834: [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/HLTPhysics/RAW/v1/000/383/834/00000/5bdb1e88-16ac-4b79-a370-72b36644b7c1.root'
-    ],
-    383815: [ # cosmics, Run 383815, LS 29, Run2024G
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/Cosmics/RAW/v1/000/383/815/00000/b48f6581-fcbd-4874-8cf4-56bb30fa6eef.root'
-    ],
-    383687 : [ # HLTPhysics 
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024F/HLTPhysics/RAW/v1/000/383/687/00000/57e56402-eecb-4992-a6a5-a832f4be7330.root',
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024F/HLTPhysics/RAW/v1/000/383/687/00000/45af49ae-4ee1-4008-b288-2924b9eabbd0.root'
-    ],
-    383853 : [ # circulating, Run 383853, Run2024G
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024G/MinimumBias/RAW/v1/000/383/853/00000/cf7df550-a7e0-40c1-bd47-0410c6b8aac9.root',
-    ],
-    383630 : [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024F/HLTPhysics/RAW/v1/000/383/630/00000/6e5cfb81-3c40-4585-966a-f19ccec7247d.root',
-    ],
-    383465 : [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024F/MinimumBias/RAW/v1/000/383/465/00000/d7e78f90-1c34-4c40-bf5a-b25abd500312.root'
-    ],
     383449 : [
         '/store/data/Run2024F/HLTPhysics/RAW/v1/000/383/449/00000/467b5b10-5158-4e8c-ab29-9d3bd05d8244.root',
         '/store/data/Run2024F/HLTPhysics/RAW/v1/000/383/449/00000/16bf76b7-8c3c-4a86-8be8-f27ccb982a12.root',
@@ -104,10 +49,6 @@ fileNamesByRun_dict = {
     ],
     383418 : [
         'root://eoscms.cern.ch//store/data/Run2024F/EGamma0/RAW/v1/000/383/418/00000/ea621243-0275-40fe-9377-671e6508cdb5.root'
-    ],
-    383468 : [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024F/JetMET0/RAW/v1/000/383/468/00000/bb185b03-465b-4095-b6f3-426fb56084b3.root'
-    ],
     383254 : [
         '/store/data/Run2024F/HLTPhysics/RAW/v1/000/383/254/00000/c454aaa4-9bda-4351-a7d1-91e8c28d4dba.root',
         '/store/data/Run2024F/HLTPhysics/RAW/v1/000/383/254/00000/c655e3c4-208e-42bf-abea-b8f7999c880f.root',
@@ -122,9 +63,6 @@ fileNamesByRun_dict = {
         '/store/data/Run2024F/HLTPhysics/RAW/v1/000/382/343/00000/01dec942-c274-4e71-b2b9-c3fb917db3ac.root',
         '/store/data/Run2024F/HLTPhysics/RAW/v1/000/382/343/00000/f400c83f-0b87-481e-97e0-03f3e84ff089.root'
         ],
-    382316 : [
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024F/EGamma0/RAW/v1/000/382/314/00000/ed4bf212-137d-4c77-92cd-30fb91d157ed.root'
-    ],
     381516 : [
         'root://eoscms.cern.ch//store/data/Run2024E/JetMET0/RAW/v1/000/381/516/00000/00e12191-9b77-4421-a101-6dfe3ee49885.root'
     ],
@@ -147,9 +85,6 @@ fileNamesByRun_dict = {
     379793 : [ # Run2024C, Cosmics (L1Menu_Collisions2024_v1_1_0)
         '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/7ae3a695-9581-4227-af54-216876989e08.root',
         '/store/data/Run2024C/Cosmics/RAW/v1/000/379/793/00000/2930aed3-7d05-4fc2-abe7-67dfdf0dfd62.root'
-    ],
-    379729 : [ # Run2024C, HLTPhysics, Collisions, (L1Menu_Collisions2024_v1_1_0, LS 194-205)
-        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2024C/HLTPhysics/RAW/v1/000/379/729/00000/9a4c061e-39e4-496a-9cb6-285be4b77367.root',
     ],
     379728 : [ # Run2024C, Circulating (L1Menu_Collisions2024_v1_1_0)
         '/store/data/Run2024C/MinimumBias/RAW/v1/000/379/728/00000/222c8979-4816-49d8-8929-4bf719555767.root'
