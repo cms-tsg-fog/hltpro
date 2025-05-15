@@ -14,7 +14,7 @@ class MenuAnalyzer:
         self.maxModuleNameLength = 300
         self.maxModulesPerPath   = 50
         self.maxPaths = 1000
-        self.maxEndPaths = 120 # arbitrary maximum number of EndPaths, increased to 120 beggining of Run 2024
+        self.maxEndPaths = 180 # arbitrary maximum number of EndPaths, increased from 120 to 180 in May 2025 (for HLT menu 2025 V1.1)
         self.requiredContent = {}
  
         # menu type
