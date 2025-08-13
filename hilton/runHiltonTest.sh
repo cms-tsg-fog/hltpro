@@ -11,14 +11,14 @@ fi
 
 ######### user params #########
 
-testMenu=/cdaq/special/2024/ECALTiming/v1.5.0/HLT/V2
-runNumber=385016
-maxEvents=2000
+testMenu=
+runNumber=394635
+maxEvents=5000
 
 # no HLT prescales + re-emulation of Level-1 Global Trigger
 testMenuOpts="-r ${runNumber} --no-prescale"
 testMenuOpts+=" --empty-output-files"
-#testMenuOpts+=" --l1-emu uGT --l1 L1Menu_Collisions2024_v1_3_0_xml"
+testMenuOpts+=" --l1-emu uGT --l1 L1Menu_Collisions2025_v1_3_0_xml"
 #testMenuOpts+=" --customise HLTrigger/Configuration/customizeHLTforCMSSW.customiseForOffline"
 
 #testMenuOpts_customCmds="del process.MessageLogger\nprocess.load('FWCore.MessageLogger.MessageLogger_cfi')"
