@@ -17,6 +17,11 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    396805: [ # Collisions 2025, era Run2025F, 2460b fill, PD HLTPhysics, Run 396805, LS = 607-615, 948-956, 966-974, L1Menu_Collisions2025_v1_3_0
+        '/store/data/Run2025F/HLTPhysics/RAW/v1/000/396/805/00000/53e9e1aa-30d0-4683-870e-7ceda767b46a.root',
+        '/store/data/Run2025F/HLTPhysics/RAW/v1/000/396/805/00000/18e43e08-688a-40d0-970b-c889d4f16ed4.root',
+        '/store/data/Run2025F/HLTPhysics/RAW/v1/000/396/805/00000/4e20363a-4ec9-40cc-ad29-2f117d59e15c.root',
+    ],
     395670: [
         'root://eoscms.cern.ch//eos/cms/store/data/Run2025D/HLTPhysics/RAW/v1/000/395/670/00000/99245758-c190-4d80-ae5c-781df89b7f86.root',
     ],
