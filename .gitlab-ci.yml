@@ -46,8 +46,9 @@ synchronize:
       git checkout "$CI_COMMIT_BRANCH"
   script:
     - >
-      echo "Pulling and committing submodule updates" &&
-      git submodule foreach git pull origin master
+      echo "Pulling and committing submodule updates"
+      git submodule set-branch --branch master --recursive
+      git submodule update --remote --merge
 
       git diff --quiet && git diff --staged --quiet || 
       { git commit -am "Update submodules to latest commit (Pipeline $CI_PIPELINE_ID)" && 
