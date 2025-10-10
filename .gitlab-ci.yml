@@ -21,6 +21,7 @@ builder image:
     DOCKERFILE: builder.Dockerfile
     CONTEXT_FOLDER: .gitlab/ci
     NAME: builder
+    container: docker
 
 synchronize:
   stage: synchronize
