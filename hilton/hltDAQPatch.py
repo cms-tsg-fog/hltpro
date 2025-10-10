@@ -58,7 +58,7 @@ options.parseArguments()
 
 process.options.numberOfThreads = options.numThreads
 process.options.numberOfStreams = options.numFwkStreams
-process.options.numberOfConcurrentLuminosityBlocks = 2
+process.options.numberOfConcurrentLuminosityBlocks = 1
 
 process.EvFDaqDirector.buBaseDir    = options.buBaseDir
 process.EvFDaqDirector.baseDir      = options.dataDir
