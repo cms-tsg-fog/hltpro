@@ -17,6 +17,12 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    398342:[ # Cosmics, Run2025G, run 398342, LS = [224, 228], 42701 events (RUCIO rule created)
+       '/store/data/Run2025G/Cosmics/RAW/v1/000/398/342/00000/cce317da-17e9-4465-9ba5-4bc9eb207317.root',
+    ],
+    398040:[ # HLTPhysics, Run2025G, run 398040, LS = [14, 23], 4241 events (RUCIO rule created)
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/040/00000/0994ecc9-5975-49bf-b078-f943d4248860.root',	
+    ],
     396805: [ # Collisions 2025, era Run2025F, 2460b fill, PD HLTPhysics, Run 396805, LS = 607-615, 948-956, 966-974, L1Menu_Collisions2025_v1_3_0
         '/store/data/Run2025F/HLTPhysics/RAW/v1/000/396/805/00000/53e9e1aa-30d0-4683-870e-7ceda767b46a.root',
         '/store/data/Run2025F/HLTPhysics/RAW/v1/000/396/805/00000/18e43e08-688a-40d0-970b-c889d4f16ed4.root',
