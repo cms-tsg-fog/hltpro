@@ -46,7 +46,7 @@ class MenuAnalyzer:
        
         if self.menuType == 'collisionsHI':
             print(colored("We are running in collisionsHI mode, remember to run ./cleanGenerateAndRun.sh with --sourceLabel rawDataRepacker",'yellow'))
-            self.requiredStreamsAndPDs['DQM'] = ['HIOnlineMonitor']
+            self.requiredStreamsAndPDs['HIDQM'] = ['HIOnlineMonitor']
         
         self.requiredEndPaths = ['DQMHistograms']
        
