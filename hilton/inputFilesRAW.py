@@ -17,6 +17,65 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+    398600:[ #HLTPhysics, Run2025G, run 398600
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/600/00000/043f5e13-fa7e-4a58-8ebb-09b88f24d30e.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/600/00000/062a7aa4-239f-4a69-96ee-2afa45c01c26.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/600/00000/0b8ba66c-f237-4c23-90e6-055334b3cef4.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/600/00000/0dbd8520-c847-49da-8d76-1230fb8c6148.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/600/00000/0e69eabd-7ac0-4d30-b9dc-431a549477ef.root',    
+    ],
+    398342:[ # Cosmics, Run2025G, run 398342, LS = [224, 228], 42701 events (RUCIO rule created)
+       '/store/data/Run2025G/Cosmics/RAW/v1/000/398/342/00000/cce317da-17e9-4465-9ba5-4bc9eb207317.root',
+    ],
+    398335: [ # HLTPhysics, Run2025G, run 398335, LS = [], 17037 events
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/335/00000/033dbf5e-d09a-4b8a-944e-3d337428ffeb.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/335/00000/055907eb-a34b-4cfe-aaf0-8a446bbebd36.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/335/00000/0684d03d-61a9-4f35-98a8-576674b77b54.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/335/00000/07b1b55f-64e5-4e2a-9493-b1b2cc46b8d8.root',
+    ],
+    398308:[ # HLTPhysics, Run2025G, run 398308, LS = [], 17236 events
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/308/00000/0055e4bd-e956-4030-a717-ecc7ff1fd49d.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/308/00000/04e189c7-cee8-451b-be97-0cd586636cfd.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/308/00000/08d12008-0a22-4e7c-aa6d-c6421f8f6057.root',
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/308/00000/0fd1f5f9-ebe8-4095-b2a9-f8f650702fb1.root',
+    ],
+    398040:[ # HLTPhysics, Run2025G, run 398040, LS = [14, 23], 4241 events (RUCIO rule created)
+       '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/040/00000/0994ecc9-5975-49bf-b078-f943d4248860.root',
+    ],
+    398226:[
+        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025G/Cosmics/RAW/v1/000/398/226/00000/a348aa0d-f9ef-4693-9ecb-d071763863a3.root'
+    ],
+    397817:[
+        #'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/HLTPhysics/RAW/v1/000/397/817/00000/7d8e25fb-6161-
+        #'/store/data/Run2025F/EGamma0/RAW/v1/000/397/817/00000/fa90bf6c-b987-4c69-87c8-b9cfe1641df7.root'
+        '/store/data/Run2025F/EGamma0/RAW/v1/000/397/817/00000/f6b10cdb-d578-4b48-8e64-535d6c8caca9.root'
+    ],
+    397698: [ # Cosmics 2025F
+        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/Cosmics/RAW/v1/000/397/698/00000/0208d8a5-7bb2-4daf-9d22-6c2d566f7305.root',
+        #'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/Cosmics/RAW/v1/000/397/698/00000/101235c9-53fd-416e-ad22-af7ce62b1764.root',
+        #'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/Cosmics/RAW/v1/000/397/698/00000/212ed47d-e945-4717-95d7-d444752c7d78.root',
+        #'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/Cosmics/RAW/v1/000/397/698/00000/2ee584a9-642f-4940-9535-e144b24240f5.root',
+        #'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/Cosmics/RAW/v1/000/397/698/00000/3f1e8c3b-0942-470c-9dfd-efcdc054686e.root',
+        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/Cosmics/RAW/v1/000/397/698/00000/3fcb1176-396b-4c70-965c-4828a74739ca.root',
+        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/Cosmics/RAW/v1/000/397/698/00000/4572a4f2-409e-44fd-b78e-057b336e55f6.root',
+        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/Cosmics/RAW/v1/000/397/698/00000/5781c668-9437-4a2f-9468-96a7f16948fd.root',
+        'root://eoscms.cern.ch//eos/cms/tier0/store/data/Run2025F/Cosmics/RAW/v1/000/397/698/00000/5a8654f8-fdce-41a7-8ff5-6ffbface7b81.root'
+    ],
+    397492:[
+        '/store/data/Run2025F/HLTPhysics/RAW/v1/000/397/492/00000/02a80049-15c9-4c41-ae91-9ed221a4338a.root',
+        #'/store/data/Run2025F/HLTPhysics/RAW/v1/000/397/492/00000/aad4745b-b6f9-435a-bfdd-83b06cc2ccf6.root',
+        #'/store/data/Run2025F/HLTPhysics/RAW/v1/000/397/492/00000/30db2cea-e3b1-461a-aff2-bb60c3674b65.root',
+        '/store/data/Run2025F/HLTPhysics/RAW/v1/000/397/492/00000/7ae6601b-9a63-451b-900a-6436f601fb25.root',
+        '/store/data/Run2025F/HLTPhysics/RAW/v1/000/397/492/00000/a23e2d45-89b1-4592-897b-1378785a9961.root',
+        '/store/data/Run2025F/HLTPhysics/RAW/v1/000/397/492/00000/379c4d56-f31a-4d54-a19e-f06d7b43b71f.root',
+    ],
+    396805: [ # Collisions 2025, era Run2025F, 2460b fill, PD HLTPhysics, Run 396805, LS = 607-615, 948-956, 966-974, L1Menu_Collisions2025_v1_3_0
+        # Express run
+        #'/store/express/Run2025F/ExpressPhysics/FEVT/Express-v1/000/396/805/00000/0034d394-cb04-4640-acea-01a6969234aa.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2025F/HLTPhysics/RAW/v1/000/396/805/00000/53e9e1aa-30d0-4683-870e-7ceda767b46a.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2025F/HLTPhysics/RAW/v1/000/396/805/00000/18e43e08-688a-40d0-970b-c889d4f16ed4.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2025F/HLTPhysics/RAW/v1/000/396/805/00000/4e20363a-4ec9-40cc-ad29-2f117d59e15c.root',
+    ],
     395670: [
         'root://eoscms.cern.ch//eos/cms/store/data/Run2025D/HLTPhysics/RAW/v1/000/395/670/00000/99245758-c190-4d80-ae5c-781df89b7f86.root',
     ],
@@ -142,5 +201,10 @@ fileNamesByRun_dict = {
     395670: [
         'root://eoscms.cern.ch//eos/cms/store/data/Run2025D/HLTPhysics/RAW/v1/000/395/670/00000/0fb61f14-6487-4862-a441-f03b50ca36cc.root'
     ],
+    396405: [
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2025E/HLTPhysics/RAW/v1/000/396/405/00000/027d7cf3-ffd9-4f52-ad5c-0e3e22cc868c.root',
+        'root://eoscms.cern.ch//eos/cms/store/data/Run2025E/HLTPhysics/RAW/v1/000/396/405/00000/028d8efe-5acc-47b0-bc16-edb43e8d1ae3.root',
+        'root://eoscms.cern.ch//eos/cms//store/data/Run2025E/HLTPhysics/RAW/v1/000/396/405/00000/041813ad-ef1f-4d73-9031-115ec550a0e0.root'
+    ]
 
 }
