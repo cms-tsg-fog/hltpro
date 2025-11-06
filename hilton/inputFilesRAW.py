@@ -17,6 +17,7 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+<<<<<<< HEAD
     398600:[ #HLTPhysics, Run2025G, run 398600
        '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/600/00000/043f5e13-fa7e-4a58-8ebb-09b88f24d30e.root',
        '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/600/00000/062a7aa4-239f-4a69-96ee-2afa45c01c26.root',

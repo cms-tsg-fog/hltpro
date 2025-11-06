@@ -58,7 +58,6 @@ options.parseArguments()
 
 process.options.numberOfThreads = options.numThreads
 process.options.numberOfStreams = options.numFwkStreams
-process.options.numberOfConcurrentLuminosityBlocks = 2
 
 process.EvFDaqDirector.buBaseDir    = options.buBaseDir
 process.EvFDaqDirector.baseDir      = options.dataDir
@@ -109,3 +108,55 @@ except:
 #    process.ProcessAcceleratorAlpaka.setBackend("cuda_async")
 #except Exception as ex:
 #   print("Unable to apply a change to ProcessAcceleratorAlpaka:", ex)
+
+
+#convert menu to SFB setup if SFB run is detected
+import json
+daqpatch_is_sfb_run_ = False
+daq_hltinfo_path_ = None
+daq_hltinfo_path_ = options.buBaseDir + "/run" + str(options.runNumber).zfill(6) + "/hlt/hltinfo"
+try:
+    with open(daq_hltinfo_path_, "r") as hltinfo:
+        daqpatch_is_sfb_run_ = json.load(hltinfo)["className"] == "sfb::SFW"
+except Exception as ex:
+    print(f"Exception trying to open hltinfo: {ex}")
+
+if daqpatch_is_sfb_run_:
+    try:
+      daqpatch_TCDSRange =  process.source.testTCDSFEDRange
+    except:
+      daqpatch_TCDSRange = cms.untracked.vuint32()
+    if process.source._TypedParameterizable__type == "DAQSource":
+        process.source.dataMode = cms.untracked.string("FRDStriped")
+        process.source.numBuffers = cms.untracked.uint32( 2 )
+        process.source.maxBufferedFiles = cms.untracked.uint32( 2 )
+        process.source.maxChunkSize = cms.untracked.uint32( 800 )
+        process.source.eventChunkSize = cms.untracked.uint32( 200 )
+        process.source.eventChunkBlock = cms.untracked.uint32( 200 )
+    elif process.source._TypedParameterizable__type == "FedRawDataInputSource":
+        daqpatch_useL1EventID = bool(process.source.useL1EventID)
+        process.source = cms.Source( "DAQSource",
+            dataMode = cms.untracked.string("FRDStriped"),
+            numBuffers = cms.untracked.uint32( 3 ),
+            useL1EventID = cms.untracked.bool( daqpatch_useL1EventID ),
+            maxBufferedFiles = cms.untracked.uint32( 2 ),
+            maxChunkSize = cms.untracked.uint32( 2000 ),
+            eventChunkSize = cms.untracked.uint32( 200 ),
+            eventChunkBlock = cms.untracked.uint32( 200 ),
+            alwaysStartFromfirstLS = cms.untracked.uint32( 0 ),
+            fileNames = cms.untracked.vstring(  ),
+            verifyChecksum = cms.untracked.bool( True ),
+            testTCDSFEDRange = daqpatch_TCDSRange,
+            fileListMode = cms.untracked.bool( False ),
+            testing = cms.untracked.bool( False )
+        )
+    daqparamfile_path_ = options.buBaseDir + "/run" + str(options.runNumber).zfill(6) + "/hlt/daqParameters.jsn"
+    with open(daqparamfile_path_, "r") as fp:
+        daqparams_ = json.load(fp)
+    daq_evm_host_ = daqparams_["evbHostName"].split(".")[0]
+    daq_sfb_rus_ = [x.split(".")[0] for x in daqparams_["listOfActiveRUs"]]
+    daq_sfb_ruparams_ = [f"/fff/BUs/{daq_evm_host_}_ramdisk"]
+    for ru in daq_sfb_rus_:
+        if ru != daq_evm_host_:
+            daq_sfb_ruparams_.append(f"/fff/BUs/{ru}_ramdisk")
+    process.EvFDaqDirector.buBaseDirsAll = cms.untracked.vstring(daq_sfb_ruparams_)

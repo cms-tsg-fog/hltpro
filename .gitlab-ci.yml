@@ -1,7 +1,7 @@
-# include all templates in https://gitlab.cern.ch/cms-cactus/ops/auto-devops/-/tree/0.4.25
+# include all templates in https://gitlab.cern.ch/cms-cactus/ops/auto-devops/-/tree/0.4.32
 include:
   - project: cms-cactus/ops/auto-devops
-    ref: 0.4.25
+    ref: 0.4.32
     file: presets/blank-slate.yml
 
 stages:
@@ -21,6 +21,7 @@ builder image:
     DOCKERFILE: builder.Dockerfile
     CONTEXT_FOLDER: .gitlab/ci
     NAME: builder
+    container: docker
 
 synchronize:
   stage: synchronize
@@ -45,8 +46,9 @@ synchronize:
       git checkout "$CI_COMMIT_BRANCH"
   script:
     - >
-      echo "Pulling and committing submodule updates" &&
-      git submodule foreach git pull origin master
+      echo "Pulling and committing submodule updates"
+      git submodule set-branch --branch master --recursive
+      git submodule update --remote --merge
 
       git diff --quiet && git diff --staged --quiet || 
       { git commit -am "Update submodules to latest commit (Pipeline $CI_PIPELINE_ID)" && 
