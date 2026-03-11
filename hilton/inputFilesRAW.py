@@ -17,7 +17,18 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
-<<<<<<< HEAD
+    401704:[ #MiniDAQ (EcalCalibration), Run2026A, run 401704 (to test EcalCalibration MiniDAQ menu)
+       '/store/data/Run2026A/MiniDaq/RAW/v1/000/401/704/00000/d9b97556-58be-49f7-875d-6ebda38bf75d.root',
+    ],
+    401733:[ #HLTPhysics, Run2026A, run 401733 (LS = 499-513)
+       '/store/data/Run2026A/HLTPhysics/RAW/v1/000/401/733/00000/d5b8a312-5230-469a-a451-d199e74012c2.root',
+    ],
+    401628:[ #Cosmics, Run2026A, run 401628 (LS = 17-31, all detectors IN and with HV ON)
+       '/store/data/Run2026A/Cosmics/RAW/v1/000/401/628/00000/cadc68ba-b807-4548-a4fb-509babe06ba1.root',
+    ],
+    401420:[ #MiniDAQ (EcalCalibration), Commissioning2026, run 401420 (to test EcalCalibration MiniDAQ menu)
+       '/store/data/Commissioning2026/MiniDaq/RAW/v1/000/401/420/00000/bfa68be5-7ac4-4d80-a3da-3a386faae421.root',
+    ],
     398600:[ #HLTPhysics, Run2025G, run 398600
        '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/600/00000/043f5e13-fa7e-4a58-8ebb-09b88f24d30e.root',
        '/store/data/Run2025G/HLTPhysics/RAW/v1/000/398/600/00000/062a7aa4-239f-4a69-96ee-2afa45c01c26.root',
