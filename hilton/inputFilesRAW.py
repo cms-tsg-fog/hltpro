@@ -20,7 +20,7 @@ fileNamesByRun_dict = {
     401704:[ #MiniDAQ (EcalCalibration), Run2026A, run 401704 (to test EcalCalibration MiniDAQ menu)
        '/store/data/Run2026A/MiniDaq/RAW/v1/000/401/704/00000/d9b97556-58be-49f7-875d-6ebda38bf75d.root',
     ],
-    401733:[ #HLTPhysics, Run2026A, run 401733 (LS = 499-513)
+    401733:[ #HLTPhysics, Run2026A, run 401733 (830b fill 11481, LS = 499-513)
        '/store/data/Run2026A/HLTPhysics/RAW/v1/000/401/733/00000/d5b8a312-5230-469a-a451-d199e74012c2.root',
     ],
     401628:[ #Cosmics, Run2026A, run 401628 (LS = 17-31, all detectors IN and with HV ON)
