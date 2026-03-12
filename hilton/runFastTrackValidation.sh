@@ -13,11 +13,11 @@ if [ -z "${CMSSW_BASE}" ]; then
 fi
 
 ######### user params #########
-testMenu=/cdaq/physics/Run2025/2e34/v1.2.1/HLT/V4  #/cdaq/physics/Run2025/PIon/v1.0.0/HLT/V6  #/cdaq/physics/Run2025/2e34/v1.1.2/HLT/V4 #cdaq/physics/Run2025/2e34/v1.1.2/HLT/V6
-runNumber=395670
-refGT=150X_dataRun3_HLT_v1
-testGT=150X_dataRun3_HLT_Candidate_2025_08_12_14_37_36 #150X_dataRun3_HLT_Candidate_2025_07_11_19_56_41 #150X_dataRun3_Prompt_Candidate_2025_06_30_17_12_05 #150X_dataRun3_HLT_Candidate_2025_05_20_07_52_45 #150X_dataRun3_HLT_Candidate_2025_05_19_22_07_33 #150X_dataRun3_HLT_Candidate_2025_05_16_17_12_41 #150X_dataRun3_HLT_Candidate_2025_06_26_07_10_35
-maxEvents=3000
+testMenu=/cdaq/cosmic/commissioning2026/v1.0.0/HLT/V2
+runNumber=401311
+refGT=160X_dataRun3_HLT_v1
+testGT=160X_dataRun3_HLT_TkAl_Target_w9_v1  
+maxEvents=10000
 
 # Default configuration: no HLT prescales
 testMenuOpts="-r ${runNumber} --unprescale"
@@ -26,7 +26,7 @@ testMenuOpts="-r ${runNumber} --unprescale"
 # Custom L1 menu required: no HLT prescales + re-emulation of Level-1 Global Trigger
 #testMenuOpts="-r ${runNumber} --l1-emu uGT --l1 L1Menu_Collisions2024_v1_3_0_xml --unprescale" ## --prescale 2p0E34"
 # Do not write output files, to avoid filling disk space. NOTE: this requires to pass --skipRepack to cleanGenerateAndRun.sh
-testMenuOpts+=" --empty-output-files"
+#testMenuOpts+=" --empty-output-files"
 
 ###############################
 
