@@ -116,4 +116,7 @@ else
   printf "\n%s\n" "[test, GT=${testGT}] DQM histograms not produced (directory $outputbasedir/test_run$runNumber/streamDQMHistograms/data/ does not exist)"
 fi
 
+echo "Running script to check rates consistency"
+./checkRates.py
+
 printf "\n%s\n" "End of script."
