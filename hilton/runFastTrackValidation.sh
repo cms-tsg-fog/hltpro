@@ -13,20 +13,20 @@ if [ -z "${CMSSW_BASE}" ]; then
 fi
 
 ######### user params #########
-testMenu=/cdaq/cosmic/commissioning2026/v1.0.0/HLT/V2
-runNumber=401311
+testMenu=/cdaq/physics/Run2026/2e34/v1.1.1/HLT/V9
+runNumber=402360
 refGT=160X_dataRun3_HLT_v1
-testGT=160X_dataRun3_HLT_TkAl_Target_w9_v1  
+testGT=160X_dataRun3_HLT_Candidate_2026_04_07_12_54_49
 maxEvents=10000
 
 # Default configuration: no HLT prescales
-testMenuOpts="-r ${runNumber} --unprescale"
+#testMenuOpts="-r ${runNumber} --unprescale"
 # To perform a test in a faster way:
 #testMenuOpts="-r ${runNumber} --prescale 2p0E34"
 # Custom L1 menu required: no HLT prescales + re-emulation of Level-1 Global Trigger
-#testMenuOpts="-r ${runNumber} --l1-emu uGT --l1 L1Menu_Collisions2024_v1_3_0_xml --unprescale" ## --prescale 2p0E34"
+testMenuOpts="-r ${runNumber} --l1-emu uGT --l1 L1Menu_Collisions2026_v1_1_0_xml --unprescale" ## --prescale 2p0E34"
 # Do not write output files, to avoid filling disk space. NOTE: this requires to pass --skipRepack to cleanGenerateAndRun.sh
-#testMenuOpts+=" --empty-output-files"
+testMenuOpts+=" --empty-output-files"
 
 ###############################
 
@@ -59,7 +59,7 @@ cp -r /fff/BU0/output/run$runNumber/streamDQMHistograms $outputbasedir/reference
 ./newHiltonMenu.py $testMenu ${testMenuOpts} -g $testGT
 [ $? -eq 0 ] || exit 1
 
-./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} #--skipRepack # don't skip repack for test GT
+./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents} --skipRepack # don't skip repack for test GT
 #./cleanGenerateAndRun.sh --run $runNumber --maxEvents ${maxEvents}
 
 if [ -d "${outputbasedir}/test_run${runNumber}" ]; then
