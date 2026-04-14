@@ -6,7 +6,6 @@ include:
 
 stages:
 - 🛠️ setup
-- synchronize
 - 🏗️ build
 #- 🐞 test
 #- 📦 publish
@@ -23,48 +22,6 @@ builder image:
     NAME: builder
     container: docker
 
-synchronize:
-  stage: synchronize
-  variables:
-    GIT_STRATEGY: fetch
-    GIT_CHECKOUT: "true"
-    GIT_DEPTH: 0
-    GIT_SUBMODULE_STRATEGY: normal
-  rules:
-    - if: "$PROJECT_ACCESS_TOKEN"
-      #changes:
-      # - hilton/hltDAQPatch.py_template # rules: changes always evaluates to true when there is no Git push event (eg. submodule fetch)
-      #when: manual
-      allow_failure: true
-  before_script:
-    - |
-      echo "Accessing GitLab as $GITLAB_USER_NAME ($GITLAB_USER_EMAIL)"
-      git config --global user.name "$GITLAB_USER_NAME"
-      git config --global user.email "$GITLAB_USER_EMAIL"
-      git config --global push.default simple
-      git remote add origin-write "https://gitlab-ci-token:$PROJECT_ACCESS_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git"
-      git checkout "$CI_COMMIT_BRANCH"
-  script:
-    - >
-      echo "Pulling and committing submodule updates"
-      git submodule set-branch --branch master --recursive
-      git submodule update --remote --merge
-
-      git diff --quiet && git diff --staged --quiet || 
-      { git commit -am "Update submodules to latest commit (Pipeline $CI_PIPELINE_ID)" && 
-      git push origin-write $CI_COMMIT_BRANCH ; }
-
-      sed 
-      -e "s/\${HLT_COMPRESSION_ALGORITHM}/""/" 
-      -e "s/\${HLT_COMPRESSION_LEVEL}/-1/" 
-      -e "s/\${USE_FILE_BROKER_PY_BOOLEAN}/True/" 
-      hilton/hltDAQPatch.py_template > hilton/hltDAQPatch.py
-
-      git diff --quiet hilton/hltDAQPatch.py || 
-      { echo "HLT config DAQ patch (hltDAQPatch.py) has changed. Committing changes." && 
-      git commit -am "Update HLT config DAQ patch (Pipeline $CI_PIPELINE_ID)" && 
-      git push origin-write $CI_COMMIT_BRANCH ; } 
- 
 build:RPMs:
   image: $CI_REGISTRY_IMAGE/builder:$CI_COMMIT_REF_NAME-latest
   stage: 🏗️ build

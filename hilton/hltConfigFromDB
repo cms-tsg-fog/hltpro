@@ -1,5 +1,1 @@
-#!/usr/bin/env python3
-
-from confdbOfflineConverter import main
-
-main()
+../common/hltConfigFromDB
