@@ -1,4 +1,4 @@
 [submodule "common"]
     path = common
-    url = ../common.git
-	branch = main
+    url = https://gitlab.cern.ch/cms-tsg/fog/common.git
+    branch = main
