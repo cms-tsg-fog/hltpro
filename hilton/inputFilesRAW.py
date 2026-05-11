@@ -17,6 +17,49 @@
 #     and the script will pick up the corresponding input files
 
 fileNamesByRun_dict = {
+
+    403489: [
+        "root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/hilton_input/Run2026D/EGamma0_403489_LS150.root",
+        "root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/hilton_input/Run2026D/JetMET0_403489_LS151.root",
+        "root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/hilton_input/Run2026D/Muon0_403489_LS152.root",
+    ],
+    403461: [
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0089_index000113_fu-c2b14-07-01_pid2073343.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0089_index000133_fu-c2b14-07-01_pid2073343.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0116_index000001_fu-c2b01-25-01_pid2077509.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0116_index000019_fu-c2b01-25-01_pid2077573.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0116_index000025_fu-c2b01-25-01_pid2077509.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0116_index000027_fu-c2b01-25-01_pid2077396.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0116_index000028_fu-c2b01-25-01_pid2077396.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0116_index000060_fu-c2b01-25-01_pid2077449.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0203_index000244_fu-c2b02-17-01_pid1225714.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0203_index000263_fu-c2b02-17-01_pid1225774.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0203_index000269_fu-c2b02-17-01_pid1225623.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0203_index000278_fu-c2b02-17-01_pid1225675.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0353_index000043_fu-c2b03-26-01_pid2120128.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0353_index000053_fu-c2b03-26-01_pid2120059.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0353_index000069_fu-c2b03-26-01_pid2120178.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0353_index000081_fu-c2b03-26-01_pid2120231.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0357_index000218_fu-c2b04-42-01_pid1004852.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0357_index000229_fu-c2b04-42-01_pid1004899.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0357_index000244_fu-c2b04-42-01_pid1004796.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0357_index000254_fu-c2b04-42-01_pid1004738.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0517_index000225_fu-c2b03-31-01_pid1388319.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0607_index000084_fu-c2b14-43-01_pid2590608.root",
+"root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/error_stream_root/run403461/run403461_ls0607_index000108_fu-c2b14-43-01_pid2590608.root",
+
+    ],
+    403459: [ #circulating run
+#        'root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/hilton_input/Run2026D/HLTPhysics_Circulating_403459_LS1To37.root',
+        'root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/hilton_input/Run2026D/HLTPhysics_Circulating_403459_LS38To42.root',
+        'root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG/hilton_input/Run2026D/HLTPhysics_Circulating_403459_LS43To98.root',
+    ],
+    403445: [ #cosmics run with all systems in
+        'root://eoscms.cern.ch//eos/cms/store/group/tsg/FOG//hilton_input/Run2026D/HLTPhysics_Cosmics_403445_LS1To70.root'
+    ],    
+    402958: [ #cosmics run with all systems in
+        '/store/data/Run2026C/HLTPhysics/RAW/v1/000/402/958/00000/359d61a1-e013-4963-a09b-6fb0e71c6ca6.root',
+        ],
     402655: [ # Low PU, test for LumiScan2026
         '/store/data/Run2026C/HLTPhysics/RAW/v1/000/402/655/00000/01dfdecf-9da1-4a2d-bbc7-6fe7bf4f8642.root',
         '/store/data/Run2026C/HLTPhysics/RAW/v1/000/402/655/00000/0364eeca-aecc-4a62-9822-9ebdd452d87c.root',
