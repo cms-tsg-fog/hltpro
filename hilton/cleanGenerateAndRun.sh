@@ -16,6 +16,8 @@ Options:
   --maxEvents     Maximum number of events   [Optional]
   --sourceLabel   FEDRawDataCollection label [Optional]
   --skipRepack    Skip data re-packing step  [Optional]
+  --cache         Caches and uses cached data, only for expert use [Optional]
+  --clearCache    Clears cached data, only for expect use [Optional]
   -h, --help      Show this help message
 @EOF
 }
@@ -27,7 +29,10 @@ while [[ $# -gt 0 ]]; do
     --nCores) if [[ $2 =~ ^[0-9]+$ ]]; then nCores="${2}"; shift; fi ;;
     --maxEvents) if [[ $2 =~ ^[0-9]+$ ]]; then maxEventsStr="maxEvents=${2}"; shift; fi ;;
     --sourceLabel) sourceLabelStr="sourceLabel=${2}"; shift ;;
-    --skipRepack) skipRepack=true ;;
+    --skipRepack) skipRepack=true;;
+    --cache) cache=true ;;
+    --clearCache) clearCache=true ;; 
+   
     *) echo "[cleanGenerateAndRun.sh] !!! INVALID ARGUMENT --> ${1}" ;;
   esac
   shift
@@ -50,8 +55,31 @@ fi
 
 echo ./cleanRun.sh $run
 ./cleanRun.sh $run
-echo cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr} ${sourceLabelStr}
-cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr} ${sourceLabelStr}
+if [ "${clearCache}" = true ] ; then
+   if [ -d /cmsnfshltdata/hltdata/TSG/HiltonInputCache/run${run} ]; then
+       rm -r /cmsnfshltdata/hltdata/TSG/HiltonInputCache/run${run}
+   fi
+fi
+
+if [ "${cache}" = true ] ; then                                                                                                                                                                              
+    if [ ! -d /cmsnfshltdata/hltdata/TSG/HiltonInputCache/run${run} ]; then
+       echo cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr} ${sourceLabelStr}
+       cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr} ${sourceLabelStr}
+       cp -r /fff/BU0/ramdisk/run${run} /cmsnfshltdata/hltdata/TSG/HiltonInputCache/
+       rm -r /cmsnfshltdata/hltdata/TSG/HiltonInputCache/run${run}/hlt
+    else
+    
+       cp -r /cmsnfshltdata/hltdata/TSG/HiltonInputCache/run${run} /fff/BU0/ramdisk/
+       cp -r /tmp/hltpro/hlt/ /fff/BU0/ramdisk/run${run}/hlt
+
+    fi 
+    
+else 
+    echo cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr} ${sourceLabelStr}
+    cmsRun genTestFakeBuFromRAW_cfg.py runNumber=$run ${maxEventsStr} ${sourceLabelStr}
+fi
+
+
 echo ./startHiltonRun.sh $run $nCores
 ./startHiltonRun.sh $run $nCores
 
